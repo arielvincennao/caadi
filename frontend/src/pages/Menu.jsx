@@ -1,8 +1,37 @@
+import Navbar from "../components/layout/Navbar";
+import {Subtitle} from "../components/Typography";
+import Card from "../components/common/Card";
+
+
+const menuOptions = [
+  { icon: "assets/icons/cud.svg", name: "CUD", to:"/cud"},
+  { icon: "assets/icons/transporte.svg", name: "Pases de transporte", to:"/transporte"},
+  { icon: "assets/icons/cnrt.svg", name: "Reserva de pasajes CNRT", to:"/cnrt"},
+  { icon: "assets/icons/beneficios.svg", name: "Beneficios sociales", to:"/beneficios"},
+  { icon: "assets/icons/cultura.svg", name: "Cultura y arte", to:"/cultura" },
+  { icon: "assets/icons/turismo.svg", name: "Turismo accesible", to:"/turismo"},
+  { icon: "assets/icons/centrodia.svg", name: "Centros de día", to:"/centrosdia"},
+  { icon: "assets/icons/gastronomia.svg", name: "Gastronomía inclusiva", to:"/gastronomia"},
+  { icon: "assets/icons/reportes.svg", name: "Reclamos de accesibilidad", to:"/reportes"},
+];
+
 function Menu() {
   return (
-    <div className="bg-white min-h-screen flex items-center justify-center">
-      <h1 className="text-red-500 text-4xl font-bold">Menu</h1>
-    </div>
+    <div>
+      <Navbar/>
+      <section className="flex flex-col items-center pb-10">
+        <Subtitle className="m-4">Menú principal</Subtitle>
+        <ul className="space-y-5">
+          {menuOptions.map((option) => (
+          <li key={option.name} >
+            <Card icon={option.icon}  to={option.to} className="text-start">
+              <span>{option.name}</span>
+            </Card> 
+          </li>
+          ))}
+        </ul>
+      </section>
+    </div>  
   )
 }
 
