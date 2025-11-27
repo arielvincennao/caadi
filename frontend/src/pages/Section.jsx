@@ -3,7 +3,6 @@ import Map from {}
 import BtnLink from {}
 import Btn from {} */
 import Step from "../components/sections/Step";
-import Button from "../components/common/Button";
 import { Title } from "../components/Typography";
 import { Text } from "../components/Typography";
 
@@ -20,7 +19,6 @@ export default function Section({
         }; */
     const blocks = {
         steps: Step,
-        button: Button
     }
 
     return (
@@ -64,8 +62,6 @@ export default function Section({
                                         text={step.description}
                                     />
                                 ))}
-                                <Button></Button>
-
                             </section>
                         );
                     }
