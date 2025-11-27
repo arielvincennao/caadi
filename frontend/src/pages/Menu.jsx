@@ -1,6 +1,7 @@
 import Navbar from "../components/layout/Navbar";
 import {Subtitle} from "../components/Typography";
 import Card from "../components/common/Card";
+import BtnBack from "../components/common/BtnBack";
 
 
 const menuOptions = [
@@ -19,6 +20,9 @@ function Menu() {
   return (
     <div>
       <Navbar/>
+      <div className="absolute top-23 left-4 md:top-25 md:left-10 z-10">
+        <BtnBack />
+      </div>
       <section className="flex flex-col items-center pb-10">
         <Subtitle className="m-4">Menú principal</Subtitle>
         <ul className="space-y-5">
