@@ -1,8 +1,11 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
+import { offices } from "../../data/offices"
+import OfficeModal from "./OfficeModal";
 
 import placeholderIcon from "./icons/placeholder.png";
+import { useState } from "react";
 
 //icono de markers
 const customIcon = new Icon({
@@ -10,35 +13,44 @@ const customIcon = new Icon({
   iconSize: [38, 38],
 });
 
-//markers hardcodeados TODO backend
-const markers = [
-  { geocode: [-37.32967013550194, -59.13681692154323], popUp: "Municipalidad de Tandil" },
-  { geocode: [-37.3152552168332, -59.13879327394908], popUp: "Hospital Ramón Santamarina" },
-];
 
 const MapView = () => {
-    return (
-        //crea el mapa, lo centra, y le pone un zoom predeterminado
-        <MapContainer
-            center={[-37.3217, -59.1332]}
-            zoom={13}
-            style={{ width: "100%", height: "100vh" }}
-        >
+  const [selectedOffice, setSelectedOffice] = useState(null)
+  return (
+    <>
+      {selectedOffice && (
+        <OfficeModal
+          office={selectedOffice}
+          onClose={() => setSelectedOffice(null)}
+        />
+      )}
+      <MapContainer
+        center={[-37.3217, -59.1332]}
+        zoom={13}
+        style={{ width: "100%", height: "100vh" }}
+      >
 
         {/*base de mapa*/}
         <TileLayer
-        attribution='&copy; OpenStreetMap contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; OpenStreetMap contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
         {/* renderiza los marcadores */}
-        {markers.map((marker, index) => (
-            <Marker key={index} position={marker.geocode} icon={customIcon}>
-            <Popup>{marker.popUp}</Popup>
-            </Marker>
+        {offices.map((office) => (
+          <Marker
+            key={office.id}
+            position={office.geocode}
+            icon={customIcon}
+            eventHandlers={{
+              click: () => setSelectedOffice(office)
+            }}
+          />
         ))}
-        </MapContainer>
-    );
+      </MapContainer>
+    </>
+  );
 };
 
 export default MapView;
+
