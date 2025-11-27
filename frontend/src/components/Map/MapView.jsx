@@ -2,7 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
 import { offices } from "../../data/offices"
-import OfficeModal from "../map/OfficeModal";
+import OfficeModal from "./OfficeModal";
 
 import placeholderIcon from "./icons/placeholder.png";
 import { useState } from "react";
