@@ -9,6 +9,8 @@ html {
   }
 
 body {
+  color: var(--db-caadi);
+  font-size: 18px;
   margin: 0;
   min-width: 320px;
   min-height: 100vh;

@@ -5,6 +5,7 @@ export default function Card({
     children,
     className = "",
     to = null,
+    icon = null
   }) {
     const navigate = useNavigate()
     const sizeClasses = {
@@ -19,23 +20,25 @@ export default function Card({
     }
   
     return (
-      <div
+      <button
           onClick={handleClick}
           className={`
           bg-white
-          rounded-[10px] p-4 
-          flex items-center gap-4
+          rounded-[10px] 
+          flex items-center gap-1 
           cursor-pointer
           box-border
-          card-style
+          border
+          shadow-md
           ${sizeClasses[size]}
           ${className}
         `}
       >
+        {icon ? <img src={icon} alt="" className='shrink-0 object-contain w-10 h-9 ml-1' /> : null}
         <div className="flex-1">
           {children}
         </div>
-      </div>
+      </button>
     );
   }
   
