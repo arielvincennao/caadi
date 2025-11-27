@@ -18,3 +18,12 @@ body {
   color: var(--db-caadi);
   box-shadow: 0 0 0 0.3px var(--db-caadi), 0 4px 4px 0 rgba(0, 0, 0, 0.15);
 }
+
+button{
+  width: 120px;
+  height: 30px;
+  color: rgb(238, 238, 238);
+  background-color: rgba(31, 49, 63);
+  border-radius: 20px;
+  font-size: 13px ;
+}
