@@ -1,30 +1,20 @@
 export default function Step({
   stepNumber,
   text,
-  stepIcon = null,
-  className = ""
+  stepIcon = null
 }) {
   return (
-    <div
-      className={`flex items-center gap-4 ${className}`}
-      role="group"
+    <article
+      className="flex items-center gap-4"
       aria-label={`Paso ${stepNumber}`}
     >
+      <img src={stepIcon} alt="" className="w-10 h-10" />
 
-      {stepIcon && (
-        <img
-          src={stepIcon}
-          alt=""
-          className="w-10 h-10 object-contain shrink-0"
-        />
-      )}
+      <div>
+        <h3 className="font-bold">Paso {stepNumber}</h3>
+        <p>{text}</p>
+      </div>
+    </article>
 
-      <p className="text-gray-800 leading-snug">
-        <span className="font-semibold">
-          Paso {stepNumber}:
-        </span>{" "}
-        {text}
-      </p>
-    </div>
   );
 }
