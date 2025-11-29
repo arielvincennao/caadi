@@ -1,12 +1,28 @@
-function Button({ className, onClick}) {
+import { useNavigate } from "react-router-dom";
+
+function Button({ children, className, onClick, href }) {
+
+  const handleClick = () => {
+
+
+    if (href) {
+      window.open(href, "_blank"); // abre link externo
+      return;
+    }
+
+    // if (onClick) {
+    //   console.log("asdad");
+    //   onClick();            // acción normal
+    // }
+  };
+
   return (
-    <button className={className} onClick={onClick}>
-      <p>Buton</p>
+    <button className={className} onClick={handleClick}>
+      {children}
     </button>
   );
 }
-//Pasar por parametro la clase .main-button en el ejemplo de los botones del menu
-
-//podriamos ponerle un parametro text para modifica el texto que se utiliza en <p> ...! 
 
 export default Button;
+
+// el button no funciona del todo bien porque el texto rebalsa

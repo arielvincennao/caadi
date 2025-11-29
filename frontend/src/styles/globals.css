@@ -22,12 +22,11 @@ body {
 }
 
 .main-button{
-  width: 120px;
-  height: 30px;
+  width: 10vw;
+  height: 5vh;
   color: rgb(238, 238, 238);
   background-color: rgba(31, 49, 63);
   border-radius: 20px;
-  font-size: 13px ;
 }
 
 .main-link{

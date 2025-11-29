@@ -1,12 +1,9 @@
-/* import Steps from {}
-import Map from {}
-import BtnLink from {}
-import Btn from {} */
 import BtnBack from "../components/common/BtnBack";
 import Navbar from "../components/layout/Navbar";
 import Step from "../components/sections/Step";
 import { Title } from "../components/Typography";
 import { Text } from "../components/Typography";
+import Button from "../components/common/Button";
 
 export default function Section({
     data
@@ -48,10 +45,14 @@ export default function Section({
                         );
                     }
 
-                    
+
                     return null;
                 })}
-                
+
+                <Button className="main-button" href="/map-test" >
+                    <Text>Ver mapa</Text>
+                </Button>
+
             </div>
         </div>
 
