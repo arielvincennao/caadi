@@ -6,13 +6,13 @@ function Home() {
     <div className="bg-white min-h-screen flex flex-col items-center justify-center text-center">
       <Logo src="/assets/logo-caadi.svg" alt="Logo CAADI" className="mb-6 max-w-xs w-40 h-40 md:w-62 md:h-62" />
       <div className="flex flex-col gap-8 md:gap-5 text-lg md:text-2xl">
-        <Card size="md" to="/menu">
+        <Card size="md" to="/menu" mode="standard">
           <span>Modo estándar</span>
         </Card>
-        <Card size="md">
+        <Card size="md" to="/menu" mode="visual">
           <span>Modo visual (LSA)</span>
         </Card>
-        <Card size="md">
+        <Card size="md" to="/menu" mode="audio">
           <span>Modo audio (Lectura de voz)</span>
         </Card>
       </div>
