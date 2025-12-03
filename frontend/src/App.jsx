@@ -4,9 +4,11 @@ import Menu from './pages/Menu'
 import Cud from './pages/cud/Cud'
 import CNRT from './pages/cnrt/CNRT'
 import MapView from './components/Map/MapView'
+import { AccessibilityProvider } from './accessibilityMode/AccessibilityMode'
 
 function App() {
   return (
+    <AccessibilityProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -16,6 +18,7 @@ function App() {
         <Route path="/CNRT" element={<CNRT />}/>
       </Routes>
     </BrowserRouter>
+    </AccessibilityProvider>
   )
 }
 

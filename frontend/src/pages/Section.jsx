@@ -1,7 +1,10 @@
+import BtnBack from "../components/common/BtnBack";
+import Navbar from "../components/layout/Navbar";
 import Step from "../components/sections/Step";
 import List from "../components/sections/List";
 import { Title } from "../components/Typography";
 import { Text } from "../components/Typography";
+import Button from "../components/common/Button";
 
 export default function Section({ data }) {
   if (!data) return null;
@@ -19,30 +22,13 @@ export default function Section({ data }) {
           <Text>{data.description}</Text>
         </section>
 
-        {/*{data.contentBlocks
-            .sort((a, b) => a.order - b.order)
-            .map((block) => {
-                const Componente = bloques[block.type];
-
-                if (!Componente) {
-                console.warn(`No existe componente para el tipo: ${block.type}`, block);
-                return null;
-                }
-
-                return (
-                    <section key={b.id}>
-                        <Componente data={b} />
-                    </section>
-                );
-            })} */}
-
         {data.contentBlocks.map((block) => {
           if (block.type === "steps") {
             return (
               <section key={block.id} className="my-6 space-y-4">
                 <h2>{block.title}</h2>
                 {block.steps.map((step) => (
-                  <Step 
+                  <Step
                     key={step.id}
                     stepNumber={step.id}
                     stepIcon={step.icon}
@@ -52,20 +38,24 @@ export default function Section({ data }) {
               </section>
             );
           }
-          if (block.type === "text") {
+
+
+          if (block.type === "text") { //ESTA FUNCIONALIDAD LA AGREGUE PORQUE LA SECCION DE CNRT TIENE UNA PARTE QUE NO IMPLICA PASOS
             return (
               <section key={block.id} className="my-6">
                 <h2>{block.title}</h2>
-                {block.list.map((poslist) => (
-                  <List 
-                    text={poslist.text}
-                  />
+                {block.list.map((poslist) => (  
+                  <List text={poslist.text} />
                 ))}
               </section>
             );
           }
           return null;
         })}
+
+        <Button className="main-button" href="/map-test">
+          <Text>Ver mapa</Text>
+        </Button>
       </div>
     </div>
   );

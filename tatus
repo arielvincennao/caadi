@@ -1,0 +1,165 @@
+[1mdiff --git a/.gitignore b/.gitignore[m
+[1mindex e6ad86c..0cda9ca 100644[m
+[1m--- a/.gitignore[m
+[1m+++ b/.gitignore[m
+[36m@@ -1,4 +1,5 @@[m
+ node_modules[m
+ .env[m
+ dist[m
+[31m-build[m
+\ No newline at end of file[m
+[32m+[m[32mbuild[m
+[32m+[m[32mpackage-lock.json[m
+\ No newline at end of file[m
+[1mdiff --git a/frontend/package-lock.json b/frontend/package-lock.json[m
+[1mindex eaffaf9..7dad4e9 100644[m
+[1m--- a/frontend/package-lock.json[m
+[1m+++ b/frontend/package-lock.json[m
+[36m@@ -20,6 +20,7 @@[m
+         "@eslint/js": "^9.39.1",[m
+         "@types/react": "^19.2.5",[m
+         "@types/react-dom": "^19.2.3",[m
+[32m+[m[32m        "@vitejs/plugin-react": "^5.1.1",[m
+         "@vitejs/plugin-react-swc": "^4.2.2",[m
+         "eslint": "^9.39.1",[m
+         "eslint-plugin-react-hooks": "^7.0.1",[m
+[36m@@ -160,6 +161,15 @@[m
+         "@babel/core": "^7.0.0"[m
+       }[m
+     },[m
+[32m+[m[32m    "node_modules/@babel/helper-plugin-utils": {[m
+[32m+[m[32m      "version": "7.27.1",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@babel/helper-plugin-utils/-/helper-plugin-utils-7.27.1.tgz",[m
+[32m+[m[32m      "integrity": "sha512-1gn1Up5YXka3YYAHGKpbideQ5Yjf1tDa9qYcgysz+cNCXukyLl6DjPXhD3VRwSb8c0J9tA4b2+rHEZtc6R0tlw==",[m
+[32m+[m[32m      "dev": true,[m
+[32m+[m[32m      "engines": {[m
+[32m+[m[32m        "node": ">=6.9.0"[m
+[32m+[m[32m      }[m
+[32m+[m[32m    },[m
+     "node_modules/@babel/helper-string-parser": {[m
+       "version": "7.27.1",[m
+       "resolved": "https://registry.npmjs.org/@babel/helper-string-parser/-/helper-string-parser-7.27.1.tgz",[m
+[36m@@ -220,6 +230,36 @@[m
+         "node": ">=6.0.0"[m
+       }[m
+     },[m
+[32m+[m[32m    "node_modules/@babel/plugin-transform-react-jsx-self": {[m
+[32m+[m[32m      "version": "7.27.1",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@babel/plugin-transform-react-jsx-self/-/plugin-transform-react-jsx-self-7.27.1.tgz",[m
+[32m+[m[32m      "integrity": "sha512-6UzkCs+ejGdZ5mFFC/OCUrv028ab2fp1znZmCZjAOBKiBK2jXD1O+BPSfX8X2qjJ75fZBMSnQn3Rq2mrBJK2mw==",[m
+[32m+[m[32m      "dev": true,[m
+[32m+[m[32m      "dependencies": {[m
+[32m+[m[32m        "@babel/helper-plugin-utils": "^7.27.1"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "engines": {[m
+[32m+[m[32m        "node": ">=6.9.0"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "peerDependencies": {[m
+[32m+[m[32m        "@babel/core": "^7.0.0-0"[m
+[32m+[m[32m      }[m
+[32m+[m[32m    },[m
+[32m+[m[32m    "node_modules/@babel/plugin-transform-react-jsx-source": {[m
+[32m+[m[32m      "version": "7.27.1",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@babel/plugin-transform-react-jsx-source/-/plugin-transform-react-jsx-source-7.27.1.tgz",[m
+[32m+[m[32m      "integrity": "sha512-zbwoTsBruTeKB9hSq73ha66iFeJHuaFkUbwvqElnygoNbj/jHRsSeokowZFN3CZ64IvEqcmmkVe89OPXc7ldAw==",[m
+[32m+[m[32m      "dev": true,[m
+[32m+[m[32m      "dependencies": {[m
+[32m+[m[32m        "@babel/helper-plugin-utils": "^7.27.1"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "engines": {[m
+[32m+[m[32m        "node": ">=6.9.0"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "peerDependencies": {[m
+[32m+[m[32m        "@babel/core": "^7.0.0-0"[m
+[32m+[m[32m      }[m
+[32m+[m[32m    },[m
+     "node_modules/@babel/template": {[m
+       "version": "7.27.2",[m
+       "resolved": "https://registry.npmjs.org/@babel/template/-/template-7.27.2.tgz",[m
+[36m@@ -1725,6 +1765,47 @@[m
+         "vite": "^5.2.0 || ^6 || ^7"[m
+       }[m
+     },[m
+[32m+[m[32m    "node_modules/@types/babel__core": {[m
+[32m+[m[32m      "version": "7.20.5",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@types/babel__core/-/babel__core-7.20.5.tgz",[m
+[32m+[m[32m      "integrity": "sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==",[m
+[32m+[m[32m      "dev": true,[m
+[32m+[m[32m      "dependencies": {[m
+[32m+[m[32m        "@babel/parser": "^7.20.7",[m
+[32m+[m[32m        "@babel/types": "^7.20.7",[m
+[32m+[m[32m        "@types/babel__generator": "*",[m
+[32m+[m[32m        "@types/babel__template": "*",[m
+[32m+[m[32m        "@types/babel__traverse": "*"[m
+[32m+[m[32m      }[m
+[32m+[m[32m    },[m
+[32m+[m[32m    "node_modules/@types/babel__generator": {[m
+[32m+[m[32m      "version": "7.27.0",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@types/babel__generator/-/babel__generator-7.27.0.tgz",[m
+[32m+[m[32m      "integrity": "sha512-ufFd2Xi92OAVPYsy+P4n7/U7e68fex0+Ee8gSG9KX7eo084CWiQ4sdxktvdl0bOPupXtVJPY19zk6EwWqUQ8lg==",[m
+[32m+[m[32m      "dev": true,[m
+[32m+[m[32m      "dependencies": {[m
+[32m+[m[32m        "@babel/types": "^7.0.0"[m
+[32m+[m[32m      }[m
+[32m+[m[32m    },[m
+[32m+[m[32m    "node_modules/@types/babel__template": {[m
+[32m+[m[32m      "version": "7.4.4",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@types/babel__template/-/babel__template-7.4.4.tgz",[m
+[32m+[m[32m      "integrity": "sha512-h/NUaSyG5EyxBIp8YRxo4RMe2/qQgvyowRwVMzhYhBCONbW8PUsg4lkFMrhgZhUe5z3L3MiLDuvyJ/CaPa2A8A==",[m
+[32m+[m[32m      "dev": true,[m
+[32m+[m[32m      "dependencies": {[m
+[32m+[m[32m        "@babel/parser": "^7.1.0",[m
+[32m+[m[32m        "@babel/types": "^7.0.0"[m
+[32m+[m[32m      }[m
+[32m+[m[32m    },[m
+[32m+[m[32m    "node_modules/@types/babel__traverse": {[m
+[32m+[m[32m      "version": "7.28.0",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@types/babel__traverse/-/babel__traverse-7.28.0.tgz",[m
+[32m+[m[32m      "integrity": "sha512-8PvcXf70gTDZBgt9ptxJ8elBeBjcLOAcOtoO/mPJjtji1+CdGbHgm77om1GrsPxsiE+uXIpNSK64UYaIwQXd4Q==",[m
+[32m+[m[32m      "dev": true,[m
+[32m+[m[32m      "dependencies": {[m
+[32m+[m[32m        "@babel/types": "^7.28.2"[m
+[32m+[m[32m      }[m
+[32m+[m[32m    },[m
+     "node_modules/@types/estree": {[m
+       "version": "1.0.8",[m
+       "resolved": "https://registry.npmjs.org/@types/estree/-/estree-1.0.8.tgz",[m
+[36m@@ -1758,6 +1839,26 @@[m
+         "@types/react": "^19.2.0"[m
+       }[m
+     },[m
+[32m+[m[32m    "node_modules/@vitejs/plugin-react": {[m
+[32m+[m[32m      "version": "5.1.1",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@vitejs/plugin-react/-/plugin-react-5.1.1.tgz",[m
+[32m+[m[32m      "integrity": "sha512-WQfkSw0QbQ5aJ2CHYw23ZGkqnRwqKHD/KYsMeTkZzPT4Jcf0DcBxBtwMJxnu6E7oxw5+JC6ZAiePgh28uJ1HBA==",[m
+[32m+[m[32m      "dev": true,[m
+[32m+[m[32m      "dependencies": {[m
+[32m+[m[32m        "@babel/core": "^7.28.5",[m
+[32m+[m[32m        "@babel/plugin-transform-react-jsx-self": "^7.27.1",[m
+[32m+[m[32m        "@babel/plugin-transform-react-jsx-source": "^7.27.1",[m
+[32m+[m[32m        "@rolldown/pluginutils": "1.0.0-beta.47",[m
+[32m+[m[32m        "@types/babel__core": "^7.20.5",[m
+[32m+[m[32m        "react-refresh": "^0.18.0"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "engines": {[m
+[32m+[m[32m        "node": "^20.19.0 || >=22.12.0"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "peerDependencies": {[m
+[32m+[m[32m        "vite": "^4.2.0 || ^5.0.0 || ^6.0.0 || ^7.0.0"[m
+[32m+[m[32m      }[m
+[32m+[m[32m    },[m
+     "node_modules/@vitejs/plugin-react-swc": {[m
+       "version": "4.2.2",[m
+       "resolved": "https://registry.npmjs.org/@vitejs/plugin-react-swc/-/plugin-react-swc-4.2.2.tgz",[m
+[36m@@ -3187,6 +3288,15 @@[m
+         "react-dom": "^19.0.0"[m
+       }[m
+     },[m
+[32m+[m[32m    "node_modules/react-refresh": {[m
+[32m+[m[32m      "version": "0.18.0",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/react-refresh/-/react-refresh-0.18.0.tgz",[m
+[32m+[m[32m      "integrity": "sha512-QgT5//D3jfjJb6Gsjxv0Slpj23ip+HtOpnNgnb2S5zU3CB26G/IDPGoy4RJB42wzFE46DRsstbW6tKHoKbhAxw==",[m
+[32m+[m[32m      "dev": true,[m
+[32m+[m[32m      "engines": {[m
+[32m+[m[32m        "node": ">=0.10.0"[m
+[32m+[m[32m      }
