@@ -1,13 +1,24 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
+// 1. Importar la librería Express
+const express = require('express');
 
-dotenv.config();
+// 2. Crear una instancia de la aplicación
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+// 3. Definir el puerto de escucha
+const PORT = 3000;
 
-app.listen(4000, () => {
-  console.log("Backend running on port 4000");
+// 4. Middleware integrado para parsear peticiones JSON
+// Permite que Express lea el req.body enviado como JSON
+app.use(express.json()); 
+
+// 5. Definición de una ruta básica (Endpoint)
+app.get('/', (req, res) => {
+    res.status(200).json({
+        message: '¡Servidor CAADI operativo y listo para recibir peticiones!'
+    });
+});
+
+// 6. Iniciar el servidor
+app.listen(PORT, () => {
+    console.log(`🚀 Servidor Express escuchando en http://localhost:${PORT}`);
 });
