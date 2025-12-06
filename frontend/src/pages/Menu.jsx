@@ -23,7 +23,7 @@ function Menu() {
       <div className="absolute top-23 left-4 md:top-25 md:left-10 z-10">
         <BtnBack />
       </div>
-      <section className="flex flex-col items-center pb-10">
+      <section className="flex flex-col items-center pb-10 pt-20 md:pt-4">
         <Subtitle className="m-4">Menú principal</Subtitle>
         <ul className="space-y-5">
           {menuOptions.map((option) => (
