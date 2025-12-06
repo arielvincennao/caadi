@@ -16,7 +16,7 @@ export default function SectionVisual({
             <div className="absolute top-23 left-4 md:top-25 md:left-10 z-10">
                 <BtnBack></BtnBack>
             </div>
-            <div className="p-3 md:w-[70%]">
+            <div className="p-3 md:w-[70%] pt-20 md:pt-3">
                 <section className="flex flex-col items-center text-center mb-8" aria-labelledby="section-title">
                     <img
                         src={data.image}

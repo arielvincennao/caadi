@@ -11,7 +11,11 @@ export default function Section({ data }) {
 
   return (
     <div className="bg-white min-h-screen flex flex-col items-center text-lg md:text-2xl">
-      <div className="p-3 md:w-[70%]">
+      <Navbar />
+      <div className="absolute top-23 left-4 md:top-25 md:left-10 z-10">
+        <BtnBack />
+      </div>
+      <div className="p-3 md:w-[70%] pt-20 md:pt-3">
         <section className="flex flex-col items-center text-center mb-8">
           <img
             src={data.image}
