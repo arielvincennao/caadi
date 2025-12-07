@@ -47,9 +47,7 @@ export function Title({ children, className = "" }) {
     return (
       <p
         className={`
-          font-normal
-          text-base md:text-lg
-          leading-relaxed
+
           ${className}
         `}
       >
