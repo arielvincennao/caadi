@@ -1,0 +1,50 @@
+export const cnrtData = {
+  name: "Comision Nacional de Regulacion del Transporte (CNRT)",
+  description:
+    "Sistema nacional para reservar pasajes gratuitos de larga distancia para personas con CUD o credencial INCUCAI. Se aplica en todo el país.",
+  image: "", // FALTA IMAGEN 
+
+  contentBlocks: [
+    {
+      id: 1,
+      type: "steps",
+      order: 1,
+      title: "¿Como funciona?",
+      steps: [
+        {
+          id: 1,
+          icon: "/assets/icons/cud_step1.svg",
+          description:
+            "El usuario ingresa al Sistema de Solicitud de Pasajes CNRT.",
+        },
+        {
+          id: 2,
+          icon: "/assets/icons/cud_step2.svg",
+          description:
+            "Accede con su DNI/CUIL y el número de su credencial CUD.",
+        },
+        {
+          id: 3,
+          icon: "/assets/icons/cud_step3.svg",
+          description: "Completa los datos del viaje (origen, destino, fecha).",
+        },
+      ],
+    },
+    {
+      id: 2,
+      type: "text",
+      order: 2,
+      title: " Anticipación / plazos útiles:",
+      list: [
+        {
+          id: 1,
+          text: "Los cupos se habilitan con 3O días de antelación (práctica habitual del sistema y de las empresas)",
+        },
+         {
+          id: 2,
+          text: "La empresa debe emitir y enviar el boleto (suele hacerlo hasta 48 horas antes de la salida)",
+        }
+      ]
+    },
+  ],
+};
