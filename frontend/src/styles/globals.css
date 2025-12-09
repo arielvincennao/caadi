@@ -16,11 +16,6 @@ body {
   min-height: 100vh;
 }
 
-.card-style { /* Card styles (index,menu) */
-  color: var(--db-caadi);
-  box-shadow: 0 0 0 0.3px var(--db-caadi), 0 4px 4px 0 rgba(0, 0, 0, 0.15);
-}
-
 .main-button{
     display:flex;
     justify-content: center;
@@ -44,3 +39,4 @@ body {
   text-align: center;
   cursor: pointer;
 }
+

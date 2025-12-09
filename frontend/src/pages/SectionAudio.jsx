@@ -18,7 +18,7 @@ export default function SectionAudio({
                 <BtnBack></BtnBack>
             </div>
             <div className="p-3 md:w-[70%] pt-20 md:pt-3">
-                <section className="flex flex-col items-center text-center mb-8" aria-labelledby="section-title">
+                <section className="flex flex-col items-center text-center mb-8 md:text-left md:items-start"  aria-labelledby="section-title">
                     <img
                         src={data.image}
                         alt={`Imagen de portada para ${data.name}`}

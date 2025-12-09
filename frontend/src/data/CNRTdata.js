@@ -2,7 +2,7 @@ export const cnrtData = {
   name: "Comision Nacional de Regulacion del Transporte (CNRT)",
   description:
     "Sistema nacional para reservar pasajes gratuitos de larga distancia para personas con CUD o credencial INCUCAI. Se aplica en todo el país.",
-  image: "", // FALTA IMAGEN 
+  image: "/assets/icons/cnrt_portada.jpg", 
 
   contentBlocks: [
     {
@@ -34,7 +34,7 @@ export const cnrtData = {
       id: 2,
       type: "text",
       order: 2,
-      title: " Anticipación / plazos útiles:",
+      title: " Anticipación/plazos útiles:",
       list: [
         {
           id: 1,
