@@ -1,44 +1,51 @@
-import { useNavigate } from "react-router-dom";
+function Button({
+    children,
+    className,
+    onClick,
+    href,
+    type,
+    disabled
+}) {
 
-function Button({ children, className, onClick, href, type, disabled }) {
+    const handleClick = (e) => {
+        if (disabled) {
+            e.preventDefault();
+            return;
+        }
 
-  const handleClick = (e) => {
-    if (disabled) {
-      e.preventDefault();
-      return;
-    }
-    
-    // si es submit, dejar que el formulario maneje el evento
-    if (type === 'submit') {
-      if (onClick) {
-        onClick(e);
-      }
-      return;
-    }
-    
-    if (onClick) {
-      e.preventDefault();
-      onClick();            // acción normal
-      return;
-    }
+        // si es submit, dejar que el formulario maneje el evento
+        if (type === 'submit') {
+            if (onClick) {
+                onClick(e);
+            }
+            return;
+        }
 
-    if (href) {
-      e.preventDefault();
-      window.open(href, "_blank"); // abre link externo
-      return;
-    }
-  };
+        // acción normal
+        if (onClick) {
+            e.preventDefault();
+            onClick();
+            return;
+        }
 
-  return (
-    <button 
-      className={className} 
-      onClick={handleClick}
-      type={type || 'button'}
-      disabled={disabled}
-    >
-      {children}
-    </button>
-  );
+        // abre link externo
+        if (href) {
+            e.preventDefault();
+            window.open(href, "_blank");
+            return;
+        }
+    };
+
+    return (
+        <button
+            className={`main-button ${className} `}
+            onClick={handleClick}
+            type={type || 'button'}
+            disabled={disabled}
+        >
+            {children}
+        </button>
+    );
 }
 
 export default Button;

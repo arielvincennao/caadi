@@ -90,7 +90,6 @@ function Admin() {
           <div className="flex justify-end">
             <Button
               type="submit"
-              className="main-button"
               disabled={isLoading}
             >
               <Text>{isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}</Text>
