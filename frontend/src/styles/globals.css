@@ -21,12 +21,23 @@ body {
     justify-content: center;
     align-items: center;
     height: 5vh;
-    color: rgb(238, 238, 238);
+    color: white;
     background-color: rgba(31, 49, 63);
     border-radius: 20px;
     padding: 10px 45px;
     cursor: pointer;
-    @apply gap-2;
+}
+
+.main-button-secondary{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 5vh;
+    color: white;
+    background-color: rgba(107, 114, 128);
+    border-radius: 20px;
+    padding: 10px 45px;
+    cursor: pointer;
 }
 
 .main-link{
