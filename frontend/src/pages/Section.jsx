@@ -2,7 +2,7 @@ import BtnBack from "../components/common/BtnBack";
 import Navbar from "../components/layout/Navbar";
 import Step from "../components/sections/Step";
 import List from "../components/sections/List";
-import { Title, Subtitle, Text } from "../components/Typography";
+import { Title, Subtitle, Text, Subsubtitle } from "../components/Typography";
 import Button from "../components/common/Button";
 
 export default function Section({ data }) {
@@ -15,7 +15,7 @@ export default function Section({ data }) {
                 <BtnBack />
             </div>
             <div className="p-3 md:w-[70%] pt-20 md:pt-3">
-                <section className="flex flex-col items-center text-center mb-8">
+                <section className="flex flex-col items-center text-center md:text-left md:items-start mb-8">
                     <img
                         src={data.image}
                         alt="Imagen de Portada"
@@ -29,7 +29,7 @@ export default function Section({ data }) {
                     if (block.type === "steps") {
                         return (
                             <section key={block.id} className="my-6 space-y-4">
-                                <h2>{block.title}</h2>
+                                <Subsubtitle>{block.title}</Subsubtitle>
                                 {block.steps.map((step) => (
                                     <Step
                                         key={step.id}
@@ -46,13 +46,22 @@ export default function Section({ data }) {
                     if (block.type === "text") { //ESTA FUNCIONALIDAD LA AGREGUE PORQUE LA SECCION DE CNRT TIENE UNA PARTE QUE NO IMPLICA PASOS
                         return (
                             <section key={block.id} className="my-6">
-                                <h2>{block.title}</h2>
+                                <Subtitle>{block.title}</Subtitle>
                                 {block.list.map((poslist) => (
-                                    <List text={poslist.text} />
+                                    <List text={poslist.text} key={poslist.id} />
                                 ))}
                             </section>
                         );
                     }
+
+                    if(block.type === "link"){
+                        return(
+                            <Button className="main-button mb-5" href={block.href} key={block.id}>
+                                {block.name}
+                            </Button>
+                        )
+                    }
+                    
                     return null;
                 })}
 
@@ -62,6 +71,8 @@ export default function Section({ data }) {
                     </svg>
                     <Text>Ver mapa</Text>
                 </Button>
+               
+
             </div>
         </div>
     );

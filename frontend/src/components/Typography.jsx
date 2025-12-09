@@ -27,21 +27,23 @@ export function Title({ children, className = "" }) {
       </h2>
     );
   }
+
+  export function Subsubtitle({ children, className = "" }) {
+    return (
+      <h3
+        className={`
+          font-semibold
+          text-2xl md:text-3xl
+          leading-snug
+          ${className}
+        `}
+      >
+        {children}
+      </h3>
+    );
+  }
   
-  // export function Subtitle2({ children, className = "" }) {
-  //   return (
-  //     <h3
-  //       className={`
-  //         font-semibold
-  //         text-2xl md:text-3xl
-  //         leading-snug
-  //         ${className}
-  //       `}
-  //     >
-  //       {children}
-  //     </h3>
-  //   );
-  // }
+
   
   export function Text({ children, className = "" }) {
     return (
