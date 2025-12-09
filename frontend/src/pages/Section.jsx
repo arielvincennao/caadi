@@ -9,7 +9,7 @@ export default function Section({ data }) {
     if (!data) return null;
 
     return (
-        <div className="bg-white min-h-screen flex flex-col items-center text-lg md:text-2xl">
+        <div className="bg-white min-h-screen flex flex-col items-center">
             <Navbar />
             <div className="absolute top-23 left-4 md:top-25 md:left-10 z-10">
                 <BtnBack />
@@ -66,12 +66,11 @@ export default function Section({ data }) {
                 })}
 
                 <Button href="/map-test">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <svg className="me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
                     </svg>
                     <Text>Ver mapa</Text>
                 </Button>
-               
 
             </div>
         </div>
