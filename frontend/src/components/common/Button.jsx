@@ -38,7 +38,7 @@ function Button({
 
     return (
         <button
-            className={`main-button ${className} `}
+            className={`main-button hover:opacity-90 ${className} `}
             onClick={handleClick}
             type={type || 'button'}
             disabled={disabled}
