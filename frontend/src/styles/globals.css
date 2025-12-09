@@ -17,11 +17,16 @@ body {
 }
 
 .main-button{
-  cursor: pointer;
-  padding: 0.5em;
-  color: rgb(238, 238, 238);
-  background-color: var(--db-caadi);
-  border-radius: 50px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 5vh;
+    color: rgb(238, 238, 238);
+    background-color: rgba(31, 49, 63);
+    border-radius: 20px;
+    padding: 10px 45px;
+    cursor: pointer;
+    @apply gap-2;
 }
 
 .main-link{

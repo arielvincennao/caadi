@@ -11,7 +11,7 @@ function Home() {
     return (
       <div className="bg-white min-h-screen flex flex-col items-center justify-center text-center px-4">
         <Logo src="/assets/logo-caadi.svg" alt="Logo CAADI" className="mb-6 max-w-xs w-40 h-40 md:w-62 md:h-62" />
-        <div className="max-w-2xl mb-8">
+        <div className="flex flex-col items-center justify-center max-w-2xl mb-8">
           <Text className="mb-10">
           CAADi es una plataforma digital diseñada para centralizar información administrativa, cultural y de servicios orientados
           a personas con discapacidad. Su propósito es facilitar el acceso a recursos útiles y favorecer una participación más activa,
