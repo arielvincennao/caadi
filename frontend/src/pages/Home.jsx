@@ -18,7 +18,7 @@ function Home() {
           autónoma e inclusiva dentro de la comunidad.
           </Text>
           <Button 
-            className="main-button mb-4"
+            className="mb-4"
             onClick={() => setShowModes(true)}
           >
             <Text>Siguiente</Text>

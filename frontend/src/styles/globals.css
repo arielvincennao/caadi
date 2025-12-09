@@ -26,12 +26,11 @@ body {
     justify-content: center;
     align-items: center;
     height: 5vh;
-    color: rgb(238, 238, 238);
-    background-color: rgba(31, 49, 63);
-    border-radius: 20px;
-    padding: 10px 45px;
+    color: #ffffff;
+    background-color: #1F313F;
+    border-radius: 200px;
     cursor: pointer;
-    @apply gap-2;
+    @apply gap-2 hover:opacity-90;
 }
 
 .main-link{

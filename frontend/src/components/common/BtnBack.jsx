@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom'
+import Button from './Button'
+import { Text } from '../Typography'
 
 export default function BtnBack({ className = "" }) {
   const navigate = useNavigate()
@@ -8,16 +10,11 @@ export default function BtnBack({ className = "" }) {
   }
 
   return (
-    <button
+    <Button
       onClick={handleClick}
+      paddingX='min'
       className={`
         mt-5
-        px-2 py-2 md:px-4 md:py-3
-        rounded-full
-        bg-[#1F313F]
-        flex items-center justify-center gap-1 md:gap-2
-        cursor-pointer
-        hover:opacity-90
         transition-opacity
         shadow-md
         relative z-10
@@ -31,7 +28,7 @@ export default function BtnBack({ className = "" }) {
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="text-white md:w-6 md:h-6"
+        className="md:w-6 md:h-6"
       >
         <path
           d="M15 18L9 12L15 6"
@@ -41,8 +38,8 @@ export default function BtnBack({ className = "" }) {
           strokeLinejoin="round"
         />
       </svg>
-      <span className="text-white text-sm md:text-base whitespace-nowrap">Volver</span>
-    </button>
+      <Text className="whitespace-nowrap me-2">Volver</Text>
+    </Button>
   )
 }
 
