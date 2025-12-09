@@ -1,8 +1,10 @@
 import BtnBack from "../components/common/BtnBack";
 import Navbar from "../components/layout/Navbar";
 import Step from "../components/sections/Step";
-import { Title } from "../components/Typography";
-import { Text } from "../components/Typography";
+import List from "../components/sections/List";
+
+import { Subtitle, Title, Text } from "../components/Typography";
+
 import Button from "../components/common/Button";
 
 export default function SectionVisual({
@@ -17,16 +19,16 @@ export default function SectionVisual({
                 <BtnBack></BtnBack>
             </div>
             <div className="p-3 md:w-[70%] pt-20 md:pt-3">
-                <section className="flex flex-col items-center text-center mb-8" aria-labelledby="section-title">
+                <section className="flex flex-col items-center md:items-start text-center md:text-left mb-8" aria-labelledby="section-title">
                     <img
                         src={data.image}
                         alt={`Imagen de portada para ${data.name}`}
                         className="w-full max-h-64 object-cover rounded-lg mb-6"
                     />
-                    <Title className="text-center mb-3">{data.name}</Title>
-                    <video src="/videos/LSA_prueba.mp4" controls>
-
-                    </video>
+                    <Title className="mb-3">{data.name}</Title>
+                    <div>
+                        <video src="/videos/LSA_prueba.mp4" className="mb-4 md:w-lg" controls></video>
+                    </div>
                     <Text>{data.description}</Text>
                 </section>
 
@@ -35,7 +37,9 @@ export default function SectionVisual({
                     if (block.type === "steps") {
                         return (
                             <section key={block.id} aria-label="Lista de pasos" className="my-6 space-y-4">
-                                <h2 className="text-xl font-semibold mb-4">Pasos para tramitar</h2>
+                                <Subtitle>{block.title}</Subtitle>
+                                <video src="/videos/LSA_prueba.mp4" className="mb-4 md:w-lg" controls></video>
+
                                 {block.steps.map((step) => (
                                     <Step
                                         key={step.id}
@@ -47,7 +51,17 @@ export default function SectionVisual({
                             </section>
                         );
                     }
-
+                    
+                    if (block.type === "text") { //ESTA FUNCIONALIDAD LA AGREGUE PORQUE LA SECCION DE CNRT TIENE UNA PARTE QUE NO IMPLICA PASOS
+                        return (
+                            <section key={block.id} className="my-6">
+                            <Subtitle>{block.title}</Subtitle>
+                            {block.list.map((poslist) => (  
+                                <List text={poslist.text} key={poslist.id} />
+                            ))}
+                            </section>
+                        );
+                    }
 
                     return null;
                 })}
@@ -58,7 +72,6 @@ export default function SectionVisual({
                     </svg>
                     <Text>Ver mapa</Text>
                 </Button>
-
             </div>
         </div>
 

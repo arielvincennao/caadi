@@ -1,15 +1,16 @@
-import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import Navbar from '../components/layout/Navbar'
 import Logo from '../components/common/Logo'
-import Card from '../components/common/Card'
 import Button from '../components/common/Button'
 import { Text } from '../components/Typography'
 
 function Home() {
-  const [showModes, setShowModes] = useState(false)
+  const navigate = useNavigate()
 
-  if (!showModes) {
-    return (
-      <div className="bg-white min-h-screen flex flex-col items-center justify-center text-center px-4">
+  return (
+    <div>
+      <Navbar/>
+      <div className="bg-white flex flex-col items-center justify-center text-center px-5 pt-34">
         <Logo src="/assets/logo-caadi.svg" alt="Logo CAADI" className="mb-6 max-w-xs w-40 h-40 md:w-62 md:h-62" />
         <div className="flex flex-col items-center justify-center max-w-2xl mb-8">
           <Text className="mb-10">
@@ -19,66 +20,17 @@ function Home() {
           </Text>
           <Button 
             className="mb-4"
-            onClick={() => setShowModes(true)}
+            onClick={() => navigate('/menu')}
           >
-            <Text>Siguiente</Text>
+            <Text>Ir al Menú principal</Text>
           </Button>
-          <Text className="text-gray-500 mt-10">
-            Gracias por utilizar CAADI
-          </Text>
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <div className="bg-white min-h-screen flex flex-col items-center justify-center text-center relative">
-      <div className="absolute top-4 left-4 md:top-6 md:left-10 z-10">
-        <button
-          onClick={() => setShowModes(false)}
-          className="
-            px-2 py-2 md:px-4 md:py-3
-            rounded-full
-            bg-[#1F313F]
-            flex items-center justify-center gap-1 md:gap-2
-            cursor-pointer
-            hover:opacity-90
-            transition-opacity
-            shadow-md
-            relative z-10
-          "
-          aria-label="Volver a la pantalla anterior"
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="text-white md:w-6 md:h-6"
+          <Button 
+            className="main-button-secondary mt-2"
+            onClick={() => navigate('/agradecimientos')}
           >
-            <path
-              d="M15 18L9 12L15 6"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <span className="text-white text-sm md:text-base whitespace-nowrap">Volver</span>
-        </button>
-      </div>
-      <Logo src="/assets/logo-caadi.svg" alt="Logo CAADI" className="mb-6 max-w-xs w-40 h-40 md:w-62 md:h-62" />
-      <div className="flex flex-col gap-8 md:gap-5 text-lg md:text-2xl">
-        <Card size="md" to="/menu" mode="standard">
-          <span>Modo estándar</span>
-        </Card>
-        <Card size="md" to="/menu" mode="visual">
-          <span>Modo visual (LSA)</span>
-        </Card>
-        <Card size="md" to="/menu" mode="audio">
-          <span>Modo audio (Lectura de voz)</span>
-        </Card>
+            <Text>Agradecimientos</Text>
+          </Button>
+        </div>
       </div>
     </div>
   )
