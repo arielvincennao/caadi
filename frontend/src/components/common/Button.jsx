@@ -1,19 +1,11 @@
-import { useNavigate } from "react-router-dom";
-const paddingMap = {
-    'min': 'px-6', // 16px
-    'normal': 'px-16', // 24px
-};
-
 function Button({
     children,
     className,
     onClick,
     href,
     type,
-    paddingX = 'normal',
     disabled
 }) {
-    const pxClass = paddingMap[paddingX] || 'px-16';
 
     const handleClick = (e) => {
         if (disabled) {
@@ -46,7 +38,7 @@ function Button({
 
     return (
         <button
-            className={`main-button ${pxClass} ${className} `}
+            className={`main-button ${className} `}
             onClick={handleClick}
             type={type || 'button'}
             disabled={disabled}

@@ -12,12 +12,12 @@ export default function BtnBack({ className = "" }) {
   return (
     <Button
       onClick={handleClick}
-      paddingX='min'
       className={`
         mt-5
         transition-opacity
         shadow-md
         relative z-10
+        back-button
         ${className}
       `}
       aria-label="Volver a la página anterior"
