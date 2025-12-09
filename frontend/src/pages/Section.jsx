@@ -2,8 +2,7 @@ import BtnBack from "../components/common/BtnBack";
 import Navbar from "../components/layout/Navbar";
 import Step from "../components/sections/Step";
 import List from "../components/sections/List";
-import { Title } from "../components/Typography";
-import { Text } from "../components/Typography";
+import { Title, Subtitle, Text } from "../components/Typography";
 import Button from "../components/common/Button";
 
 export default function Section({ data }) {
@@ -11,12 +10,12 @@ export default function Section({ data }) {
 
   return (
     <div className="bg-white min-h-screen flex flex-col items-center text-lg md:text-2xl">
-      <Navbar />
+      <Navbar></Navbar>
       <div className="absolute top-23 left-4 md:top-25 md:left-10 z-10">
-        <BtnBack />
+          <BtnBack></BtnBack>
       </div>
       <div className="p-3 md:w-[70%] pt-20 md:pt-3">
-        <section className="flex flex-col items-center text-center mb-8">
+        <section className="flex flex-col items-center md:items-start text-center md:text-left mb-8" aria-labelledby="section-title">
           <img
             src={data.image}
             alt="Imagen de Portada"
@@ -25,12 +24,12 @@ export default function Section({ data }) {
           <Title>{data.name}</Title>
           <Text>{data.description}</Text>
         </section>
-
+        
         {data.contentBlocks.map((block) => {
           if (block.type === "steps") {
             return (
               <section key={block.id} className="my-6 space-y-4">
-                <h2>{block.title}</h2>
+                <Subtitle>{block.title}</Subtitle>
                 {block.steps.map((step) => (
                   <Step
                     key={step.id}
@@ -47,9 +46,9 @@ export default function Section({ data }) {
           if (block.type === "text") { //ESTA FUNCIONALIDAD LA AGREGUE PORQUE LA SECCION DE CNRT TIENE UNA PARTE QUE NO IMPLICA PASOS
             return (
               <section key={block.id} className="my-6">
-                <h2>{block.title}</h2>
+                <Subtitle>{block.title}</Subtitle>
                 {block.list.map((poslist) => (  
-                  <List text={poslist.text} />
+                  <List text={poslist.text} key={poslist.id} />
                 ))}
               </section>
             );

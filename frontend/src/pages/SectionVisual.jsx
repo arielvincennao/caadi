@@ -1,8 +1,10 @@
 import BtnBack from "../components/common/BtnBack";
 import Navbar from "../components/layout/Navbar";
 import Step from "../components/sections/Step";
-import { Subtitle, Title } from "../components/Typography";
-import { Text } from "../components/Typography";
+import List from "../components/sections/List";
+
+import { Subtitle, Title, Text } from "../components/Typography";
+
 import Button from "../components/common/Button";
 
 export default function SectionVisual({
@@ -35,7 +37,7 @@ export default function SectionVisual({
                     if (block.type === "steps") {
                         return (
                             <section key={block.id} aria-label="Lista de pasos" className="my-6 space-y-4">
-                                <Subtitle>Pasos para tramitarlo</Subtitle>
+                                <Subtitle>{block.title}</Subtitle>
                                 <video src="/videos/LSA_prueba.mp4" className="mb-4 md:w-lg" controls></video>
 
                                 {block.steps.map((step) => (
@@ -49,6 +51,18 @@ export default function SectionVisual({
                             </section>
                         );
                     }
+                    
+                    if (block.type === "text") { //ESTA FUNCIONALIDAD LA AGREGUE PORQUE LA SECCION DE CNRT TIENE UNA PARTE QUE NO IMPLICA PASOS
+                        return (
+                            <section key={block.id} className="my-6">
+                            <Subtitle>{block.title}</Subtitle>
+                            {block.list.map((poslist) => (  
+                                <List text={poslist.text} key={poslist.id} />
+                            ))}
+                            </section>
+                        );
+                    }
+
                     return null;
                 })}
                 <Button className="main-button" href="/map-test" >

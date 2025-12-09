@@ -16,17 +16,12 @@ body {
   min-height: 100vh;
 }
 
-.card-style { /* Card styles (index,menu) */
-  color: var(--db-caadi);
-  box-shadow: 0 0 0 0.3px var(--db-caadi), 0 4px 4px 0 rgba(0, 0, 0, 0.15);
-}
-
 .main-button{
-  width: 10vw;
-  height: 5vh;
+  cursor: pointer;
+  padding: 0.5em;
   color: rgb(238, 238, 238);
-  background-color: rgba(31, 49, 63);
-  border-radius: 20px;
+  background-color: var(--db-caadi);
+  border-radius: 50px;
 }
 
 .main-link{
@@ -39,3 +34,4 @@ body {
   text-align: center;
   cursor: pointer;
 }
+

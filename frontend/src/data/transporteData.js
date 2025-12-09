@@ -1,5 +1,5 @@
-export const cudData = {
-  name: "Certificado Único de Discapacidad",
+export const transporteData = {
+  name: "Pases de transporte",
   description: "El CUD (Certificado Único de Discapacidad) es un documento oficial que entrega el Estado para reconocer la discapacidad de una persona.",
   image: "/assets/icons/cud_portada.svg",
 
