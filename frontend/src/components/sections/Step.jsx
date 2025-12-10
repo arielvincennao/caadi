@@ -1,20 +1,13 @@
-export default function Step({
-  stepNumber,
-  text,
-  stepIcon = null
-}) {
+import { Subsubtitle } from "../Typography";
+
+export default function Step({ step }) {
   return (
-    <article
-      className="flex items-center gap-4"
-      aria-label={`Paso ${stepNumber}`}
-    >
-      <img src={stepIcon} alt="" className="w-10 h-10" />
-
+    <li className="flex items-center gap-4">
+      <img src={step.icon} alt="" className="w-10 h-10" />
       <div>
-        <h3 className="font-bold">Paso {stepNumber}</h3>
-        <p>{text}</p>
+        <Subsubtitle>Paso {step.id}</Subsubtitle>
+        <p>{step.description}</p>
       </div>
-    </article>
-
+    </li>
   );
 }

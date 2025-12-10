@@ -7,11 +7,10 @@ import Transporte from './pages/transporte/Transporte'
 import MapView from './components/Map/MapView'
 import Admin from './pages/Admin'
 import Agradecimientos from './pages/Agradecimientos'
-import { AccessibilityProvider } from './accessibilityMode/AccessibilityMode'
+import Turismo from './pages/turismo/Turismo'
 
 function App() {
   return (
-    <AccessibilityProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -20,11 +19,11 @@ function App() {
         <Route path="/cud" element={<Cud />}/>
         <Route path="/CNRT" element={<CNRT />}/>
         <Route path="/transporte" element={<Transporte />}/>
+        <Route path="/turismo" element={<Turismo />}/>
         <Route path="/admin" element={<Admin />}/>
         <Route path="/agradecimientos" element={<Agradecimientos />}/>
       </Routes>
     </BrowserRouter>
-    </AccessibilityProvider>
   )
 }
 

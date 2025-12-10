@@ -1,5 +1,5 @@
 import Navbar from "../components/layout/Navbar";
-import {Subtitle} from "../components/Typography";
+import { Title } from "../components/Typography";
 import Card from "../components/common/Card";
 import BtnBack from "../components/common/BtnBack";
 
@@ -12,7 +12,6 @@ const menuOptions = [
   { icon: "assets/icons/cultura.svg", name: "Cultura y arte", to:"/cultura" },
   { icon: "assets/icons/turismo.svg", name: "Turismo accesible", to:"/turismo"},
   { icon: "assets/icons/centrodia.svg", name: "Centros de día", to:"/centrosdia"},
-  { icon: "assets/icons/gastronomia.svg", name: "Gastronomía inclusiva", to:"/gastronomia"},
   { icon: "assets/icons/reportes.svg", name: "Reclamos de accesibilidad", to:"/reportes"},
 ];
 
@@ -24,7 +23,7 @@ function Menu() {
         <BtnBack />
       </div>
       <section className="flex flex-col items-center pb-10 pt-20 md:pt-4">
-        <Subtitle className="m-4">Menú principal</Subtitle>
+        <Title className="m-4 md:text-2xl">Menú principal</Title>
         <ul className="space-y-5">
           {menuOptions.map((option) => (
           <li key={option.name} >

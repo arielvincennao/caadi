@@ -50,4 +50,3 @@ function Button({
 
 export default Button;
 
-// el button no funciona del todo bien porque el texto rebalsa
