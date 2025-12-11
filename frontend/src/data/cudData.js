@@ -1,3 +1,4 @@
+
 export const cudData = {
   name: "Certificado Único de Discapacidad",
   description: "El CUD (Certificado Único de Discapacidad) es un documento oficial que entrega el Estado para reconocer la discapacidad de una persona. Es gratuito y válido en todo el país.",
@@ -42,5 +43,12 @@ export const cudData = {
       name: "Leer más en Mi Argentina",
       href: "https://www.argentina.gob.ar/servicio/como-obtener-el-certificado-unico-de-discapacidad-cud"
     },
+    {
+      id: 3,
+      type: "link",
+      order: 3,
+      name: "Ubicación en el mapa",
+      href: "/map-test"
+    }
   ]
 };

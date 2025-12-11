@@ -43,8 +43,6 @@ export function Title({ children, className = "" }) {
     );
   }
   
-
-  
   export function Text({ children, className = "" }) {
     return (
       <p

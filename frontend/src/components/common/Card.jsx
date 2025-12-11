@@ -1,11 +1,9 @@
 import { useNavigate } from 'react-router-dom'
-import { useAccessibility } from '../../accessibilityMode/useAccessibility';
 
 export default function Card({
     size = "md",
     children,
     className = "",
-    mode = null,
     to = null,
     icon = null
   }) {
@@ -15,13 +13,10 @@ export default function Card({
       lg: "w-70 h-15 md:w-110 md:h-20",
     };
 
-    const { setMode } = useAccessibility();
+
 
 
     const handleClick = () => {
-      if(mode){
-        setMode(mode);
-      }
       if (to) {
         navigate(to)
       }
