@@ -5,7 +5,8 @@ export default function Card({
     children,
     className = "",
     to = null,
-    icon = null
+    icon = null,
+    onClick = null
   }) {
     const navigate = useNavigate()
     const sizeClasses = {
@@ -17,11 +18,16 @@ export default function Card({
 
 
     const handleClick = () => {
-      if (to) {
+      if (onClick) {
+        onClick()
+      } else if (to) {
         navigate(to)
       }
     }
   
+    // Si se usa onClick sin to, no aplicar tamaños fijos para permitir flexibilidad
+    const shouldApplySize = !onClick && to
+    
     return (
       <button
           onClick={handleClick}
@@ -33,7 +39,7 @@ export default function Card({
           box-border
           border
           shadow-md
-          ${sizeClasses[size]}
+          ${shouldApplySize ? sizeClasses[size] : ''}
           ${className}
         `}
       >
