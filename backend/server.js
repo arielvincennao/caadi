@@ -23,15 +23,6 @@ app.get("/", (req, res) => {
   res.status(200).json({ message: "Servidor CAADI funcionando!" });
 });
 
-//Probar un SELECT a claim (endpoint real)
-app.get("/claims", async (req, res) => {
-  const { data, error } = await supabase.from("claim").select("*");
-
-  if (error) return res.status(500).json({ error });
-
-  res.json(data);
-});
-
 // Levantar servidor
 const PORT = process.env.PORT || 3000;
 
