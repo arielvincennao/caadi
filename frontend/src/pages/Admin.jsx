@@ -31,7 +31,7 @@ const handleSubmit = async (e) => {
     }
 
     //TODO esto aca deberia llevarnos ya al menu para editar 
-    navigate("/");
+    navigate("/admin/dashboard");
   } catch (e) {
     setError("Error inesperado al iniciar sesión");
   } finally {
