@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Title } from '../../components/Typography'
+import './admin.css'
 
 const sections = [
   { id: 'cud', name: 'CUD', icon: 'assets/icons/cud.svg' },
@@ -33,35 +34,11 @@ function Dashboard() {
                   <button
                     key={section.id}
                     onClick={() => handleSectionClick(section)}
-                    className={`
-                      bg-white
-                      rounded-xl
-                      border-2
-                      shadow-md
-                      hover:shadow-xl
-                      transition-all
-                      duration-300
-                      p-6
-                      md:p-8
-                      text-left
-                      w-full
-                      group
-                      hover:bg-gray-50
-                      ${
-                        selectedSection?.id === section.id
-                          ? 'border-[#1F313F] bg-gray-50'
-                          : 'border-gray-200 hover:border-[#1F313F]'
-                      }
-                    `}
+                    className={`dashboard-section-button ${
+                      selectedSection?.id === section.id ? 'selected' : ''
+                    }`}
                   >
-                    <span className="
-                      text-lg
-                      md:text-xl
-                      font-semibold
-                      text-[#1F313F]
-                      transition-colors
-                      duration-300
-                    ">
+                    <span className="dashboard-section-button-text">
                       {section.name}
                     </span>
                   </button>

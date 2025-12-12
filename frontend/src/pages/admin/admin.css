@@ -1,0 +1,58 @@
+/* Estilos para todas las vistas de admin */
+
+/* Panel de edición común */
+.admin-panel {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  border: 2px solid rgb(229, 231, 235);
+}
+
+@media (min-width: 768px) {
+  .admin-panel {
+    padding: 2rem;
+  }
+}
+
+/* Botones de sección del dashboard */
+.dashboard-section-button {
+  background-color: white;
+  border-radius: 0.75rem;
+  border-width: 2px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s;
+  padding: 1.5rem;
+  text-align: left;
+  width: 100%;
+  border-color: rgb(229, 231, 235);
+  cursor: pointer;
+}
+
+.dashboard-section-button:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  background-color: rgb(249, 250, 251);
+  border-color: #1F313F;
+}
+
+.dashboard-section-button.selected {
+  border-color: #1F313F;
+  background-color: rgb(249, 250, 251);
+}
+
+.dashboard-section-button-text {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1F313F;
+  transition: color 0.3s;
+}
+
+@media (min-width: 768px) {
+  .dashboard-section-button {
+    padding: 2rem;
+  }
+  
+  .dashboard-section-button-text {
+    font-size: 1.25rem;
+  }
+}
