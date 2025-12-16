@@ -5,14 +5,14 @@ import BtnBack from "../components/common/BtnBack";
 
 
 const menuOptions = [
-  { icon: "assets/icons/cud.svg", name: "CUD", to:"/cud"},
-  { icon: "assets/icons/transporte.svg", name: "Pases de transporte", to:"/transporte"},
-  { icon: "assets/icons/cnrt.svg", name: "Reserva de pasajes CNRT", to:"/cnrt"},
-  { icon: "assets/icons/beneficios.svg", name: "Beneficios sociales", to:"/beneficios"},
-  { icon: "assets/icons/cultura.svg", name: "Cultura y arte", to:"/cultura" },
-  { icon: "assets/icons/turismo.svg", name: "Turismo accesible", to:"/turismo"},
-  { icon: "assets/icons/centrodia.svg", name: "Centros de día", to:"/centrosdia"},
-  { icon: "assets/icons/reportes.svg", name: "Reclamos de accesibilidad", to:"/reportes"},
+  { icon: "cud", name: "CUD", to:"/cud"},
+  { icon: "transporte", name: "Pases de transporte", to:"/transporte"},
+  { icon: "cnrt", name: "Reserva de pasajes CNRT", to:"/cnrt"},
+  { icon: "beneficios", name: "Beneficios sociales", to:"/beneficios"},
+  { icon: "cultura", name: "Cultura y arte", to:"/cultura" },
+  { icon: "turismo", name: "Turismo accesible", to:"/turismo"},
+  { icon: "centrosdia", name: "Centros de día", to:"/centrosdia"},
+  { icon: "reclamos", name: "Reclamos de accesibilidad", to:"/reclamos"},
 ];
 
 function Menu() {

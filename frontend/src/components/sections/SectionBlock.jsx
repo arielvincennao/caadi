@@ -32,7 +32,7 @@ export default function SectionBlock({ block }) {
 
     if (block.type === "link") {
         return (
-            <Button className="main-button mb-5" href={block.href} key={block.id}>
+            <Button className="main-button mb-5" href={block.href} key={block.id} icon={block.icon}>
                 {block.name}
             </Button>
         )
@@ -40,9 +40,9 @@ export default function SectionBlock({ block }) {
 
     if (block.type === "card") {
         return (
-            <section key={block.id} className="my-6 md:flex">
+            <section key={block.id} className="my-6 flex flex-col items-center justify-center md:flex-row">
                 {block.cards.map((card) => (
-                    <CardSection card={card} key={card.id} className="mr-5 mb-2.5" />
+                    <CardSection card={card} key={card.id} className="md:mr-5 mb-2.5" />
                 ))
                 }
             </section>

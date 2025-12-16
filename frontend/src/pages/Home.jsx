@@ -10,22 +10,21 @@ function Home() {
   return (
     <div>
       <Navbar/>
-      <div className="bg-white flex flex-col items-center justify-center text-center px-5 pt-34">
-        <Logo src="/assets/logo-caadi.svg" alt="Logo CAADI" className="mb-6 max-w-xs w-40 h-40 md:w-62 md:h-62" />
-        <div className="flex flex-col items-center justify-center max-w-2xl mb-8">
-          <Text className="mb-10">
+      <div className="bg-white flex flex-col items-center justify-center text-center min-h-[calc(100vh-5rem)] gap-y-6">
+        <Logo src="/assets/logo-caadi.svg" alt="Logo CAADI" className=" max-w-xs w-40 h-40 md:w-62 md:h-62" />
+        <div className="flex flex-col items-center justify-center max-w-2xl gap-y-5">
+          <Text>
           CAADi es una plataforma digital diseñada para centralizar información administrativa, cultural y de servicios orientados
           a personas con discapacidad. Su propósito es facilitar el acceso a recursos útiles y favorecer una participación más activa,
           autónoma e inclusiva dentro de la comunidad.
           </Text>
           <Button 
-            className="mb-4"
             onClick={() => navigate('/menu')}
           >
             <Text>Ir al Menú principal</Text>
           </Button>
           <Button 
-            className="main-button-secondary mt-2"
+            className="main-button-secondary"
             onClick={() => navigate('/agradecimientos')}
           >
             <Text>Agradecimientos</Text>
