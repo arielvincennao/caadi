@@ -8,6 +8,7 @@ import MapView from './components/Map/MapView'
 import Admin from './pages/Admin'
 import Agradecimientos from './pages/Agradecimientos'
 import Turismo from './pages/turismo/Turismo'
+import Beneficios from './pages/beneficios/Beneficios'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/CNRT" element={<CNRT />}/>
         <Route path="/transporte" element={<Transporte />}/>
         <Route path="/turismo" element={<Turismo />}/>
+        <Route path="/beneficios" element={<Beneficios />}/>
         <Route path="/admin" element={<Admin />}/>
         <Route path="/agradecimientos" element={<Agradecimientos />}/>
       </Routes>

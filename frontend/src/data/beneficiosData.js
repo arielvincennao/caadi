@@ -1,8 +1,8 @@
 
-export const cudData = {
-  name: "Certificado Único de Discapacidad",
-  description: "El CUD (Certificado Único de Discapacidad) es un documento oficial que entrega el Estado para reconocer la discapacidad de una persona. Es gratuito y válido en todo el país.",
-  image: "/assets/icons/cud_portada.svg",
+export const beneficiosData = {
+  name: "Beneficios sociales",
+  description: "",
+  image: "/assets/icons/beneficios_portada.jpg",
 
   contentBlocks: [
 
@@ -14,24 +14,24 @@ export const cudData = {
       steps: [
         {
           id: 1,
-          icon: "turno-medico",
+          icon: "/assets/icons/cud_step1.svg",
           description:
             "Pedir turno en la oficina de INFORME del Hospital Ramón Santamarina, Tandil."
         },
         {
           id: 2,
-          icon: "documentos",
+          icon: "/assets/icons/cud_step2.svg",
           description:
             "Presentar DNI y estudios médicos actualizados."
         },
         {
           id: 3,
-          icon: "evaluacion-medica",
+          icon: "/assets/icons/cud_step3.svg",
           description: "Asistir a la Junta Evaluadora, donde profesionales revisan la documentación y realizan la evaluación"
         },
         {
           id: 4,
-          icon: "cud",
+          icon: "/assets/icons/cud.svg",
           description: "Retirar el CUD cuando te avisen que está listo."
         }
       ]
@@ -48,8 +48,7 @@ export const cudData = {
       type: "link",
       order: 3,
       name: "Ubicación en el mapa",
-      href: "/map-test",
-      icon: "ubicacion"
+      href: "/map-test"
     }
   ]
 };

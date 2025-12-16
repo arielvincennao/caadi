@@ -13,19 +13,19 @@ export const cnrtData = {
       steps: [
         {
           id: 1,
-          icon: "/assets/icons/cud_step1.svg",
+          icon: "ingresar-sitio",
           description:
             "El usuario ingresa al Sistema de Solicitud de Pasajes CNRT.",
         },
         {
           id: 2,
-          icon: "/assets/icons/cud_step2.svg",
+          icon: "cud",
           description:
             "Accede con su DNI/CUIL y el número de su credencial CUD.",
         },
         {
           id: 3,
-          icon: "/assets/icons/cud_step3.svg",
+          icon: "completar-online",
           description: "Completa los datos del viaje (origen, destino, fecha).",
         },
       ],

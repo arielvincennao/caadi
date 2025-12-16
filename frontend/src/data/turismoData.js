@@ -12,14 +12,14 @@ export const turismoData = {
       cards: [
         {
           id: 1,
-          icon: "/assets/icons/buscar.png",
+          icon: "buscar-mapa",
           title: "Buscá por parque",
           description: "Navegá por el mapa de áreas protegidas de Argentina",
           href: "https://www.argentina.gob.ar/interior/ambiente/parquesnacionales/areas-protegidas",
         },
         {
           id: 2,
-          icon: "/assets/icons/actividades.png",
+          icon: "buscar-actividad",
           title: "Buscá por experiencia",
           description: "Conocé las actividades que ofrecen los parques",
           href: "https://www.argentina.gob.ar/interior/ambiente/parquesnacionales/experiencias-del-turismo-de-naturaleza"

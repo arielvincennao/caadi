@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { Icon } from './Icon';
 
 export default function Card({
     size = "md",
@@ -37,7 +38,7 @@ export default function Card({
           ${className}
         `}
       >
-        {icon ? <img src={icon} alt="" className='shrink-0 object-contain w-10 h-9 ml-1' /> : null}
+        {icon ? <Icon name={icon} className='shrink-0 object-contain w-10 h-9 ml-1' /> : null}
         <div className="flex-1">
           {children}
         </div>
