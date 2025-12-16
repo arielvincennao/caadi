@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { supabase } from '../../db/supabaseClient'
+import { useNavigate } from "react-router-dom";
 
 import Logo from '../components/common/Logo'
 import Button from '../components/common/Button'
@@ -9,31 +11,33 @@ function Admin() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate();
+  
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
+  setIsLoading(true);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError('')
-    setIsLoading(true)
+  try {
+    const { data, error: authError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      if (!email || !password) {
-        setError('Por favor, completa todos los campos')
-        setIsLoading(false)
-        return
-      }
-
-      console.log('Login attempt:', { email, password })
-      
-      // navigate('/admin/dashboard')
-      
-    } catch (err) {
-      setError('Error al iniciar sesión. Por favor, intenta nuevamente.')
-    } finally {
-      setIsLoading(false)
+    if (authError) {
+      setError("Credenciales incorrectas");
+      setIsLoading(false);
+      return;
     }
+
+    //TODO esto aca deberia llevarnos ya al menu para editar 
+    navigate("/admin/dashboard");
+  } catch (e) {
+    setError("Error inesperado al iniciar sesión");
+  } finally {
+    setIsLoading(false);
   }
+};
 
   return (
     <div className="bg-white min-h-screen flex flex-col items-center justify-center px-4">

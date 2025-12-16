@@ -6,6 +6,7 @@ import CNRT from './pages/cnrt/CNRT'
 import Transporte from './pages/transporte/Transporte'
 import MapView from './components/Map/MapView'
 import Admin from './pages/Admin'
+import Dashboard from './pages/admin/Dashboard'
 import Agradecimientos from './pages/Agradecimientos'
 import Turismo from './pages/turismo/Turismo'
 import Beneficios from './pages/beneficios/Beneficios'
@@ -23,6 +24,7 @@ function App() {
         <Route path="/turismo" element={<Turismo />}/>
         <Route path="/beneficios" element={<Beneficios />}/>
         <Route path="/admin" element={<Admin />}/>
+        <Route path="/admin/dashboard" element={<Dashboard />}/>
         <Route path="/agradecimientos" element={<Agradecimientos />}/>
       </Routes>
     </BrowserRouter>
