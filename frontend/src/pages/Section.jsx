@@ -26,8 +26,6 @@ export default function Section({ data }) {
             {data.contentBlocks.map(block => (
                 <SectionBlock block={block} key={block.id} />
             ))}
-
-           
             </div>
         </div>
     );
