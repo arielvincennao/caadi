@@ -5,95 +5,97 @@ export const transporteData = {
   
   contentBlocks: [
 
-     {
+    {
       id: 1,
-      type: "card",
+      type: "expandedCard",
       order: 1,
-      cards: [
-        {
+      card: {
           id: 1,
           icon: "buscar-mapa",
           title: "Pase Nacional",
           description: "Se usa en todo el país para transporte y beneficios nacionales",
-          href: "",
-        },
-        {
-          id: 2,
-          icon: "buscar-mapa",
-          title: "Pase Provincial",
-          description: "Se utiliza para gestiones y beneficios dentro de la provincia",
-          href: ""
-        },
-        {
-          id: 3,
-          icon: "buscar-mapa",
-          title: "Pase Local",
-          description: "Permite cargar los beneficios en la tarjeta SUBE para el transporte urbano de Tandil",
-          href: ""
-        }
-      ]
+      },
+      content: [
+      {
+        id: 1,
+        type: "steps",
+        title: "Cómo presentarlo para usarlo",
+        steps: [
+          {
+            id: 1,
+            icon: "cud",
+            description:
+              "El Pase Nacional viene impreso en el mismo CUD.",
+          },
+          {
+            id: 2,
+            icon: "fotocopia",
+            description:
+              "Se debe sacar una fotocopia del original.",
+          },
+          {
+            id: 3,
+            icon: "recortar",
+            description: "Se debe recortar la parte inferior del pase (marcada con línea punteada) de la fotocopia.",
+          },
+        ],
+      },
+    ]
+  },
+  {
+    id: 2,
+    type: "expandedCard",
+    order: 2,
+    card: {
+        id: 2,
+        icon: "buscar-mapa",
+        title: "Pase Provincial",
+        description: "Se utiliza para gestiones y beneficios dentro de la provincia",
     },
-
-    {
-      id: 2,
-      type: "steps",
-      order: 2,
-      title: "Cómo presentarlo para usarlo",
-      steps: [
-        {
-          id: 1,
-          icon: "cud",
-          description:
-            "El Pase Nacional viene impreso en el mismo CUD.",
-        },
-        {
-          id: 2,
-          icon: "fotocopia",
-          description:
-            "Se debe sacar una fotocopia del original.",
-        },
-        {
-          id: 3,
-          icon: "recortar",
-          description: "Se debe recortar la parte inferior del pase (marcada con línea punteada) de la fotocopia.",
-        },
-      ],
-    },
-
-    {
+    content: [
+      {
+        id: 1,
+        type: "steps",
+        title: "Cómo tramitarlo",
+        steps: [
+          {
+            id: 1,
+            icon: "documentos",
+            description:
+              "Vas a necesitar fotocopia y original del DNI y del CUD.",
+          },
+          {
+            id: 2,
+            icon: "oficina",
+            description:
+              "Dirigite a la Oficina de Discapacidad de Tandil",
+          },
+        ],
+      },
+      {
+        id: 4,
+        type: "link",
+        order: 4,
+        name: "Ubicación en el mapa",
+        href: "/map-test",
+        icon: "ubicacion"
+      },
+    ]
+  },
+  {
+    id: 3,
+    type: "expandedCard",
+    order: 3,
+    card:{
       id: 3,
-      type: "steps",
-      order: 3,
-      title: "Cómo tramitarlo",
-      steps: [
-        {
-          id: 1,
-          icon: "documentos",
-          description:
-            "Vas a necesitar fotocopia y original del DNI y del CUD.",
-        },
-        {
-          id: 2,
-          icon: "oficina",
-          description:
-            "Dirigite a la Oficina de Discapacidad de Tandil",
-        },
-      ],
+      icon: "buscar-mapa",
+      title: "Pase Local",
+      description: "Permite cargar los beneficios en la tarjeta SUBE para el transporte urbano de Tandil",
     },
-
-   {
-      id: 4,
-      type: "link",
-      order: 4,
-      name: "Ubicación en el mapa",
-      href: "/map-test",
-      icon: "ubicacion"
-    },
-
-     {
-      id: 5,
+    content: [
+      {
+      id: 1,
       type: "steps",
-      order: 5,
       title: "Cómo tramitarlo",
       steps: [
         {
@@ -104,15 +106,16 @@ export const transporteData = {
         }
       ],
     },
-
-    {
-      id: 6,
+     {
+      id: 2,
       type: "link",
-      order: 6,
       name: "Ubicación en el mapa",
       href: "/map-test",
       icon: "ubicacion"
     },
-  
+
+    ] 
+  }
+
   ],
 };

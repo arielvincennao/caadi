@@ -1,51 +1,23 @@
-import Step from "./Step";
-import List from "./List";
-import CardSection from "./CardSection";
-import { Subtitle } from "../Typography";
-import Button from "../common/Button";
+import CardBlock from "./blocks/CardBlock";
+import LinkBlock from "./blocks/LinkBlock";
+import StepsBlock from "./blocks/StepsBlock";
+import TextBlock from "./blocks/TextBlock";
+import ExpandedCard from "./blocks/ExpandedCard";
+
+
+const BLOCK_RENDER = {
+    card: CardBlock,
+    link: LinkBlock,
+    steps: StepsBlock,
+    text: TextBlock,
+    expandedCard: ExpandedCard
+};
 
 export default function SectionBlock({ block }) {
-    if (block.type === "steps") {
-        return (
-            <section key={block.id} className="my-6 space-y-4">
-                <Subtitle>{block.title}</Subtitle>
-                <ol>
-                    {block.steps.map((step) => (
-                        <Step step={step} key={step.id} />
-                    ))
-                    }
-                </ol>
-            </section>
-        );
-    }
+    const BlockComponent = BLOCK_RENDER[block.type];
 
-    if (block.type === "text") {
-        return (
-            <section key={block.id} className="my-6">
-                <Subtitle>{block.title}</Subtitle>
-                {block.list.map((poslist) => (
-                    <List text={poslist.text} key={poslist.id} />
-                ))}
-            </section>
-        );
-    }
-
-    if (block.type === "link") {
-        return (
-            <Button className="main-button mb-5" href={block.href} key={block.id} icon={block.icon}>
-                {block.name}
-            </Button>
-        )
-    }
-
-    if (block.type === "card") {
-        return (
-            <section key={block.id} className="my-6 flex flex-col items-center justify-center md:flex-row">
-                {block.cards.map((card) => (
-                    <CardSection card={card} key={card.id} className="md:mr-5 mb-2.5" />
-                ))
-                }
-            </section>
-        );
-    }
+    if(!BlockComponent) return null;
+    
+    
+    return <BlockComponent block={block} />;
 }
