@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 // ==========================
 // Importar routers
 // ==========================
-const publicRoutes = require("./src/routes/public_routes/homeAPI"); 
+
 const menuRoutes = require("./src/routes/public_routes/menuAPI");
 const sectionRoutes = require("./src/routes/public_routes/sectionBySlugAPI");
 
@@ -56,16 +56,18 @@ app.get("/", (req, res) => {
 // ==========================
 
 // Rutas públicas
-// app.use("/home", publicRoutes);
-// app.use("/menu", menuRoutes);
-// app.use("/sections", sectionRoutes);
+
+app.use("/menu", menuRoutes); //checkear que esto sea logico ...
+app.use("/sections", sectionRoutes);
 
 // Rutas privadas (admin)
+
 app.use("/admin", privateRoutes);
 
 // ==========================
 // Levantar servidor
 // ==========================
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
