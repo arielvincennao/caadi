@@ -130,6 +130,9 @@ function Reclamos() {
               <Text>Enviar</Text>
             </Button>
           </div>
+          <Text className="mb-6 text-gray-500 italic text-center text-base font-medium">
+            NOTA: Esto NO es un servicio, es un relevamiento
+          </Text>
         </form>
       </div>
     </div>
