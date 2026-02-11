@@ -3,15 +3,15 @@ export default function List({
   className = ""
 }) {
   return (
-    <div
+    <ul
       className={`flex items-center gap-4 ${className}`}
       role="group"
     >
         
-      <p className="text-gray-800 leading-snug">
+      <li className="text-gray-800 leading-snug">
         {text}
-      </p>
+      </li>
 
-    </div>
+    </ul>
   );
 }
