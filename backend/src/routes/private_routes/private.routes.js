@@ -1,10 +1,8 @@
-import express from "express"
-import * as adminController from "../controllers/private.controller.js"
-const router = express.Router()
+const express = require("express");
+const adminController = require("../../controllers/private_controllers/private.controller");
 
-// CRUD sectoins
-router.get("/sections", adminController.getAllSections)
-router.get("/sections/:id", adminController.getSectionById)
-router.post("/sections", adminController.createSection)
-router.put("/sections/:id", adminController.updateSection)
-router.delete("/sections/:id", adminController.deleteSection)
+const router = express.Router();
+
+router.get("/sections", adminController.getAllSections); //funca
+router.get("/sections/:slug", adminController.getSectionBySlug); //este no esta programado agus.
+module.exports = router;
