@@ -16,7 +16,7 @@ export default function CardSection({ card, className, onClick }) {
                 onClick
             })}
 
-            className={`flex flex-col items-center text-center max-w-sm p-6 border rounded-2xl border-gray-400 cursor-pointer ${className}`}
+            className={`flex flex-col items-center text-center max-w-sm p-6 border rounded-2xl bg-[#FCFCFC] border-gray-400 cursor-pointer ${className}`}
         >
     
             <Icon name={card.icon} className="w-16 h-16" />

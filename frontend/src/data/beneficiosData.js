@@ -7,8 +7,11 @@ export const beneficiosData = {
   contentBlocks: [
 
     {
+      id: "beneficios-cards",
+      type: "expandedCardsGroup",
+      cards:[
+    {
       id: 1,
-      type: "expandedCard",
       order: 1,
       card: {
           id: 1,
@@ -20,7 +23,7 @@ export const beneficiosData = {
       content: [
       {
       id: 1,
-      type: "text",
+      type: "list",
       order: 1,
       title: "Requisitos principales",
       list: [
@@ -69,7 +72,6 @@ export const beneficiosData = {
     },
      {
     id: 2,
-    type: "expandedCard",
     order: 2,
     card: {
         id: 2,
@@ -80,7 +82,7 @@ export const beneficiosData = {
     content: [
        {
       id: 1,
-      type: "text",
+      type: "list",
       order: 1,
       title: "Requisitos principales",
       list: [
@@ -123,7 +125,6 @@ export const beneficiosData = {
   },
   {
       id: 3,
-      type: "expandedCard",
       order: 1,
       card: {
           id: 1,
@@ -135,7 +136,7 @@ export const beneficiosData = {
       content: [
       {
       id: 1,
-      type: "text",
+      type: "list",
       order: 1,
       title: "Requisitos principales",
       list: [
@@ -167,7 +168,6 @@ export const beneficiosData = {
     },
     {
       id: 4,
-      type: "expandedCard",
       order: 1,
       card: {
           id: 1,
@@ -179,7 +179,7 @@ export const beneficiosData = {
       content: [
       {
       id: 1,
-      type: "text",
+      type: "list",
       order: 1,
       title: "Requisito obligatorio",
       list: [
@@ -193,7 +193,6 @@ export const beneficiosData = {
     },
      {
       id: 5,
-      type: "expandedCard",
       order: 5,
       card: {
           id: 1,
@@ -205,7 +204,7 @@ export const beneficiosData = {
       content: [
       {
       id: 1,
-      type: "text",
+      type: "list",
       order: 1,
       title: "Requisitos principales",
       list: [
@@ -221,5 +220,7 @@ export const beneficiosData = {
       },
     ]
     },
+  ]
+  }
   ]
 };

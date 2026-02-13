@@ -4,10 +4,12 @@ export const transporteData = {
   image: "/assets/icons/transporte_portada.jpg",
   
   contentBlocks: [
-
+    {
+      id: "transporte-group",
+      type: "expandedCardsGroup",
+      cards: [
     {
       id: 1,
-      type: "expandedCard",
       order: 1,
       card: {
           id: 1,
@@ -44,7 +46,6 @@ export const transporteData = {
   },
   {
     id: 2,
-    type: "expandedCard",
     order: 2,
     card: {
         id: 2,
@@ -84,7 +85,6 @@ export const transporteData = {
   },
   {
     id: 3,
-    type: "expandedCard",
     order: 3,
     card:{
       id: 3,
@@ -116,6 +116,7 @@ export const transporteData = {
 
     ] 
   }
-
+      ]
+    }
   ],
 };

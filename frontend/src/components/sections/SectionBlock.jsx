@@ -1,16 +1,17 @@
 import CardBlock from "./blocks/CardBlock";
 import LinkBlock from "./blocks/LinkBlock";
 import StepsBlock from "./blocks/StepsBlock";
-import TextBlock from "./blocks/TextBlock";
-import ExpandedCard from "./blocks/ExpandedCard";
+import ListBlock from "./blocks/ListBlock";
+
+import ExpandedCardsGroup from "./blocks/ExpandedCardsGroup";
 
 
 const BLOCK_RENDER = {
     card: CardBlock,
     link: LinkBlock,
     steps: StepsBlock,
-    text: TextBlock,
-    expandedCard: ExpandedCard
+    list: ListBlock,
+    expandedCardsGroup : ExpandedCardsGroup
 };
 
 export default function SectionBlock({ block }) {

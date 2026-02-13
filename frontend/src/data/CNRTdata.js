@@ -32,7 +32,7 @@ export const cnrtData = {
     },
     {
       id: 2,
-      type: "text",
+      type: "list",
       order: 2,
       title: " Anticipación/plazos útiles:",
       list: [
