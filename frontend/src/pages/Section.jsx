@@ -7,7 +7,7 @@ export default function Section({ data }) {
     if (!data) return null;
 
     return (
-        <div className="bg-white min-h-screen flex flex-col items-center">
+        <div className=" min-h-screen flex flex-col items-center">
             <Navbar />
             <div className="absolute top-23 left-4 md:top-25 md:left-10 z-10">
                 <BtnBack />
@@ -26,6 +26,8 @@ export default function Section({ data }) {
             {data.contentBlocks.map(block => (
                 <SectionBlock block={block} key={block.id} />
             ))}
+
+           
             </div>
         </div>
     );

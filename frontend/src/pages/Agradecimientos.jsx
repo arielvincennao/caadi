@@ -4,7 +4,7 @@ import BtnBack from "../components/common/BtnBack";
 
 function Agradecimientos() {
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen">
       <Navbar />
 
       <div className="absolute top-23 left-4 md:top-25 md:left-10 z-10">

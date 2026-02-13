@@ -19,7 +19,7 @@ export const cnrtData = {
         },
         {
           id: 2,
-          icon: "cud",
+          icon: "turno",
           description:
             "Accede con su DNI/CUIL y el número de su credencial CUD.",
         },
@@ -32,7 +32,7 @@ export const cnrtData = {
     },
     {
       id: 2,
-      type: "text",
+      type: "list",
       order: 2,
       title: " Anticipación/plazos útiles:",
       list: [

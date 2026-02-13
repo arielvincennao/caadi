@@ -1,17 +1,11 @@
 export default function List({
-  text,
+  item,
   className = ""
 }) {
   return (
-    <div
-      className={`flex items-center gap-4 ${className}`}
-      role="group"
-    >
-        
-      <p className="text-gray-800 leading-snug">
-        {text}
-      </p>
 
-    </div>
+      <li className={` ${className}`}>
+        {item.text}
+      </li>
   );
 }
