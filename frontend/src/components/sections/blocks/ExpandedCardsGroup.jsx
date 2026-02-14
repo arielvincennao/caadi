@@ -4,7 +4,9 @@ import SectionBlock from "../SectionBlock";
 
 export default function ExpandedCardsGroup({ block }) {
   const [activeId, setActiveId] = useState(null);
-  const contentRef = useRef(null);
+
+  const cardRefs = useRef({});
+  const desktopContentRef = useRef(null);
 
   const activeCard = block.cards.find(card => card.id === activeId);
 
@@ -12,11 +14,29 @@ export default function ExpandedCardsGroup({ block }) {
   useEffect(() => {
   if (!activeCard) return;
 
-    contentRef.current?.scrollIntoView({
+  const isDesktop = window.innerWidth >= 768;
+
+  //en desktop con scrollIntoView puedo ir porque siempre es un solo contenedor expandido
+  if (isDesktop) {
+    desktopContentRef.current?.scrollIntoView({
       behavior: "smooth",
       block: "start"
     });
+  } else {
+    //en mobile se expande dentro del map, no es siempre el mismo contenedor, tengo que buscar la posición exacta para mostrar el contenido
+    const el = cardRefs.current[activeCard.id];
+    if (!el) return;
+
+    //el -100 es para que no desaparezca la card por completo de la pantalla, y se note que es la clickeada (se ve un poco de la descripción, da contexto)
+    const y = el.getBoundingClientRect().top + window.scrollY - 100;
+
+    window.scrollTo({
+      top: y,
+      behavior: "smooth"
+    });
+  }
 }, [activeCard]);
+
 
   return (
     <>
@@ -36,7 +56,7 @@ export default function ExpandedCardsGroup({ block }) {
 
               {/* renderizo el contenido debajo de cada card en mobile */}
               {isActive && (
-                <div ref={contentRef} className="md:hidden p-6 rounded-xl mt-4 bg-white shadow-sm">
+                <div ref={el => (cardRefs.current[card.id] = el)} className="md:hidden p-6 rounded-xl mt-4 bg-white shadow-sm">
                   {card.content.map(innerBlock => (
                     <SectionBlock
                       key={innerBlock.id}
@@ -52,8 +72,8 @@ export default function ExpandedCardsGroup({ block }) {
 
       {/* renderizo el contenido debajo de todas las cards en desktop */}
       {activeCard && (
-        <div ref={contentRef} key={activeCard.id} className="hidden md:block w-full bg-white shadow-sm rounded-2xl py-5 mb-15">
-          <div className="max-w-5xl mx-auto px-6 space-y-5">
+        <div key={activeCard.id} className="hidden md:block w-full bg-white shadow-sm rounded-2xl py-5 mb-15">
+          <div ref={desktopContentRef} className="max-w-5xl mx-auto px-6 space-y-5">
             {activeCard.content.map(innerBlock => (
               <SectionBlock
                 key={innerBlock.id}
