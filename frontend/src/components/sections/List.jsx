@@ -4,7 +4,7 @@ export default function List({
 }) {
   return (
 
-      <li className={` ${className}`}>
+      <li className={`ml-4 ${className}`}>
         {item.text}
       </li>
   );

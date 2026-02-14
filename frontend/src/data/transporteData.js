@@ -13,7 +13,7 @@ export const transporteData = {
       order: 1,
       card: {
           id: 1,
-          icon: "buscar-mapa",
+          icon: "pase-nacional",
           title: "Pase Nacional",
           description: "Se usa en todo el país para transporte y beneficios nacionales",
       },
@@ -49,7 +49,7 @@ export const transporteData = {
     order: 2,
     card: {
         id: 2,
-        icon: "buscar-mapa",
+        icon: "pase-provincial",
         title: "Pase Provincial",
         description: "Se utiliza para gestiones y beneficios dentro de la provincia",
     },
@@ -88,7 +88,7 @@ export const transporteData = {
     order: 3,
     card:{
       id: 3,
-      icon: "buscar-mapa",
+      icon: "pase-local",
       title: "Pase Local",
       description: "Permite cargar los beneficios en la tarjeta SUBE para el transporte urbano de Tandil",
     },

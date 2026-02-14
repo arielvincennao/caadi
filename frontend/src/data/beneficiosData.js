@@ -15,7 +15,7 @@ export const beneficiosData = {
       order: 1,
       card: {
           id: 1,
-          icon: "beneficios",
+          icon: "pension",
           title: "Pensión por Discapacidad",
           description: "Prestacion económica para personas que no registran trabajo ni ingresos propios."
           
@@ -75,7 +75,7 @@ export const beneficiosData = {
     order: 2,
     card: {
         id: 2,
-        icon: "buscar-mapa",
+        icon: "exencion-patente",
         title: "Exención de Patente",
         description: "Beneficio que permite no pagar la patente del vehículo destinado a su traslado"
     },
@@ -128,7 +128,7 @@ export const beneficiosData = {
       order: 1,
       card: {
           id: 1,
-          icon: "beneficios",
+          icon: "peaje",
           title: "Exención de peajes",
           description: "Habilita a circular por autopistas y rutas sin pagar peaje."
           
@@ -171,7 +171,7 @@ export const beneficiosData = {
       order: 1,
       card: {
           id: 1,
-          icon: "beneficios",
+          icon: "estacionamiento",
           title: "Estacionamiento libre",
           description: "Permite estacionar en zonas permitidas sin límite de tiempo y acceder a lugares reservados para personas con discapacidad"
           
@@ -196,7 +196,7 @@ export const beneficiosData = {
       order: 5,
       card: {
           id: 1,
-          icon: "beneficios",
+          icon: "tarifa-social",
           title: "Tarifa social",
           description: "Reduce el costo mensual de luz, gas, agua y otros servicios"
           
