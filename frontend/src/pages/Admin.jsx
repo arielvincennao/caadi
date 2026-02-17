@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect} from 'react'
 import { supabase } from '../../db/supabaseClient'
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +12,10 @@ function Admin() {
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate();
+
+useEffect(() => {
+   supabase.auth.signOut();
+}, []);
   
 const handleSubmit = async (e) => {
   e.preventDefault();

@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Title } from '../../components/Typography'
+import { supabase } from "../../../db/supabaseClient"
+import { useNavigate } from "react-router-dom"
 import './admin.css'
 
 const sections = [
@@ -15,6 +17,12 @@ const sections = [
 
 function Dashboard() {
   const [selectedSection, setSelectedSection] = useState(null)
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate("/admin");
+  };
 
   const handleSectionClick = (section) => {
     setSelectedSection(section)
@@ -22,9 +30,17 @@ function Dashboard() {
 
   return (
     <div className="bg-white min-h-screen">
+      <div className="flex justify-end p-4">
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+        >
+          Cerrar sesión
+        </button>
+      </div>
       <section className="pb-10 pt-20 md:pt-24 px-4 md:px-6">
         <Title className="mb-10 md:mb-12 md:text-2xl text-center">Panel de Administración</Title>
-        
+
         <div className="w-full max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row gap-6 md:gap-8">
             {/* Columna izquierda - Botones */}
@@ -34,9 +50,8 @@ function Dashboard() {
                   <button
                     key={section.id}
                     onClick={() => handleSectionClick(section)}
-                    className={`dashboard-section-button ${
-                      selectedSection?.id === section.id ? 'selected' : ''
-                    }`}
+                    className={`dashboard-section-button ${selectedSection?.id === section.id ? 'selected' : ''
+                      }`}
                   >
                     <span className="dashboard-section-button-text">
                       {section.name}
@@ -58,7 +73,7 @@ function Dashboard() {
                 ) : (
                   <div className="flex items-center justify-center h-full min-h-[200px]">
                     <p className="text-xl md:text-2xl text-gray-500 text-center">
-                    ← Selecciona la sección a editar
+                      ← Selecciona la sección a editar
                     </p>
                   </div>
                 )}
