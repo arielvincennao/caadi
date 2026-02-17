@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import RequireAdmin from "./components/auth/RequireAdmin.jsx"
 import Home from './pages/Home'
 import Menu from './pages/Menu'
 import Cud from './pages/cud/Cud'
@@ -19,15 +20,15 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/map-test" element={<MapView />} />
-        <Route path="/cud" element={<Cud />}/>
-        <Route path="/CNRT" element={<CNRT />}/>
-        <Route path="/transporte" element={<Transporte />}/>
-        <Route path="/turismo" element={<Turismo />}/>
-        <Route path="/beneficios" element={<Beneficios />}/>
-        <Route path="/reclamos" element={<Reclamos />}/>
-        <Route path="/admin" element={<Admin />}/>
-        <Route path="/admin/dashboard" element={<Dashboard />}/>
-        <Route path="/agradecimientos" element={<Agradecimientos />}/>
+        <Route path="/cud" element={<Cud />} />
+        <Route path="/CNRT" element={<CNRT />} />
+        <Route path="/transporte" element={<Transporte />} />
+        <Route path="/turismo" element={<Turismo />} />
+        <Route path="/beneficios" element={<Beneficios />} />
+        <Route path="/reclamos" element={<Reclamos />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/dashboard" element={<RequireAdmin><Dashboard /></RequireAdmin>}/>
+        <Route path="/agradecimientos" element={<Agradecimientos />} />
       </Routes>
     </BrowserRouter>
   )
