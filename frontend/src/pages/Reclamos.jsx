@@ -44,7 +44,7 @@ function Reclamos() {
   return (
     <div className="bg-white min-h-screen flex flex-col items-center">
       <Navbar />
-      <div className="absolute top-23 left-4 md:top-25 md:left-10 z-10">
+      <div className="absolute top-23 left-4 md:top-25 mt-5 md:left-10 z-10">
         <BtnBack />
       </div>
       <div className="p-3 md:w-[70%] pt-20 md:pt-3 max-w-2xl">

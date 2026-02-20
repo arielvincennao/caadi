@@ -19,7 +19,7 @@ function Menu() {
   return (
     <div>
       <Navbar/>
-      <div className="absolute top-23 left-4 md:top-25 md:left-10 z-10">
+      <div className="absolute top-23 left-4 mt-5 md:top-25 md:left-10 z-10">
         <BtnBack />
       </div>
       <section className="flex flex-col items-center pb-10 pt-20 md:pt-4">
