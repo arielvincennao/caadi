@@ -32,8 +32,15 @@ export const cnrtData = {
     },
     {
       id: 2,
+      type: "link",
+      name: "Reservar pasaje",
+      href: "https://reservapasajes.cnrt.gob.ar/web/ingresar",
+    },
+
+    {
+      id: 3,
       type: "list",
-      order: 2,
+      order: 3,
       title: " Anticipación/plazos útiles:",
       list: [
         {

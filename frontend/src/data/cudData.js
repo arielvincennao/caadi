@@ -14,7 +14,7 @@ export const cudData = {
       steps: [
         {
           id: 1,
-          icon: "turno-medico",
+          icon: "turno",
           description:
             "Pedir turno en la oficina de INFORME del Hospital Ramón Santamarina, Tandil."
         },

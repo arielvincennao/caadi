@@ -48,7 +48,7 @@ export const beneficiosData = {
         steps: [
           {
             id: 1,
-            icon: "turno-medico",
+            icon: "turno",
             description:
               "Vas a necesitar un turno en ANSES.",
           },
@@ -158,7 +158,7 @@ export const beneficiosData = {
         steps: [
           {
             id: 1,
-            icon: "turno-medico",
+            icon: "ingresar-sitio",
             description:
               "En la provincia de Buenos Aires, se gestiona online o por formulario de la concesionaria, adjuntando CUD y cédula del auto.",
           },

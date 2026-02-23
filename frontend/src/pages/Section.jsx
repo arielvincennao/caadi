@@ -17,7 +17,7 @@ export default function Section({ data }) {
                     <img
                         src={data.image}
                         alt="Imagen de Portada"
-                        className="w-full max-h-64 object-cover rounded-lg mb-6"
+                        className="w-full max-h-64 md:max-h-96 object-cover rounded-lg mb-6"
                     />
                     <Title>{data.name}</Title>
                     <Text>{data.description}</Text>
