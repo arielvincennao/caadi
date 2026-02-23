@@ -12,6 +12,7 @@ import Agradecimientos from './pages/Agradecimientos'
 import Turismo from './pages/turismo/Turismo'
 import Beneficios from './pages/beneficios/Beneficios'
 import Reclamos from './pages/Reclamos'
+import Cultura from './pages/cultura/Cultura.jsx'
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/transporte" element={<Transporte />} />
         <Route path="/turismo" element={<Turismo />} />
         <Route path="/beneficios" element={<Beneficios />} />
+        <Route path="/cultura" element={<Cultura />} />
         <Route path="/reclamos" element={<Reclamos />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/dashboard" element={<RequireAdmin><Dashboard /></RequireAdmin>}/>
