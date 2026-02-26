@@ -1,61 +1,102 @@
-import { useState } from "react";
-import Step from "../components/sections/blocks/StepsBlock";
-import Card from "../components/sections/blocks/CardBlock";
+import { useEffect, useState, useMemo } from "react";
 import { supabase } from "../../db/supabaseClient";
+import SectionBlock from "../components/sections/SectionBlock";
+
+const DB_TYPE_TO_SECTION_TYPE = {
+  collapsible: "expandedCardsGroup",
+  stepper: "steps",
+};
+
+function toSectionBlock(block) {
+  const sectionType = DB_TYPE_TO_SECTION_TYPE[block.type] ?? block.type;
+  return { id: block.id, type: sectionType, ...(block.data || {}) };
+}
 
 export default function ComponentsTest() {
   const [blocks, setBlocks] = useState([]);
-  const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const fetchBlocks = async () => {
     setLoading(true);
+    setError(null);
     try {
-      // Traemos la sección "cud" solo para test
-      const { data: section } = await supabase
-        .from("section")
-        .select("")
-        .eq("slug", "cud")
-        .single();
+      const { data: blocksData, error: fetchError } = await supabase
+        .from("content_block")
+        .select("*")
+        .order("position", { ascending: true });
 
-      if (!section) {
-        alert("No se encontró la sección CUD");
-        setLoading(false);
+      if (fetchError) {
+        console.error(fetchError);
+        setError(fetchError.message);
         return;
       }
 
-      const { data: blocksData } = await supabase
-        .from("content_block")
-        .select("")
-        .eq("section_id", section.id)
-        .order("position", { ascending: true });
-
       setBlocks(blocksData || []);
-      setStep(0);
-      console.log(blocksData)
     } catch (error) {
       console.error(error);
-      alert("Error al traer datos");
+      setError("Error al traer datos");
     } finally {
       setLoading(false);
     }
   };
 
-  const stepBlocks = blocks.filter(b => b.type === "step"); // ahora Step
-  const cardBlocks = blocks.filter(b => b.type === "card"); // ahora Card
+  useEffect(() => {
+    fetchBlocks();
+  }, []);
+
+  const { childrenByParentId, rootBlocks } = useMemo(() => {
+    const byParent = {};
+    blocks.forEach((b) => {
+      if (b.parent_id != null) {
+        if (!byParent[b.parent_id]) byParent[b.parent_id] = [];
+        byParent[b.parent_id].push(b);
+      }
+    });
+    const roots = blocks.filter((b) => b.parent_id == null);
+    return { childrenByParentId: byParent, rootBlocks: roots };
+  }, [blocks]);
+
+  const blockToComponent = (block) => {
+    if (block.type === "collapsible") {
+      const children = (childrenByParentId[block.id] || []).map(toSectionBlock);
+      const blockForSection = {
+        id: block.id,
+        type: "expandedCardsGroup",
+        cards: [
+          {
+            id: block.id,
+            card: {
+              icon: block.data?.icon,
+              title: block.data?.title,
+              description: block.data?.description,
+            },
+            content: children,
+          },
+        ],
+      };
+      return (
+        <div key={block.id} style={{ marginBottom: 24 }}>
+          <SectionBlock block={blockForSection} />
+        </div>
+      );
+    }
+
+    const blockForSection = toSectionBlock(block);
+    return (
+      <div key={block.id} style={{ marginBottom: 24 }}>
+        <SectionBlock block={blockForSection} />
+      </div>
+    );
+  };
 
   return (
     <div style={{ padding: 20 }}>
-        {cardBlocks.length > 0 && (
-        <div>
-          <h2>Card</h2>
-          {cardBlocks.map(block => (
-            <Card key={block.id} title={block.title}>
-              <p>{block.description}</p>
-            </Card>
-          ))}
-        </div>
-      )}
+      {loading && <p>Cargando...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      <h2>Contenido de content_block</h2>
+      {rootBlocks.map(blockToComponent)}
     </div>
   );
 }
