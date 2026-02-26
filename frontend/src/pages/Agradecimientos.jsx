@@ -7,7 +7,7 @@ function Agradecimientos() {
     <div className="min-h-screen">
       <Navbar />
 
-      <div className="absolute top-23 left-4 md:top-25 md:left-10 z-10">
+      <div className="absolute top-23 left-4 md:top-25 md:left-10 mt-5 z-10">
         <BtnBack />
       </div>
 
