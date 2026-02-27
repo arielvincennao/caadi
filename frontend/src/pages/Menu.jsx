@@ -1,21 +1,37 @@
+import { useEffect, useState } from "react";
 import Navbar from "../components/layout/Navbar";
 import { Title } from "../components/Typography";
 import Card from "../components/common/Card";
 import BtnBack from "../components/common/BtnBack";
-
-
-const menuOptions = [
-  { icon: "cud", name: "CUD", to:"/cud"},
-  { icon: "transporte", name: "Pases de transporte", to:"/transporte"},
-  { icon: "cnrt", name: "Reserva de pasajes CNRT", to:"/cnrt"},
-  { icon: "beneficios", name: "Beneficios sociales", to:"/beneficios"},
-  { icon: "cultura", name: "Cultura y arte", to:"/cultura" },
-  { icon: "turismo", name: "Turismo accesible", to:"/turismo"},
-  { icon: "centrosdia", name: "Centros de día", to:"/centrosdia"},
-  { icon: "reclamos", name: "Reclamos de accesibilidad", to:"/reclamos"},
-];
+import { supabase } from "../../db/supabaseClient";
 
 function Menu() {
+  const [menuOptions, setMenuOptions] = useState([]);
+
+  useEffect(() => {
+    async function fetchMenu() {
+      const { data, error } = await supabase
+        .from("section")
+        .select("title, icon, slug, position")
+        .order("position", { ascending: true }); //Ordena los items del menu por posición. Si se creara un nuevo item, se debe adjuntar la posición.
+
+      if (error) {
+        console.error("Error:", error);
+        return;
+      }
+
+      const options = (data || []).map((item) => ({
+        title: item.title,
+        icon: item.icon,
+        to: `/${item.slug}`,
+      }));
+
+      setMenuOptions(options);
+    }
+
+    fetchMenu();
+  }, []);
+
   return (
     <div>
       <Navbar/>
@@ -26,11 +42,11 @@ function Menu() {
         <Title className="m-4 md:text-2xl">Menú principal</Title>
         <ul className="space-y-5">
           {menuOptions.map((option) => (
-          <li key={option.name} >
-            <Card icon={option.icon}  to={option.to} className="text-start">
-              <span>{option.name}</span>
-            </Card> 
-          </li>
+            <li key={option.title}>
+              <Card icon={option.icon} to={option.to} className="text-start">
+                <span>{option.title}</span>
+              </Card>
+            </li>
           ))}
         </ul>
       </section>
