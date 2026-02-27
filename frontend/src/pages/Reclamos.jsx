@@ -223,6 +223,8 @@ function Reclamos() {
             />
             {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
           </div>
+          
+          <input type="text" name="_gotcha" style={{ display: "none" }} />
 
           {/* BOTON SUBMIT */}
           <div className="mt-4">
