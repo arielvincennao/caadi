@@ -2,101 +2,99 @@ import { useEffect, useState, useMemo } from "react";
 import { supabase } from "../../db/supabaseClient";
 import SectionBlock from "../components/sections/SectionBlock";
 
-const DB_TYPE_TO_SECTION_TYPE = {
-  collapsible: "expandedCardsGroup",
-  stepper: "steps",
-};
+function mapBlock(block) {
+  return {
+    id: block.id,
+    type: block.type,
+    ...(block.data || {}),
+  };
+}
 
-function toSectionBlock(block) {
-  const sectionType = DB_TYPE_TO_SECTION_TYPE[block.type] ?? block.type;
-  return { id: block.id, type: sectionType, ...(block.data || {}) };
+function buildExpandedGroup(block, children) {
+  return {
+    id: block.id,
+    type: "expandedCardsGroup",
+    cards: [
+      {
+        id: block.id,
+        card: {
+          icon: block.data?.icon,
+          title: block.data?.title,
+          description: block.data?.description,
+        },
+        content: children.map(mapBlock),
+      },
+    ],
+  };
 }
 
 export default function ComponentsTest() {
   const [blocks, setBlocks] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchBlocks = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const { data: blocksData, error: fetchError } = await supabase
-        .from("content_block")
-        .select("*")
-        .order("position", { ascending: true });
-
-      if (fetchError) {
-        console.error(fetchError);
-        setError(fetchError.message);
-        return;
-      }
-
-      setBlocks(blocksData || []);
-    } catch (error) {
-      console.error(error);
-      setError("Error al traer datos");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    async function fetchBlocks() {
+      try {
+        const { data, error } = await supabase
+          .from("content_block")
+          .select("*")
+          .order("position", { ascending: true });
+
+        if (error) throw error;
+
+        setBlocks(data || []);
+      } catch (err) {
+        console.error(err);
+        setError("Error al traer datos");
+      } finally {
+        setLoading(false);
+      }
+    }
+
     fetchBlocks();
   }, []);
 
-  const { childrenByParentId, rootBlocks } = useMemo(() => {
-    const byParent = {};
-    blocks.forEach((b) => {
-      if (b.parent_id != null) {
-        if (!byParent[b.parent_id]) byParent[b.parent_id] = [];
-        byParent[b.parent_id].push(b);
-      }
-    });
-    const roots = blocks.filter((b) => b.parent_id == null);
-    return { childrenByParentId: byParent, rootBlocks: roots };
-  }, [blocks]);
+  const { rootBlocks, childrenByParentId } = useMemo(() => {
+    const map = {};
+    const roots = [];
 
-  const blockToComponent = (block) => {
-    if (block.type === "collapsible") {
-      const children = (childrenByParentId[block.id] || []).map(toSectionBlock);
-      const blockForSection = {
-        id: block.id,
-        type: "expandedCardsGroup",
-        cards: [
-          {
-            id: block.id,
-            card: {
-              icon: block.data?.icon,
-              title: block.data?.title,
-              description: block.data?.description,
-            },
-            content: children,
-          },
-        ],
-      };
-      return (
-        <div key={block.id} style={{ marginBottom: 24 }}>
-          <SectionBlock block={blockForSection} />
-        </div>
-      );
+    for (const block of blocks) {
+      if (block.parent_id == null) {
+        roots.push(block);
+      } else {
+        if (!map[block.parent_id]) map[block.parent_id] = [];
+        map[block.parent_id].push(block);
+      }
     }
 
-    const blockForSection = toSectionBlock(block);
+    return { rootBlocks: roots, childrenByParentId: map };
+  }, [blocks]);
+
+  function renderBlock(block) {
+    let blockData;
+
+    if (block.type === "expandedCardsGroup") {
+      const children = childrenByParentId[block.id] || [];
+      blockData = buildExpandedGroup(block, children);
+    } else {
+      blockData = mapBlock(block);
+    }
+
     return (
       <div key={block.id} style={{ marginBottom: 24 }}>
-        <SectionBlock block={blockForSection} />
+        <SectionBlock block={blockData} />
       </div>
     );
-  };
+  }
+
+  if (loading) return <p>Cargando...</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
     <div style={{ padding: 20 }}>
-      {loading && <p>Cargando...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
       <h2>Contenido de content_block</h2>
-      {rootBlocks.map(blockToComponent)}
+      {rootBlocks.map(renderBlock)}
     </div>
   );
 }
