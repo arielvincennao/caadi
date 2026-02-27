@@ -1,55 +1,55 @@
 
 export const cudData = {
-  name: "Certificado Único de Discapacidad",
-  description: "El CUD (Certificado Único de Discapacidad) es un documento oficial que entrega el Estado para reconocer la discapacidad de una persona. Es gratuito y válido en todo el país.",
-  image: "/assets/icons/cud_portada.svg",
+    name: "Certificado Único de Discapacidad",
+    description: "El CUD (Certificado Único de Discapacidad) es un documento oficial que entrega el Estado para reconocer la discapacidad de una persona. Es gratuito y válido en todo el país.",
+    image: "/assets/icons/cud_portada.svg",
 
-  contentBlocks: [
+    contentBlocks: [
 
-    {
-      id: 1,
-      type: "steps",
-      title: "Pasos para tramitarlo",
-      order: 1,
-      steps: [
         {
-          id: 1,
-          icon: "turno-medico",
-          description:
-            "Pedir turno en la oficina de INFORME del Hospital Ramón Santamarina, Tandil."
+            id: 1,
+            type: "steps",
+            title: "Pasos para tramitarlo",
+            order: 1,
+            steps: [
+                {
+                    id: 1,
+                    icon: "turno-medico",
+                    description:
+                        "Pedir turno en la oficina de INFORME del Hospital Ramón Santamarina, Tandil."
+                },
+                {
+                    id: 2,
+                    icon: "documentos",
+                    description:
+                        "Presentar DNI y estudios médicos actualizados."
+                },
+                {
+                    id: 3,
+                    icon: "evaluacion-medica",
+                    description: "Asistir a la Junta Evaluadora, donde profesionales revisan la documentación y realizan la evaluación"
+                },
+                {
+                    id: 4,
+                    icon: "cud",
+                    description: "Retirar el CUD cuando te avisen que está listo."
+                }
+            ]
         },
         {
-          id: 2,
-          icon: "documentos",
-          description:
-            "Presentar DNI y estudios médicos actualizados."
+            id: 2,
+            type: "link",
+            order: 2,
+            name: "Leer más en Mi Argentina",
+            href: "https://www.argentina.gob.ar/servicio/como-obtener-el-certificado-unico-de-discapacidad-cud"
         },
         {
-          id: 3,
-          icon: "evaluacion-medica",
-          description: "Asistir a la Junta Evaluadora, donde profesionales revisan la documentación y realizan la evaluación"
-        },
-        {
-          id: 4,
-          icon: "cud",
-          description: "Retirar el CUD cuando te avisen que está listo."
+            id: 3,
+            type: "map",
+            order: 3,
+            title: "Ubicación en el mapa",
+            institutionId: 7,
+            section: "tramites"
         }
-      ]
-    },
-    {
-      id: 2,
-      type: "link",
-      order: 2,
-      name: "Leer más en Mi Argentina",
-      href: "https://www.argentina.gob.ar/servicio/como-obtener-el-certificado-unico-de-discapacidad-cud"
-    },
-    {
-      id: 3,
-      type: "link",
-      order: 3,
-      name: "Ubicación en el mapa",
-      href: "/map-test",
-      icon: "ubicacion"
-    }
-  ]
+    ]
 };

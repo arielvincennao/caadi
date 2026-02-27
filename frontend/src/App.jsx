@@ -19,7 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
-        <Route path="/map-test" element={<MapView />} />
+        <Route path="/map" element={<MapView />} />
         <Route path="/cud" element={<Cud />} />
         <Route path="/CNRT" element={<CNRT />} />
         <Route path="/transporte" element={<Transporte />} />
