@@ -23,7 +23,7 @@ function Menu() {
       const options = (data || []).map((item) => ({
         title: item.title,
         icon: item.icon,
-        to: `/${item.slug}`,
+        to: `/seccion/${item.slug}`,
       }));
 
       setMenuOptions(options);

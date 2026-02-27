@@ -15,6 +15,7 @@ import Reclamos from './pages/Reclamos'
 import Cultura from './pages/cultura/Cultura.jsx'
 import Centrosdia from './pages/centrosdia/Centrosdia.jsx'
 import Test from './pages/Test.jsx'
+import DynamicSection from './pages/DynamicSection.jsx'
 
 function App() {
   return (
@@ -23,21 +24,23 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/map-test" element={<MapView />} />
-        <Route path="/cud" element={<Cud />} />
-        <Route path="/CNRT" element={<CNRT />} />
-        <Route path="/transporte" element={<Transporte />} />
-        <Route path="/turismo" element={<Turismo />} />
-        <Route path="/beneficios" element={<Beneficios />} />
-        <Route path="/cultura" element={<Cultura />} />
-        <Route path="/centrosdia" element={<Centrosdia />} />
-        <Route path="/reclamos" element={<Reclamos />} />
+
+        <Route path="/seccion/:slug" element={<DynamicSection />} />
+
         <Route path="/admin" element={<Admin />} />
-        <Route path="/admin/dashboard" element={<RequireAdmin><Dashboard /></RequireAdmin>}/>
-        <Route path="/admin/test" element={<Test />}/>
+        <Route
+          path="/admin/dashboard"
+          element={
+            <RequireAdmin>
+              <Dashboard />
+            </RequireAdmin>
+          }
+        />
+        <Route path="/admin/test" element={<Test />} />
         <Route path="/agradecimientos" element={<Agradecimientos />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
 export default App
