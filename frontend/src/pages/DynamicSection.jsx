@@ -9,10 +9,9 @@ export default function DynamicSection() {
 
   useEffect(() => {
     async function fetchData() {
-      // 1️⃣ Traer section por slug
       const { data: section, error: sectionError } = await supabase
         .from("section")
-        .select("")
+        .select("*")
         .eq("slug", slug)
         .single();
 
@@ -21,16 +20,36 @@ export default function DynamicSection() {
         return;
       }
 
-      // 2️⃣ Traer bloques
-      const { data: blocks } = await supabase
+      const { data: blocks, error: blocksError } = await supabase
         .from("content_block")
-        .select("")
+        .select("*")
         .eq("section_id", section.id)
-        .order("position");
+        .order("position", { ascending: true });
+
+      if (blocksError) {
+        console.error("Error loading blocks", blocksError);
+        return;
+      }
+
+      const list = blocks || [];
+      const rootBlocks = list.filter((b) => b.parent_id == null || b.parent_id === "");
+      const childrenByParentId = {};
+      for (const b of list) {
+        if (b.parent_id != null && b.parent_id !== "") {
+          const key = String(b.parent_id);
+          if (!childrenByParentId[key]) childrenByParentId[key] = [];
+          childrenByParentId[key].push(b);
+        }
+      }
+      // Ordenar hijos por position
+      for (const key of Object.keys(childrenByParentId)) {
+        childrenByParentId[key].sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
+      }
 
       setData({
         ...section,
-        blocks,
+        rootBlocks,
+        childrenByParentId,
       });
     }
 
