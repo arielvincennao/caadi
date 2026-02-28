@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import Button from "../common/Button"; // Ajusta la ruta de importación si es necesario
 
 const OfficeModal = ({ office, onClose }) => {
     const modalRef = useRef(null);
@@ -44,39 +45,37 @@ const OfficeModal = ({ office, onClose }) => {
                 <div className="flex flex-col gap-3">
                     {/* Botón de Llamar */}
                     {office.phone && (
-                        <a
-                            href={`tel:${office.phone.replace(/\s+/g, '')}`}
+                        <Button
+                            onClick={() => window.location.href = `tel:${office.phone.replace(/\s+/g, '')}`}
                             className="w-full bg-green-600 text-white text-center py-2 rounded-lg hover:bg-green-700 transition font-medium flex items-center justify-center gap-2"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                             </svg>
                             Llamar
-                        </a>
+                        </Button>
                     )}
 
                     {/* Botón de Cómo llegar */}
                     {office.coordinates && (
-                        <a
+                        <Button
                             href={`https://www.google.com/maps/dir/?api=1&destination=${office.coordinates[0]},${office.coordinates[1]}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
                             className="w-full bg-green-600 text-white text-center py-2 rounded-lg hover:bg-green-700 transition font-medium flex items-center justify-center gap-2"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                             </svg>
                             Cómo llegar
-                        </a>
+                        </Button>
                     )}
 
                     {/* Botón de Cerrar */}
-                    <button
+                    <Button
+                        className="main-button-secondary"
                         onClick={onClose}
-                        className="w-full border border-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-100 transition font-medium cursor-pointer mt-1"
                     >
                         Cerrar
-                    </button>
+                    </Button>
                 </div>
             </div>
         </div>

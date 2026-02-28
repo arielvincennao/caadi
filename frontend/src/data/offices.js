@@ -7,7 +7,7 @@ export const mockOffices = [
         email: "pedidos_turnos_web@sisptandil.gob.ar",
         hours: "24 hs",
         coordinates: [-37.3154, -59.1387],
-        section: "salud"
+        section: "Salud"
     },
     {
         id: 2,
@@ -17,7 +17,7 @@ export const mockOffices = [
         email: "clinica@clinicachacabuco.com.ar",
         hours: "24 hs",
         coordinates: [-37.3306, -59.1372],
-        section: "tramite"
+        section: "Salud"
     },
     {
         id: 3,
@@ -67,6 +67,13 @@ export const mockOffices = [
         email: "intendente@tandil.gov.ar",
         hours: "07:00 - 15:00",
         coordinates: [-37.3295, -59.1368],
-        section: "turismo"
+        section: "tramites"
+    },
+    {
+        id: 8,
+        institution: "Espacio de referencia para adultos mayores y personas con discapacidad",
+        address: "Las Heras 1150",
+        coordinates: [-37.3171, -59.1320],
+        section: "transporte"
     }
 ];

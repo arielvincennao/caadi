@@ -2,12 +2,12 @@
 import { useState, useEffect } from "react";
 import { mockOffices } from "../data/offices";
 
-export const useFetchOffices = (seccion, institucionId) => {
+export const useFetchOffices = (section, institutionId) => {
     const [offices, setOffices] = useState([]);
     const [loading, setLoading] = useState(true);
-    
+
     // Centro por defecto
-    const [mapCenter, setMapCenter] = useState([-37.3217, -59.1332]); 
+    const [mapCenter, setMapCenter] = useState([-37.3217, -59.1332]);
     const [mapZoom, setMapZoom] = useState(13);
 
     useEffect(() => {
@@ -27,16 +27,16 @@ export const useFetchOffices = (seccion, institucionId) => {
                 const data = await response.json();
 
                 // Filtrado por sección (Si tu API Express ya filtra por query params, 
-                // podés pasarle la 'seccion' a la URL del fetch y omitir este paso)
-                const dataFiltrada = seccion
-                    ? data.filter(office => office.seccion === seccion)
+                // podés pasarle la 'section' a la URL del fetch y omitir este paso)
+                const dataFiltrada = section
+                    ? data.filter(office => office.section === section)
                     : data;
 
                 setOffices(dataFiltrada);
 
                 // Lógica de centrado del mapa
-                if (institucionId) {
-                    const targetOffice = dataFiltrada.find(o => o.id.toString() === institucionId);
+                if (institutionId) {
+                    const targetOffice = dataFiltrada.find(o => o.id.toString() === institutionId);
                     if (targetOffice) {
                         setMapCenter(targetOffice.coordenadas);
                         setMapZoom(16);
@@ -48,19 +48,26 @@ export const useFetchOffices = (seccion, institucionId) => {
 
                 // CÓDIGO MOCK 
 
-                const dataFiltrada = seccion
-                    ? mockOffices.filter(office => office.seccion === seccion)
+                const dataFiltrada = section
+                    ? mockOffices.filter(office =>
+                        office.section?.toLowerCase() === section.toLowerCase()
+                    )
                     : mockOffices;
 
                 setOffices(dataFiltrada);
 
-                if (institucionId) {
-                    const targetOffice = dataFiltrada.find(o => o.id.toString() === institucionId);
+                if (institutionId) {
+                    // Buscamos en mockOffices (o dataFiltrada) por ID
+                    const targetOffice = mockOffices.find(o => o.id.toString() === institutionId);
+
                     if (targetOffice) {
-                        setMapCenter(targetOffice.coordenadas);
+                        // ERROR CORREGIDO: Usar .coordinates (o asegurar que coincida con tu mock)
+                        const coords = targetOffice.coordinates || targetOffice.coordenadas;
+                        setMapCenter(coords);
                         setMapZoom(16);
                     }
                 } else {
+                    // Si no hay ID, volvemos al centro inicial (Tandil)
                     setMapCenter([-37.3217, -59.1332]);
                     setMapZoom(13);
                 }
@@ -73,7 +80,7 @@ export const useFetchOffices = (seccion, institucionId) => {
         };
 
         fetchOffices();
-    }, [seccion, institucionId]);
+    }, [section, institutionId]);
 
     return { offices, loading, mapCenter, setMapCenter, mapZoom, setMapZoom };
 };

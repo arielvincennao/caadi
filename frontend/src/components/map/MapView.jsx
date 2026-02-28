@@ -16,10 +16,9 @@ import OfficeMarker from "./OfficeMarker";
 
 const MapView = () => {
     const [searchParams] = useSearchParams();
-    const seccion = searchParams.get("seccion");
-    const institucionId = searchParams.get("institucion");
+    const section = searchParams.get("section");
+    const institutionId = searchParams.get("institutionId");
 
-    // Consumimos la lógica separada en el Custom Hook
     const { 
         offices, 
         loading, 
@@ -27,14 +26,14 @@ const MapView = () => {
         setMapCenter, 
         mapZoom, 
         setMapZoom 
-    } = useFetchOffices(seccion, institucionId);
+    } = useFetchOffices(section, institutionId);
 
     const [selectedOffice, setSelectedOffice] = useState(null);
     const [userPosition, setUserPosition] = useState(null);
     const mapRef = useRef(null);
 
-    const tituloSeccion = seccion
-        ? seccion.charAt(0).toUpperCase() + seccion.slice(1)
+    const titulosection = section
+        ? section.charAt(0).toUpperCase() + section.slice(1)
         : "Todas las ubicaciones";
 
     // Geolocalización
@@ -63,8 +62,17 @@ const MapView = () => {
         }
     }, [loading]);
 
+    // Prevenir renderizado del mapa si no hay un centro inicial válido en la primera carga
+    if (!mapCenter && loading) {
+        return (
+            <div className="flex items-center justify-center w-full h-screen bg-gray-100">
+                <p className="text-xl font-semibold text-gray-600">Iniciando mapa...</p>
+            </div>
+        );
+    }
+
     return (
-        <div className="relative w-full h-screen bg-gray-100">
+        <div className="relative w-full h-screen bg-gray-100 overflow-hidden">
             {/* Header Flotante */}
             <div className="absolute top-4 left-4 z-[1000] flex items-center gap-3 pointer-events-none">
                 <div className="pointer-events-auto">
@@ -72,10 +80,20 @@ const MapView = () => {
                 </div>
                 <div className="bg-white px-5 py-2 rounded-full shadow-md border border-gray-200 pointer-events-auto">
                     <h1 className="text-gray-800 font-bold text-lg capitalize tracking-wide text-center">
-                        {tituloSeccion}
+                        {titulosection}
                     </h1>
                 </div>
             </div>
+
+            {/* Capa de Carga Flotante (Aparece sin destruir el mapa) */}
+            {loading && (
+                <div className="absolute inset-0 z-[2000] bg-white/40 backdrop-blur-sm flex items-center justify-center pointer-events-none transition-all duration-300">
+                    <div className="bg-white px-6 py-3 rounded-xl shadow-lg border border-gray-200 flex items-center gap-3">
+                        <div className="w-5 h-5 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                        <p className="font-semibold text-gray-700">Actualizando ubicaciones...</p>
+                    </div>
+                </div>
+            )}
 
             {/* Modal */}
             {selectedOffice && (
@@ -85,16 +103,12 @@ const MapView = () => {
                 />
             )}
 
-            {/* Contenedor del Mapa */}
-            {loading ? (
-                <div className="flex items-center justify-center w-full h-full">
-                    <p className="text-xl font-semibold text-gray-600">Cargando mapa...</p>
-                </div>
-            ) : (
+            {/* Contenedor del Mapa Siempre Renderizado */}
+            {mapCenter && (
                 <MapContainer
                     center={mapCenter}
                     zoom={mapZoom}
-                    style={{ width: "100%", height: "100%" }}
+                    style={{ width: "100%", height: "100%", zIndex: 1 }}
                     zoomControl={false}
                     whenCreated={(map) => (mapRef.current = map)}
                 >

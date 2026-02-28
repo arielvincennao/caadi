@@ -27,7 +27,7 @@ function Button({
         // acción normal
         if (onClick) {
             e.preventDefault();
-            onClick();
+            onClick(e);
             return;
         }
 
