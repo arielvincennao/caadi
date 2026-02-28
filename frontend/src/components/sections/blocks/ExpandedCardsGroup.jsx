@@ -27,7 +27,7 @@ export default function ExpandedCardsGroup({ block }) {
     const el = cardRefs.current[activeCard.id];
     if (!el) return;
 
-    //el -100 es para que no desaparezca la card por completo de la pantalla, y se note que es la clickeada (se ve un poco de la descripción, da contexto)
+    //el -100 es para que no desaparezca la card por completo de la pantalla y se note que es la clickeada (se ve un poco de la descripción, da contexto)
     const y = el.getBoundingClientRect().top + window.scrollY - 100;
 
     window.scrollTo({

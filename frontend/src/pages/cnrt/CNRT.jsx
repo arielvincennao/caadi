@@ -1,6 +1,6 @@
 import Section from "../Section";
 import { cnrtData } from "../../data/CNRTdata";
 
-export default function Cud() {
+export default function Cnrt() {
   return <Section data={cnrtData} />;
 }

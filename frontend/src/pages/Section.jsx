@@ -12,12 +12,12 @@ export default function Section({ data }) {
             <div className="absolute top-23 left-4 mt-5 md:top-25 md:left-10 z-10">
                 <BtnBack />
             </div>
-            <div className="p-3 md:w-[70%] pt-20 md:pt-3">
+            <div className="p-3 md:w-6xl pt-20 md:pt-3 w-full mx-auto">
                 <section className="flex flex-col items-center text-center md:text-left md:items-start mb-8">
                     <img
                         src={data.image}
                         alt="Imagen de Portada"
-                        className="w-full max-h-64 object-cover rounded-lg mb-6"
+                        className="w-full max-h-64 md:max-h-96 object-cover rounded-lg mb-6"
                     />
                     <Title>{data.name}</Title>
                     <Text>{data.description}</Text>
