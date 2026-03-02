@@ -3,7 +3,7 @@ import Button from '../../common/Button';
 
 export default function MapBlock({ block }) {
     const navigate = useNavigate();
-    const { section, institutionId, title } = block;
+    const { section, officeId, title } = block;
 
     const handleNavigation = () => {
         const params = new URLSearchParams();
@@ -12,8 +12,8 @@ export default function MapBlock({ block }) {
             params.append('section', section);
         }
         
-        if (institutionId) {
-            params.append('institutionId', institutionId);
+        if (officeId) {
+            params.append('id', officeId);
         }
 
         const queryString = params.toString();

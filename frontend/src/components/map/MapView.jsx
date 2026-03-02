@@ -17,7 +17,7 @@ import OfficeMarker from "./OfficeMarker";
 const MapView = () => {
     const [searchParams] = useSearchParams();
     const section = searchParams.get("section");
-    const institutionId = searchParams.get("institutionId");
+    const id = searchParams.get("id");
 
     const { 
         offices, 
@@ -26,7 +26,7 @@ const MapView = () => {
         setMapCenter, 
         mapZoom, 
         setMapZoom 
-    } = useFetchOffices(section, institutionId);
+    } = useFetchOffices(section, id);
 
     const [selectedOffice, setSelectedOffice] = useState(null);
     const [userPosition, setUserPosition] = useState(null);
