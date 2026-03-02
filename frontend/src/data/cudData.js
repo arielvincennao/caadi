@@ -48,6 +48,7 @@ export const cudData = {
             type: "map",
             order: 3,
             title: "Ubicación en el mapa",
+            mapTitle: "Certificado Único de Discapacidad",
             officeId: "1c439b3f-fd41-4e7a-9dbf-fc58aef85a1a"
         }
     ]

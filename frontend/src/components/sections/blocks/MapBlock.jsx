@@ -3,7 +3,7 @@ import Button from '../../common/Button';
 
 export default function MapBlock({ block }) {
     const navigate = useNavigate();
-    const { section, officeId, title } = block;
+    const { section, officeId, mapTitle } = block;
 
     const handleNavigation = () => {
         const params = new URLSearchParams();
@@ -14,6 +14,10 @@ export default function MapBlock({ block }) {
         
         if (officeId) {
             params.append('id', officeId);
+        }
+
+        if (mapTitle) {
+            params.append('mapTitle', mapTitle);
         }
 
         const queryString = params.toString();
@@ -27,7 +31,7 @@ export default function MapBlock({ block }) {
 
     return (
         <Button onClick={handleNavigation}>
-            {title || "Ver ubicación"}
+            {mapTitle || "Ver ubicación"}
         </Button>
     );
 }

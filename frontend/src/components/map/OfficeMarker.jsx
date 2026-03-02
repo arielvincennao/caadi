@@ -28,7 +28,7 @@ const OfficeMarker = ({ office, onSelect }) => {
                         e.stopPropagation();
                         onSelect(office);
                     }}
-                    className="bg-white text-gray-800 font-semibold py-1.5 rounded-xl shadow-md border border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors min-w-[200px] max-w-[500px] whitespace-normal text-center"
+                    className="bg-white text-gray-800 font-semibold py-1.5 rounded-xl shadow-md border border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors min-w-[150px] max-w-[500px] whitespace-normal text-center"
                 >
                     {office.name}
                 </div>

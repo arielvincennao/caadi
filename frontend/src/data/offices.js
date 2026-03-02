@@ -17,7 +17,7 @@ export const mockOffices = [
         email: "clinica@clinicachacabuco.com.ar",
         schedule: "24 hs",
         coordinates: [-37.3306, -59.1372],
-        section_id: [{id:1,name:"salud"}, "emergencias"]
+        section_id: ["salud", "emergencias"]
     },
     {
         id: 3,

@@ -1,3 +1,4 @@
+// src/hooks/useFetchOffices.js
 import { useState, useEffect } from "react";
 
 export const useFetchOffices = (section, id) => {
@@ -26,8 +27,11 @@ export const useFetchOffices = (section, id) => {
                 }
 
                 const data = await response.json();
-                const dataFiltrada = section
-                    ? data.filter(office => {
+                
+                let dataToDisplay = [];
+
+                if (section) {
+                    dataToDisplay = data.filter(office => {
                         if (Array.isArray(office.section_id)) {
                             return office.section_id.some(s => s.toLowerCase() === section.toLowerCase());
                         }
@@ -35,13 +39,19 @@ export const useFetchOffices = (section, id) => {
                             return office.section_id.toLowerCase() === section.toLowerCase();
                         }
                         return false;
-                    })
-                    : data;
+                    });
+                } 
+                else if (id) {
+                    dataToDisplay = data.filter(office => office.id.toString() === id);
+                } 
+                else {
+                    dataToDisplay = data;
+                }
 
-                setOffices(dataFiltrada);
+                setOffices(dataToDisplay);
 
                 if (id) {
-                    const targetOffice = dataFiltrada.find(o => o.id.toString() === id);
+                    const targetOffice = data.find(o => o.id.toString() === id);
 
                     if (targetOffice) {
                         const coords = targetOffice.coordinates || targetOffice.coordenadas;
