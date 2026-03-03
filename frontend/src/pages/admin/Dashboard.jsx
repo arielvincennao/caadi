@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Title } from '../../components/Typography'
-import { supabase } from "../../../db/supabaseClient"
+import { authService } from "../../services/AuthService"
 import { useNavigate } from "react-router-dom"
 import './admin.css'
 
@@ -20,8 +20,12 @@ function Dashboard() {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate("/admin");
+    try {
+      await authService.signOut()
+      navigate('/admin');
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
   };
 
   const handleSectionClick = (section) => {

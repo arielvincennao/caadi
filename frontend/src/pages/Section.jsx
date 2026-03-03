@@ -4,32 +4,20 @@ import Navbar from "../components/layout/Navbar";
 import { Title, Text } from "../components/Typography";
 import SectionBlock from "../components/sections/SectionBlock";
 import CardSection from "../components/sections/CardSection";
+import { mapBlock, parseBlockData } from "../utils/dataTransformers";
 
-function getBlockData(block) {
-  const raw = block.data;
-  if (raw == null) return {};
-  if (typeof raw === "object") return raw;
-  if (typeof raw === "string") {
-    try {
-      return JSON.parse(raw);
-    } catch {
-      return {};
-    }
-  }
-  return {};
-}
-
-function mapBlock(block) {
-  const data = getBlockData(block);
-  return {
-    id: block.id,
-    type: String(block.type || ""),
-    data,
-    ...data,
-  };
-}
-
-export default function Section({ data }) {
+/**
+ * Section
+ * Componente presentacional (Presentational Component)
+ * 
+ * Responsabilidades:
+ * - Renderizar la sección con todos sus bloques
+ * - Manejar estado local de UI (expandedId)
+ * - Presentar datos de forma visual
+ * 
+ * NO accede a BD, NO obtiene datos, NO hace transformaciones de datos
+ */
+function Section({ data }) {
   const [expandedId, setExpandedId] = useState(null);
 
   if (!data) return null;
@@ -64,7 +52,7 @@ export default function Section({ data }) {
 
           if (block.type === "expandedCardsGroup") {
             const cardData = (() => {
-              const d = getBlockData(block);
+              const d = parseBlockData(block.data);
               return typeof d === "object" && d !== null && ("icon" in d || "title" in d || "description" in d)
                 ? d
                 : { icon: "", title: "", description: "" };
@@ -96,3 +84,5 @@ export default function Section({ data }) {
     </div>
   );
 }
+
+export default Section;

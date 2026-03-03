@@ -1,62 +1,34 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { supabase } from "../../db/supabaseClient";
+import { useSectionData } from "../hooks/useSectionData";
 import Section from "../pages/Section";
 
+/**
+ * DynamicSection
+ * Componente contenedor (Container Component)
+ * 
+ * Responsabilidades:
+ * - Obtener el slug de los parámetros de la ruta
+ * - Obtener los datos de la sección usando el hook personalizado
+ * - Manejar estados de carga y error
+ * - Renderizar el componente presentacional Section
+ * 
+ * NO hace acceso directo a la BD ni transformaciones complejas
+ */
 export default function DynamicSection() {
   const { slug } = useParams();
-  const [data, setData] = useState(null);
+  const { data, loading, error } = useSectionData(slug);
 
-  useEffect(() => {
-    async function fetchData() {
-      const { data: section, error: sectionError } = await supabase
-        .from("section")
-        .select("*")
-        .eq("slug", slug)
-        .single();
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
 
-      if (sectionError || !section) {
-        console.error("Section not found");
-        return;
-      }
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
-      const { data: blocks, error: blocksError } = await supabase
-        .from("content_block")
-        .select("*")
-        .eq("section_id", section.id)
-        .order("position", { ascending: true });
-
-      if (blocksError) {
-        console.error("Error loading blocks", blocksError);
-        return;
-      }
-
-      const list = blocks || [];
-      const rootBlocks = list.filter((b) => b.parent_id == null || b.parent_id === "");
-      const childrenByParentId = {};
-      for (const b of list) {
-        if (b.parent_id != null && b.parent_id !== "") {
-          const key = String(b.parent_id);
-          if (!childrenByParentId[key]) childrenByParentId[key] = [];
-          childrenByParentId[key].push(b);
-        }
-      }
-      // Ordenar hijos por position
-      for (const key of Object.keys(childrenByParentId)) {
-        childrenByParentId[key].sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
-      }
-
-      setData({
-        ...section,
-        rootBlocks,
-        childrenByParentId,
-      });
-    }
-
-    fetchData();
-  }, [slug]);
-
-  if (!data) return <div>Cargando...</div>;
+  if (!data) {
+    return <div>Sección no encontrada</div>;
+  }
 
   return <Section data={data} />;
 }

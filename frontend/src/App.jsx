@@ -1,21 +1,13 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import RequireAdmin from "./components/auth/RequireAdmin.jsx"
 import Home from './pages/Home'
 import Menu from './pages/Menu'
-import Cud from './pages/cud/Cud'
-import CNRT from './pages/cnrt/CNRT'
-import Transporte from './pages/transporte/Transporte'
 import MapView from './components/map/MapView'
-import Admin from './pages/Admin'
+import Admin from './pages/admin/Admin.jsx'
 import Dashboard from './pages/admin/Dashboard'
 import Agradecimientos from './pages/Agradecimientos'
-import Turismo from './pages/turismo/Turismo'
-import Beneficios from './pages/beneficios/Beneficios'
-import Reclamos from './pages/Reclamos'
-import Cultura from './pages/cultura/Cultura.jsx'
-import Centrosdia from './pages/centrosdia/Centrosdia.jsx'
 import Test from './pages/Test.jsx'
 import DynamicSection from './pages/DynamicSection.jsx'
+import { PrivateRoute } from './context/AuthContext.jsx'
 
 function App() {
   return (
@@ -23,21 +15,19 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
-        <Route path="/map-test" element={<MapView />} />
-
+        <Route path="/map" element={<MapView />} />
         <Route path="/seccion/:slug" element={<DynamicSection />} />
+        <Route path="/agradecimientos" element={<Agradecimientos />} />
 
         <Route path="/admin" element={<Admin />} />
         <Route
           path="/admin/dashboard"
           element={
-            <RequireAdmin>
+            <PrivateRoute>
               <Dashboard />
-            </RequireAdmin>
+            </PrivateRoute>
           }
         />
-        <Route path="/admin/test" element={<Test />} />
-        <Route path="/agradecimientos" element={<Agradecimientos />} />
       </Routes>
     </BrowserRouter>
   );
