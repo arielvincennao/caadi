@@ -1,5 +1,6 @@
-import { useState } from 'react'
-import { authService } from '../services/AuthService'
+import { useEffect, useState } from 'react'
+import { AuthService } from '../../api/services/AuthService'
+import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from "react-router-dom";
 
 import Logo from '../../components/common/Logo'
@@ -16,7 +17,16 @@ function Admin() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const { isAuthenticated, isLoading: isLoadingAuth} = useAuth()
+
+  useEffect(() => {
+    if (!isLoadingAuth && isAuthenticated) {
+      navigate('/admin/dashboard', { replace: true })
+    }
+  }, [isLoadingAuth, isAuthenticated, navigate])
+
+  if (isLoadingAuth) return null
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +34,7 @@ function Admin() {
     setIsLoading(true);
 
     try {
-      await authService.signIn(email, password)
+      await AuthService.signIn(email, password)
       navigate('/admin/dashboard')
     } catch (error) {
       setError(ERROR_MESSAGES[error.message] || ERROR_MESSAGES.default)

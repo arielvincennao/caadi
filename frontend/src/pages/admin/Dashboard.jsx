@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Title } from '../../components/Typography'
-import { authService } from "../../services/AuthService"
+import { AuthService } from "../../api/services/AuthService"
 import { useNavigate } from "react-router-dom"
 import './admin.css'
 
@@ -21,7 +21,7 @@ function Dashboard() {
 
   const handleLogout = async () => {
     try {
-      await authService.signOut()
+      await AuthService.signOut()
       navigate('/admin');
     } catch (error) {
       console.error('Error al cerrar sesión:', error);

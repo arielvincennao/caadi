@@ -5,13 +5,13 @@ import MapView from './components/map/MapView'
 import Admin from './pages/admin/Admin.jsx'
 import Dashboard from './pages/admin/Dashboard'
 import Agradecimientos from './pages/Agradecimientos'
-import Test from './pages/Test.jsx'
 import DynamicSection from './pages/DynamicSection.jsx'
-import { PrivateRoute } from './context/AuthContext.jsx'
+import { PrivateRoute, AuthProvider} from './context/AuthContext.jsx'
 
 function App() {
   return (
     <BrowserRouter>
+    <AuthProvider>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
@@ -29,6 +29,7 @@ function App() {
           }
         />
       </Routes>
+    </AuthProvider>
     </BrowserRouter>
   );
 }

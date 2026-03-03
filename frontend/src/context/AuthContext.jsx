@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { authService } from '../services/authService'
+import { AuthService } from '../api/services/AuthService'
 
 const AuthContext = createContext(null)
 
@@ -9,10 +9,10 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     // Carga la sesión inicial
-    authService.getSession().then(setSession).catch(() => setSession(null))
+    AuthService.getSession().then(setSession).catch(() => setSession(null))
 
     // Escucha cambios (login, logout, expiración)
-    const { data: { subscription } } = authService.onAuthStateChange(setSession)
+    const { data: { subscription } } = AuthService.onAuthStateChange(setSession)
 
     return () => subscription.unsubscribe()
   }, [])
