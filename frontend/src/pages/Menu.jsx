@@ -48,6 +48,12 @@ function Menu() {
               </Card>
             </li>
           ))}
+          {/* El boton de reclamos de accesibilidad es estatico. Siempre estara debajo de las opciones del menu que vienen de la base de datos. */}
+          <li key="reclamos-accesibilidad">
+            <Card icon="reclamos" to="/reclamos" className="text-start">
+              <span>Reclamos de accesibilidad</span>
+            </Card>
+          </li>
         </ul>
       </section>
     </div>  
