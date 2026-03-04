@@ -3,9 +3,9 @@ import Navbar from '../components/layout/Navbar';
 import BtnBack from '../components/common/BtnBack';
 import Button from '../components/common/Button';
 import { Title, Text } from '../components/Typography';
-import { supabase } from "../../db/supabaseClient";
+import { ClaimService } from '../api/services/ClaimService';
 
-function Reclamos() {
+function Claim() {
 
   const [formData, setFormData] = useState({
     type: '',
@@ -62,12 +62,10 @@ function Reclamos() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setSuccess(false);
     setSubmitError(null);
 
     const validationErrors = validate();
-
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
@@ -75,48 +73,23 @@ function Reclamos() {
 
     setLoading(true);
 
-    const payload = {
-      "Tipo de queja": formData.type,
-      "Nombre completo": formData.full_name,
-      "Correo electrónico": formData.email,
-      "Ubicación": formData.location,
-      "Descripción": formData.description,
-    };
-
     try {
-      // guarda en supabase
-      const { error } = await supabase.from("claim").insert([formData]);
-      if (error) throw error;
-
-      // envia al email
-      const response = await fetch("https://formspree.io/f/xlgwvbel", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) throw new Error();
-
+      await ClaimService.sendClaim(formData);
       setSuccess(true);
-
-      // resetea el form
       setFormData({
-        type: "",
-        full_name: "",
-        email: "",
-        location: "",
-        description: "",
+        type: '',
+        full_name: '',
+        email: '',
+        location: '',
+        description: '',
       });
-
     } catch (error) {
+      console.log(formData)
       setSubmitError("Ocurrió un error al enviar el formulario.");
     } finally {
       setLoading(false);
-    }
-  };
+    };
+  }
 
   return (
     <div className="bg-white min-h-screen flex flex-col items-center">
@@ -241,4 +214,4 @@ function Reclamos() {
   );
 }
 
-export default Reclamos;
+export default Claim;
