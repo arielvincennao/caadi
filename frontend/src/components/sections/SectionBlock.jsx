@@ -19,10 +19,15 @@ const BLOCK_RENDER = {
 };
 
 export default function SectionBlock({ block }) {
-    const BlockComponent = BLOCK_RENDER[block.type];
+  const BlockComponent = BLOCK_RENDER[block.type];
 
-    if(!BlockComponent) return null;
-    
-    
-    return <BlockComponent block={block} />;
+  if (!BlockComponent) return null;
+
+  return (
+    <BlockComponent block={block}>
+      {block.children?.map(child => (
+        <SectionBlock key={child.id} block={child} />
+      ))}
+    </BlockComponent>
+  );
 }
