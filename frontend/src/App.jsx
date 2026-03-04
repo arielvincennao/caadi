@@ -16,7 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
-        <Route path="/map" element={<MapView />} />
+        <Route path="/mapa" element={<MapView />} />
         <Route path="/seccion/:slug" element={<DynamicSection />} />
         <Route path="/agradecimientos" element={<Agradecimientos />} />
         <Route path="/reclamos" element={<Claim />} />
