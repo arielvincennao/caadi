@@ -1,13 +1,9 @@
-// src/components/map/MapView.jsx
+
 import { useRef, useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
 import { useSearchParams } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
-
-// Hooks y Datos
 import { useFetchOffices } from "../../hooks/useFetchOffices";
-
-// Componentes
 import OfficeModal from "./OfficeModal";
 import BtnBack from "../common/BtnBack";
 import RecenterMap from "./RecenterMap";
@@ -17,26 +13,38 @@ import OfficeMarker from "./OfficeMarker";
 const MapView = () => {
     const [searchParams] = useSearchParams();
     const section = searchParams.get("section");
-    const institutionId = searchParams.get("institutionId");
+    const id = searchParams.get("id");
+    const customTitle = searchParams.get("mapTitle");
 
-    const { 
-        offices, 
-        loading, 
-        mapCenter, 
-        setMapCenter, 
-        mapZoom, 
-        setMapZoom 
-    } = useFetchOffices(section, institutionId);
+    const {
+        offices,
+        loading,
+        mapCenter,
+        setMapCenter,
+        mapZoom,
+        setMapZoom
+    } = useFetchOffices(section, id);
 
     const [selectedOffice, setSelectedOffice] = useState(null);
     const [userPosition, setUserPosition] = useState(null);
     const mapRef = useRef(null);
 
-    const titulosection = section
-        ? section.charAt(0).toUpperCase() + section.slice(1)
-        : "Todas las ubicaciones";
+    let titulosection = "Todas las ubicaciones";
 
-    // Geolocalización
+    if (customTitle) {
+        titulosection = customTitle;
+    } else if (section) {
+        titulosection = section.charAt(0).toUpperCase() + section.slice(1);
+    } else if (id) {
+        const oficinaSeleccionada = offices.find(o => o.id.toString() === id);
+
+        if (oficinaSeleccionada) {
+            titulosection = oficinaSeleccionada.name;
+        } else if (loading) {
+            titulosection = "Cargando...";
+        }
+    }
+
     const getUserLocation = () => {
         if (!navigator.geolocation) return alert("Tu navegador no soporta geolocalización");
 
@@ -55,14 +63,12 @@ const MapView = () => {
         );
     };
 
-    // Fix visual para el tamaño del mapa de Leaflet
     useEffect(() => {
         if (!loading && mapRef.current) {
             setTimeout(() => mapRef.current.invalidateSize(), 100);
         }
     }, [loading]);
 
-    // Prevenir renderizado del mapa si no hay un centro inicial válido en la primera carga
     if (!mapCenter && loading) {
         return (
             <div className="flex items-center justify-center w-full h-screen bg-gray-100">
@@ -78,14 +84,13 @@ const MapView = () => {
                 <div className="pointer-events-auto">
                     <BtnBack />
                 </div>
-                <div className="bg-white px-5 py-2 rounded-full shadow-md border border-gray-200 pointer-events-auto">
+                <div className="bg-white p-2 rounded-full shadow-md border border-gray-200 pointer-events-auto">
                     <h1 className="text-gray-800 font-bold text-lg capitalize tracking-wide text-center">
                         {titulosection}
                     </h1>
                 </div>
             </div>
 
-            {/* Capa de Carga Flotante (Aparece sin destruir el mapa) */}
             {loading && (
                 <div className="absolute inset-0 z-[2000] bg-white/40 backdrop-blur-sm flex items-center justify-center pointer-events-none transition-all duration-300">
                     <div className="bg-white px-6 py-3 rounded-xl shadow-lg border border-gray-200 flex items-center gap-3">
@@ -121,12 +126,12 @@ const MapView = () => {
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
 
-                    {/* Marcadores Modulares */}
+                    {/* Marcadores */}
                     {offices.map((office) => (
-                        <OfficeMarker 
-                            key={office.id} 
-                            office={office} 
-                            onSelect={setSelectedOffice} 
+                        <OfficeMarker
+                            key={office.id}
+                            office={office}
+                            onSelect={setSelectedOffice}
                         />
                     ))}
 

@@ -14,7 +14,7 @@ export const cudData = {
             steps: [
                 {
                     id: 1,
-                    icon: "turno-medico",
+                    icon: "turno",
                     description:
                         "Pedir turno en la oficina de INFORME del Hospital Ramón Santamarina, Tandil."
                 },
@@ -48,8 +48,8 @@ export const cudData = {
             type: "map",
             order: 3,
             title: "Ubicación en el mapa",
-            institutionId: 7,
-            section: "tramites"
+            mapTitle: "Certificado Único de Discapacidad",
+            officeId: "1c439b3f-fd41-4e7a-9dbf-fc58aef85a1a"
         }
     ]
 };
