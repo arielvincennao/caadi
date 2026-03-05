@@ -41,36 +41,35 @@ export function mapBlock(block) {
   };
 }
 
-/**
- * Organiza los bloques en una estructura jerárquica
- * Separa bloques raíz de bloques hijos y agrupa por parent_id
- * @param {Array} blocks - Array de bloques de la BD
- * @returns {Object} { rootBlocks, childrenByParentId }
- */
 export function transformBlocksStructure(blocks) {
   const list = blocks || [];
-  
-  // Filtrar bloques sin parent (raíz)
-  const rootBlocks = list.filter(
-    (b) => b.parent_id == null || b.parent_id === ""
-  );
-  
-  // Agrupar bloques hijos por su parent_id
-  const childrenByParentId = {};
+
+  // Indexamos todos los bloques por id para acceso rápido
+  const blockMap = {};
+  for (const b of list) {
+    blockMap[String(b.id)] = { ...mapBlock(b), children: [] };
+  }
+
+  // Adjuntamos cada hijo a su padre
   for (const b of list) {
     if (b.parent_id != null && b.parent_id !== "") {
-      const key = String(b.parent_id);
-      if (!childrenByParentId[key]) {
-        childrenByParentId[key] = [];
+      const parent = blockMap[String(b.parent_id)];
+      if (parent) {
+        parent.children.push(blockMap[String(b.id)]);
       }
-      childrenByParentId[key].push(b);
     }
   }
-  
-  // Ordenar hijos por position
-  for (const key of Object.keys(childrenByParentId)) {
-    childrenByParentId[key].sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
+
+  // Ordenamos los hijos por position en todos los niveles
+  for (const block of Object.values(blockMap)) {
+    block.children.sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
   }
-  
-  return { rootBlocks, childrenByParentId };
+
+  // Los bloques raíz son los que no tienen parent_id
+  const rootBlocks = list
+    .filter(b => b.parent_id == null || b.parent_id === "")
+    .map(b => blockMap[String(b.id)])
+    .sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
+
+  return { rootBlocks };
 }

@@ -1,29 +1,21 @@
-import { useState } from "react";
 import BtnBack from "../components/common/BtnBack";
 import Navbar from "../components/layout/Navbar";
 import { Title, Text } from "../components/Typography";
 import SectionBlock from "../components/sections/SectionBlock";
-import CardSection from "../components/sections/CardSection";
-import { mapBlock, parseBlockData } from "../utils/dataTransformers";
 
 /**
  * Section
- * Componente presentacional (Presentational Component)
  * 
  * Responsabilidades:
  * - Renderizar la sección con todos sus bloques
  * - Manejar estado local de UI (expandedId)
  * - Presentar datos de forma visual
  * 
- * NO accede a BD, NO obtiene datos, NO hace transformaciones de datos
  */
 function Section({ data }) {
-  const [expandedId, setExpandedId] = useState(null);
-
   if (!data) return null;
 
   const rootBlocks = data.rootBlocks ?? [];
-  const childrenByParentId = data.childrenByParentId ?? {};
 
   return (
     <div className="min-h-screen flex flex-col items-center">
@@ -47,39 +39,9 @@ function Section({ data }) {
           <Text>{data.description}</Text>
         </section>
 
-        {rootBlocks.map((block) => {
-          const children = childrenByParentId[String(block.id)] ?? [];
-
-          if (block.type === "expandedCardsGroup") {
-            const cardData = (() => {
-              const d = parseBlockData(block.data);
-              return typeof d === "object" && d !== null && ("icon" in d || "title" in d || "description" in d)
-                ? d
-                : { icon: "", title: "", description: "" };
-            })();
-            const isActive = expandedId !== null && String(expandedId) === String(block.id);
-
-            return (
-              <div key={block.id} className="mb-6">
-                <CardSection
-                  card={cardData}
-                  onClick={() => setExpandedId(isActive ? null : block.id)}
-                />
-                {isActive && children.length > 0 && (
-                  <div className="mt-4 pl-0 md:pl-4">
-                    {children.map((child) => (
-                      <SectionBlock key={child.id} block={mapBlock(child)} />
-                    ))}
-                  </div>
-                )}
-              </div>
-            );
-          }
-
-          return (
-            <SectionBlock key={block.id} block={mapBlock(block)} />
-          );
-        })}
+        {rootBlocks.map((block) => (
+          <SectionBlock key={block.id} block={block} />
+        ))}
       </div>
     </div>
   );
