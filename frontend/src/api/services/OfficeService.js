@@ -2,18 +2,12 @@ import { OfficeRepository } from "../repositories/OfficeRepository";
 
 export const OfficeService = {
   async getBySection(slug) {
-    const offices = await OfficeRepository.getAll();
-
-    if (!slug) return offices;
-
-    return offices.filter(office =>
-      office.section_slug.includes("all") ||
-      office.section_slug.includes(slug.toLowerCase())
-    );
+    if (!slug) return await OfficeRepository.getAll();
+    return await OfficeRepository.getBySection(slug);
   },
 
   async getById(id) {
-    const offices = await OfficeRepository.getAll();
-    return offices.filter(office => office.id.toString() === id);
+    const office = await OfficeRepository.getById(id);
+    return office ? [office] : [];
   }
 }
