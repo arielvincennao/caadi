@@ -5,6 +5,7 @@ export default function CardSection({ card, className, onClick }) {
     const isLink = Boolean(card.href);
     const isExpanded = Boolean(onClick);
     const Wrapper = isLink ? "a" : isExpanded ? "button" : "div";
+    
     return (
         <Wrapper
             {...(isLink && {

@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useSectionData } from "../hooks/useSectionData";
 import Section from "../pages/Section";
+import { Subtitle } from "../components/Typography";
 
 /**
  * DynamicSection
@@ -19,11 +20,15 @@ export default function DynamicSection() {
   const { data, loading, error } = useSectionData(slug);
 
   if (loading) {
-    return <div>Cargando...</div>;
+    return <div className="flex justify-center items-center h-screen bg-slate-100">
+      <Subtitle>Cargando...</Subtitle>
+    </div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="flex justify-center items-center h-screen">
+      <Subtitle>Error: {error}</Subtitle>
+    </div>;
   }
 
   if (!data) {
