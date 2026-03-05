@@ -1,4 +1,3 @@
-
 import { useRef, useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
 import { useSearchParams } from "react-router-dom";
@@ -12,7 +11,7 @@ import OfficeMarker from "./OfficeMarker";
 
 const MapView = () => {
     const [searchParams] = useSearchParams();
-    const section = searchParams.get("section");
+    const section = searchParams.get("seccion");
     const id = searchParams.get("id");
     const customTitle = searchParams.get("mapTitle");
 
