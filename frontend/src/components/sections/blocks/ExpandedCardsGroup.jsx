@@ -47,45 +47,38 @@ export default function ExpandedCardsGroup({ block }) {
   console.log("ExpandedCardsGroup render", block);
 
   return (
-    <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
-        {cards.map(card => {
-          const isActive = card.id === activeId;
-          return (
-            <div key={card.id} className="w-full">
-              <CardSection
-                card={card.data}
-                onClick={() =>
-                  setActiveId(isActive ? null : card.id)
-                }
-                className={isActive ? "border-slate-600 border-3 shadow-sm bg-slate-100" : ""} />
-
-
-              {isActive && (
-                <div ref={active => (cardRefs.current[card.id] = active)} className="md:hidden p-6 rounded-xl mt-4 bg-white shadow-sm">
-                  {card.children?.map(innerBlock => (
-                    <SectionBlock key={innerBlock.id} block={innerBlock} />
-                  ))}
-                </div>
-              )}
-            </div>
-          );
-        })}
-
-        {activeCard && (
-          <div key={activeCard.id} className="hidden md:block w-full bg-white shadow-sm rounded-2xl py-5 mb-15">
-            <div ref={desktopContentRef} className="max-w-5xl mx-auto px-6 space-y-5">
-              {activeCard.children?.map(innerBlock => (
-                <SectionBlock
-                  key={innerBlock.id}
-                  block={innerBlock}
-                />
-              ))}
-            </div>
+  <>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
+      {cards.map(card => {
+        const isActive = card.id === activeId;
+        return (
+          <div key={card.id} className="w-full">
+            <CardSection
+              card={card.data}
+              onClick={() => setActiveId(isActive ? null : card.id)}
+              isActive={isActive}
+            />
+            {isActive && (
+              <div ref={active => (cardRefs.current[card.id] = active)} className="md:hidden p-6 rounded-xl mt-4 bg-white shadow-sm">
+                {card.children?.map(innerBlock => (
+                  <SectionBlock key={innerBlock.id} block={innerBlock} />
+                ))}
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        );
+      })}
+    </div>  {/* ← cierra el grid acá */}
 
-    </>
-  );
+    {activeCard && (  // ← ahora está afuera del grid
+      <div key={activeCard.id} className="hidden md:block w-full bg-white shadow-sm rounded-2xl py-5 mb-15">
+        <div ref={desktopContentRef} className="max-w-5xl mx-auto px-6 space-y-5">
+          {activeCard.children?.map(innerBlock => (
+            <SectionBlock key={innerBlock.id} block={innerBlock} />
+          ))}
+        </div>
+      </div>
+    )}
+  </>
+);
 }
