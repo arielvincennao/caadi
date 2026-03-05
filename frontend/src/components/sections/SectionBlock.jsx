@@ -4,9 +4,7 @@ import StepsBlock from "./blocks/StepsBlock";
 import ListBlock from "./blocks/ListBlock";
 import BlogBlock from "./blocks/BlogBlock";
 import MapBlock from "./blocks/MapBlock";
-
 import ExpandedCardsGroup from "./blocks/ExpandedCardsGroup";
-
 
 const BLOCK_RENDER = {
     card: CardBlock,
