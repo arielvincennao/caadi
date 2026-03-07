@@ -44,4 +44,9 @@ export const SectionService = {
     const section = await SectionRepository.getSectionBySlug(slug);
     return !!section;
   },
+
+  async update(id, changes) {
+  if (!id) throw new Error("El id es requerido");
+  return await SectionRepository.update(id, changes);
+}
 };

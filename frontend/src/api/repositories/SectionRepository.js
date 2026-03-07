@@ -64,4 +64,15 @@ export const SectionRepository = {
     
     return { section, blocks };
   },
+
+  async update(id, changes) {
+  const { data, error } = await supabase
+    .from("section")
+    .update(changes)
+    .eq("id", id)
+    .select()
+    .single();
+  if (error) throw error;
+  return data;
+}
 };

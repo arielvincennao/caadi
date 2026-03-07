@@ -1,50 +1,36 @@
 import { useState, useEffect } from "react";
-import { supabase } from "../../../db/supabaseClient";
+import { useAuth } from "../../context/AuthContext";
 import { Subsubtitle } from "../Typography";
 import { Icon } from "../common/Icon";
 
 export default function Step({ step: initialStep }) {
-  // 1. Estados para Admin y Edición
-  const [isAdmin, setIsAdmin] = useState(false);
+  const { isAuthenticated } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [step, setStep] = useState(initialStep);
 
-  // 2. Validar sesión de admin al cargar
-  useEffect(() => {
-    const checkUser = async () => {
-      try {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (user) setIsAdmin(true);
-      } catch (error) {
-        console.error("Error validando admin en Step:", error);
-      }
-    };
-    checkUser();
-  }, []);
-
-  // Sincronizar si la prop initialStep cambia
   useEffect(() => {
     setStep(initialStep);
   }, [initialStep]);
 
-  // 3. Handlers
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setStep((prev) => ({ ...prev, [name]: value }));
+    setStep(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSave = async () => {
-    console.log("Guardando cambios del paso...", step);
-    // await supabase.from('pasos').update(step).eq('id', step.id);
-    setIsEditing(false);
+    try {
+      // TODO: await ContentBlockService.update(...)
+      setIsEditing(false);
+    } catch (err) {
+      console.error("Error guardando paso:", err);
+    }
   };
 
   return (
     <li className={`flex items-start gap-4 my-4 p-2 rounded-lg transition-all relative group ${isEditing ? "bg-blue-50 ring-1 ring-blue-100" : ""}`}>
-      
-      {/* BOTONES DE CONTROL ADMIN */}
-      {isAdmin && (
-        <div className="absolute top-0 right-0 flex gap-1 translate-y-[-50%] group-hover:translate-y-0  group-hover:opacity-100 transition-all">
+
+      {isAuthenticated && (
+        <div className="absolute top-0 right-0 flex gap-1 translate-y-[-50%] group-hover:translate-y-0 group-hover:opacity-100 transition-all">
           {!isEditing ? (
             <button
               onClick={() => setIsEditing(true)}
@@ -57,24 +43,13 @@ export default function Step({ step: initialStep }) {
             </button>
           ) : (
             <div className="flex gap-1">
-              <button
-                onClick={handleSave}
-                className="bg-green-600 text-white px-2 py-0.5 rounded text-[10px] font-bold shadow-sm"
-              >
-                OK
-              </button>
-              <button
-                onClick={() => { setIsEditing(false); setStep(initialStep); }}
-                className="bg-gray-500 text-white px-2 py-0.5 rounded text-[10px] font-bold shadow-sm"
-              >
-                X
-              </button>
+              <button onClick={handleSave} className="bg-green-600 text-white px-2 py-0.5 rounded text-[10px] font-bold shadow-sm">OK</button>
+              <button onClick={() => { setIsEditing(false); setStep(initialStep); }} className="bg-gray-500 text-white px-2 py-0.5 rounded text-[10px] font-bold shadow-sm">X</button>
             </div>
           )}
         </div>
       )}
 
-      {/* ICONO / INPUT ICONO */}
       <div className="flex flex-col items-center flex-shrink-0">
         <Icon name={step.icon} className={`w-10 h-10 ${isEditing ? 'opacity-40' : ''}`} />
         {isEditing && (
@@ -88,7 +63,6 @@ export default function Step({ step: initialStep }) {
         )}
       </div>
 
-      {/* TEXTOS EDITABLES */}
       <div className="flex-1 min-w-0">
         {isEditing ? (
           <div className="flex flex-col gap-1 w-full">
