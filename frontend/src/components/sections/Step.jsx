@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { Subsubtitle } from "../Typography";
 import { Icon } from "../common/Icon";
+import { ContentBlockService } from "../../api/services/ContentBlockService";
 
-export default function Step({ step: initialStep }) {
+export default function Step({ step: initialStep, blockId, allSteps }) {
   const { isAuthenticated } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [step, setStep] = useState(initialStep);
@@ -19,7 +20,11 @@ export default function Step({ step: initialStep }) {
 
   const handleSave = async () => {
     try {
-      // TODO: await ContentBlockService.update(...)
+      // Reemplaza el step modificado dentro del array completo
+      const updatedSteps = allSteps.map(s =>
+        s.id === step.id ? step : s
+      );
+      await ContentBlockService.updateBlock(blockId, { steps: updatedSteps });
       setIsEditing(false);
     } catch (err) {
       console.error("Error guardando paso:", err);

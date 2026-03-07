@@ -5,12 +5,16 @@ export default function StepsBlock({ block }) {
   const { title, steps } = block.data || {};
 
   return (
-    <section className="">
+    <section>
       <Subtitle>{title}</Subtitle>
-
       <ol>
         {steps?.map((step) => (
-          <Step step={step} key={step.id} />
+          <Step
+            step={step}
+            key={step.id}
+            blockId={block.id}
+            allSteps={steps}
+          />
         ))}
       </ol>
     </section>
