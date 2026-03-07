@@ -78,7 +78,7 @@ export const transporteData = {
                             type: "map",
                             title: "Ubicación en el mapa",
                             section: "transporte",
-                            institutionId: "8"
+                            officeId: "8"
                         },
                     ]
                 },
@@ -110,7 +110,7 @@ export const transporteData = {
                             type: "map",
                             title: "Ubicación en el mapa",
                             section: "transporte",
-                            institutionId: "8"
+                            oofficeId: "8"
                         },
 
                     ]

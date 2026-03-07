@@ -33,11 +33,11 @@ const OfficeModal = ({ office, onClose }) => {
                 onClick={(e) => e.stopPropagation()}
                 className="relative bg-white w-[90%] max-w-md p-6 rounded-xl shadow-xl animate-fadeIn"
             >
-                <h2 id="office-title" className="text-xl font-semibold mb-3">{office.institution}</h2>
+                <h2 id="office-title" className="text-xl font-semibold mb-3">{office.name}</h2>
 
                 <div className="space-y-1 text-gray-700 mb-6">
                     <p><strong>Dirección:</strong> {office.address}</p>
-                    {office.hours && <p><strong>Horario:</strong> {office.hours}</p>}
+                    {office.schedule && <p><strong>Horario:</strong> {office.schedule}</p>}
                     {office.phone && <p><strong>Teléfono:</strong> {office.phone}</p>}
                     {office.email && <p><strong>Correo:</strong> {office.email}</p>}
                 </div>
