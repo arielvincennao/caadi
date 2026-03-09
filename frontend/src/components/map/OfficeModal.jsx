@@ -32,13 +32,13 @@ const OfficeModal = ({ office: initialOffice, onClose, onSave }) => {
       await OfficeService.update(office.id, {
         name: office.name,
         address: office.address,
-        schedule: office.schedule,
-        phone: office.phone,
-        email: office.email,
+        schedule: office.schedule || null,
+        phone: office.phone || null,
+        email: office.email || null,
         coordinates: office.coordinates
       });
       setIsEditing(false);
-      onSave();
+      onSave?.();
     } catch (err) {
       console.error("Error guardando oficina:", err);
     }
