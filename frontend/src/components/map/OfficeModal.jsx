@@ -3,7 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import { OfficeService } from "../../api/services/OfficeService";
 import Button from "../common/Button";
 
-const OfficeModal = ({ office: initialOffice, onClose }) => {
+const OfficeModal = ({ office: initialOffice, onClose, onSave }) => {
   const modalRef = useRef(null);
   const { isAuthenticated } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
@@ -38,6 +38,7 @@ const OfficeModal = ({ office: initialOffice, onClose }) => {
         coordinates: office.coordinates
       });
       setIsEditing(false);
+      onSave();
     } catch (err) {
       console.error("Error guardando oficina:", err);
     }
