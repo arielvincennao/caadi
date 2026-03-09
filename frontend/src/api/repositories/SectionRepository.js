@@ -55,24 +55,51 @@ export const SectionRepository = {
    */
   async getSectionWithBlocks(slug) {
     const section = await this.getSectionBySlug(slug);
-    
+
     if (!section) {
       return { section: null, blocks: [] };
     }
 
     const blocks = await this.getContentBlocksBySection(section.id);
-    
+
     return { section, blocks };
   },
 
+  async getAll() {
+    const { data, error } = await supabase
+      .from("section")
+      .select("*")
+      .order("position", { ascending: true });
+    if (error) throw error;
+    return data || [];
+  },
+
+  async create(sectionData) {
+    const { data, error } = await supabase
+      .from("section")
+      .insert([sectionData])
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  },
+
   async update(id, changes) {
-  const { data, error } = await supabase
-    .from("section")
-    .update(changes)
-    .eq("id", id)
-    .select()
-    .single();
-  if (error) throw error;
-  return data;
-}
+    const { data, error } = await supabase
+      .from("section")
+      .update(changes)
+      .eq("id", id)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  },
+
+  async delete(id) {
+    const { error } = await supabase
+      .from("section")
+      .delete()
+      .eq("id", id);
+    if (error) throw error;
+  }
 };

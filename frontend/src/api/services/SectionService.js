@@ -45,8 +45,26 @@ export const SectionService = {
     return !!section;
   },
 
+  async getAll() {
+    return await SectionRepository.getAll();
+  },
+
+  async create(sectionData) {
+    if (!sectionData.slug) throw new Error("El slug es requerido");
+    if (!sectionData.title) throw new Error("El título es requerido");
+    if (!sectionData.icon) throw new Error("El ícono es requerido");
+    if (!sectionData.image) throw new Error("La imagen es requerida");
+    if (sectionData.position === undefined) throw new Error("La posición es requerida");
+    return await SectionRepository.create(sectionData);
+  },
+
   async update(id, changes) {
-  if (!id) throw new Error("El id es requerido");
-  return await SectionRepository.update(id, changes);
-}
+    if (!id) throw new Error("El id es requerido");
+    return await SectionRepository.update(id, changes);
+  },
+  
+  async delete(id) {
+    if (!id) throw new Error("El id es requerido");
+    return await SectionRepository.delete(id);
+  }
 };
