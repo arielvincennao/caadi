@@ -22,7 +22,7 @@ function Admin() {
 
   useEffect(() => {
     if (!isLoadingAuth && isAuthenticated) {
-      navigate('/admin/dashboard', { replace: true })
+      navigate('/menu', { replace: true })
     }
   }, [isLoadingAuth, isAuthenticated, navigate])
 
@@ -35,7 +35,7 @@ function Admin() {
 
     try {
       await AuthService.signIn(email, password)
-      navigate('/admin/dashboard')
+      navigate('/menu')
     } catch (error) {
       setError(ERROR_MESSAGES[error.message] || ERROR_MESSAGES.default)
     } finally {
