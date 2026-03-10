@@ -17,6 +17,7 @@ export default function BtnBack({ className = "" }) {
         shadow-md
         relative z-10
         back-button
+        py-2.5! px-5!
         ${className}
       `}
             aria-label="Volver a la página anterior"

@@ -41,7 +41,7 @@ function Button({
 
     return (
         <button
-            className={`main-button hover:opacity-90 ${className} `}
+            className={`h-[5vh] flex items-center justify-center text-white cursor-pointer rounded-full bg-(--db-caadi) py-2.5 px-[45px] border-rad hover:opacity-90 ${className} `}
             onClick={handleClick}
             type={type || 'button'}
             disabled={disabled}

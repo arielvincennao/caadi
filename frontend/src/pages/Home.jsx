@@ -24,7 +24,7 @@ function Home() {
             <Text>Ir al Menú principal</Text>
           </Button>
           <Button 
-            className="main-button-secondary"
+            className="bg-gray-500"
             onClick={() => navigate('/agradecimientos')}
           >
             <Text>Agradecimientos</Text>
