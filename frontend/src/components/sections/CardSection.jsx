@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { Text } from "../Typography";
 import { Icon } from "../common/Icon";
+import { ContentBlockService } from "../../api/services/ContentBlockService";
 
-export default function CardSection({ card: initialCard, className, onClick, isActive }) {
+export default function CardSection({ card: initialCard, blockId, className, onClick, isActive }) {
   const { isAuthenticated } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [card, setCard] = useState(initialCard);
@@ -17,10 +18,10 @@ export default function CardSection({ card: initialCard, className, onClick, isA
     setCard(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     if (e) e.stopPropagation();
     try {
-      // TODO: await ContentBlockService.update(card.id, { data: card })
+      await ContentBlockService.updateBlock(blockId, initialCard)
       setIsEditing(false);
     } catch (err) {
       console.error("Error guardando card:", err);
@@ -41,19 +42,21 @@ export default function CardSection({ card: initialCard, className, onClick, isA
       {isAuthenticated && (
         <div className="absolute top-2 right-2 z-10 flex gap-1">
           {!isEditing ? (
-            <button
+            <div
+              role="button"
+              tabIndex={0}
               onClick={(e) => { e.stopPropagation(); setIsEditing(true); }}
-              className="bg-blue-600 text-white p-1.5 rounded-full group-hover:opacity-100 transition-opacity shadow-sm"
+              className="bg-blue-600 text-white p-1.5 rounded-full group-hover:opacity-100 transition-opacity shadow-sm cursor-pointer"
               title="Editar Card"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
               </svg>
-            </button>
+            </div>
           ) : (
             <div className="flex gap-1">
-              <button onClick={handleSave} className="bg-green-600 text-white px-2 py-1 rounded text-[10px] font-bold shadow-sm">OK</button>
-              <button onClick={(e) => { e.stopPropagation(); setIsEditing(false); setCard(initialCard); }} className="bg-gray-500 text-white px-2 py-1 rounded text-[10px] font-bold shadow-sm">X</button>
+              <div role="button" tabIndex={0} onClick={handleSave} className="bg-green-600 text-white px-2 py-1 rounded text-[10px] font-bold shadow-sm cursor-pointer">OK</div>
+              <div role="button" tabIndex={0} onClick={(e) => { e.stopPropagation(); setIsEditing(false); setCard(initialCard); }} className="bg-gray-500 text-white px-2 py-1 rounded text-[10px] font-bold shadow-sm cursor-pointer">X</div>
             </div>
           )}
         </div>

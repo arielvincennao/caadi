@@ -6,6 +6,7 @@ export const useFetchOffices = (section, id) => {
   const [loading, setLoading] = useState(true);
   const [mapCenter, setMapCenter] = useState([-37.3217, -59.1332]);
   const [mapZoom, setMapZoom] = useState(13);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     const fetchOffices = async () => {
@@ -34,7 +35,9 @@ export const useFetchOffices = (section, id) => {
     };
 
     fetchOffices();
-  }, [section, id]);
+  }, [section, id, refreshKey]);
 
-  return { offices, loading, mapCenter, setMapCenter, mapZoom, setMapZoom };
+  const refetch = () => setRefreshKey(prev => prev + 1);
+
+  return { offices, loading, mapCenter, setMapCenter, mapZoom, setMapZoom, refetch };
 };

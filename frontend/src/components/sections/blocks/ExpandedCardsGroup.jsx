@@ -55,6 +55,7 @@ export default function ExpandedCardsGroup({ block }) {
           <div key={card.id} className="w-full">
             <CardSection
               card={card.data}
+              blockId={card.id}
               onClick={() => setActiveId(isActive ? null : card.id)}
               isActive={isActive}
             />

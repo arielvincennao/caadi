@@ -3,7 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import { OfficeService } from "../../api/services/OfficeService";
 import Button from "../common/Button";
 
-const OfficeModal = ({ office: initialOffice, onClose }) => {
+const OfficeModal = ({ office: initialOffice, onClose, onSave }) => {
   const modalRef = useRef(null);
   const { isAuthenticated } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
@@ -32,12 +32,13 @@ const OfficeModal = ({ office: initialOffice, onClose }) => {
       await OfficeService.update(office.id, {
         name: office.name,
         address: office.address,
-        schedule: office.schedule,
-        phone: office.phone,
-        email: office.email,
+        schedule: office.schedule || null,
+        phone: office.phone || null,
+        email: office.email || null,
         coordinates: office.coordinates
       });
       setIsEditing(false);
+      onSave?.();
     } catch (err) {
       console.error("Error guardando oficina:", err);
     }

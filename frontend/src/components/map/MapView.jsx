@@ -21,7 +21,8 @@ const MapView = () => {
         mapCenter,
         setMapCenter,
         mapZoom,
-        setMapZoom
+        setMapZoom,
+        refetch
     } = useFetchOffices(section, id);
 
     const [selectedOffice, setSelectedOffice] = useState(null);
@@ -104,6 +105,7 @@ const MapView = () => {
                 <OfficeModal
                     office={selectedOffice}
                     onClose={() => setSelectedOffice(null)}
+                    onsSave={refetch}
                 />
             )}
 

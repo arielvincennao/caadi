@@ -8,7 +8,7 @@ export const OfficeRepository = {
     if (error) throw error;
     return data || [];
   },
-  
+
   async getBySection(sectionSlug) {
     const { data, error } = await supabase
       .from("office")
@@ -28,15 +28,40 @@ export const OfficeRepository = {
     return data;
   },
 
+  async create(officeData) {
+    const { data, error } = await supabase
+      .from("office")
+      .insert([officeData])
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  },
+
   async update(id, changes) {
-  const { data, error } = await supabase
-    .from("office")
-    .update(changes)
-    .eq("id", id)
-    .select()
-    .single();
+    const { data, error } = await supabase
+      .from("office")
+      .update(changes)
+      .eq("id", id)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  },
+
+  async delete(id) {
+    const { error } = await supabase
+      .from("office")
+      .delete()
+      .eq("id", id);
+    if (error) throw error;
+  },
+
+  async linkSection(officeId, sectionId) {
+  const { error } = await supabase
+    .from("office_section")
+    .insert({ office_id: officeId, section_id: sectionId });
   if (error) throw error;
-  return data;
 }
 
 }
