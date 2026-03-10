@@ -85,7 +85,7 @@ function Section({ data: initialData }) {
             {editData.image && (
               <img
                 src={editData.image}
-                alt="Imagen de Portada"
+                alt={editData.title}
                 className={`w-full max-h-64 md:max-h-96 object-cover rounded-lg ${isEditing ? 'opacity-50 ring-4 ring-blue-400' : ''}`}
               />
             )}

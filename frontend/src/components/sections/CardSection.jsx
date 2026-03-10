@@ -35,7 +35,7 @@ export default function CardSection({ card: initialCard, blockId, className, onC
   return (
     <Wrapper
       {...(isLink && !isEditing && { href: card.href, target: "_blank" })}
-      {...(isExpanded && !isEditing && { type: "button", onClick })}
+      {...(isExpanded && !isEditing && { type: "button", onClick, "aria-expanded": isActive, "aria-controls": `card-content-${blockId}`})}
       style={isActive ? { borderColor: '#475569', backgroundColor: '#f1f5f9', borderWidth: '2px' } : {}}
       className={`flex flex-col items-center text-center max-w-sm p-6 border rounded-2xl bg-[#FCFCFC] border-gray-400 relative group ${!isEditing ? 'cursor-pointer' : ''} ${className ?? ''}`}
     >
@@ -85,7 +85,7 @@ export default function CardSection({ card: initialCard, blockId, className, onC
           className="mb-3 text-2xl font-semibold leading-8 text-center border-b border-blue-400 bg-transparent w-full outline-none"
         />
       ) : (
-        <h4 className="mb-3 text-2xl font-semibold leading-8">{card.title}</h4>
+        <h4 id={`card-title-${blockId}`} className="mb-3 text-2xl font-semibold leading-8">{card.title}</h4>
       )}
 
       {isEditing ? (
