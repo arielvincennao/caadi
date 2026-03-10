@@ -44,8 +44,6 @@ export default function ExpandedCardsGroup({ block }) {
 
   }, [activeCard]);
 
-  console.log("ExpandedCardsGroup render", block);
-
   return (
   <>
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
