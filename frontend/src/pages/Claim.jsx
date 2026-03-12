@@ -1,61 +1,51 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '../components/layout/Navbar';
 import BtnBack from '../components/common/BtnBack';
 import Button from '../components/common/Button';
 import { Title, Text } from '../components/Typography';
 import { ClaimService } from '../api/services/ClaimService';
+import { useClaimForm } from '../hooks/useClaimForm';
 
 function Claim() {
-
-  const [formData, setFormData] = useState({
-    type: '',
-    full_name: '',
-    email: '',
-    location: '',
-    description: '',
-  });
-
+  const { formConfig, loading: configLoading } = useClaimForm();
+  const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [submitError, setSubmitError] = useState(null);
 
-  const claimType = [
-    'Accesibilidad física',
-    'Accesibilidad digital',
-    'Atención al público',
-    'Transporte público',
-    'Espacios públicos',
-    'Otros'
-  ];
+  useEffect(() => {
+    if (formConfig?.fields) {
+      const initialData = {};
+      formConfig.fields.forEach(field => {
+        initialData[field.name] = "";
+      });
+      setFormData(initialData);
+    }
+  }, [formConfig]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-
-    // limpia el error del campo al escribir
+    setFormData(prev => ({ ...prev, [name]: value }));
     setErrors(prev => ({ ...prev, [name]: "" }));
   };
 
-  // VALIDACIÓN
   const validate = () => {
     const newErrors = {};
+    const fields = formConfig?.fields || [];
 
-    if (!formData.type) newErrors.type = "Seleccione un tipo";
-    if (!formData.full_name.trim()) newErrors.full_name = "El nombre es obligatorio";
-
-    if (!formData.email.trim()) {
-      newErrors.email = "El email es obligatorio";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email inválido";
-    }
-
-    if (!formData.location.trim()) newErrors.location = "La ubicación es obligatoria";
-    if (!formData.description.trim()) newErrors.description = "La descripción es obligatoria";
+    fields.forEach(field => {
+      if (!field.required) return;
+      const value = formData[field.name];
+      if (!value || !value.toString().trim()) {
+        newErrors[field.name] = field.type === "select"
+          ? "Seleccione un tipo"
+          : `El campo ${field.label.toLowerCase()} es obligatorio`;
+      }
+      if (field.type === "email" && value && !/\S+@\S+\.\S+/.test(value)) {
+        newErrors[field.name] = "Email inválido";
+      }
+    });
 
     return newErrors;
   };
@@ -72,24 +62,56 @@ function Claim() {
     }
 
     setLoading(true);
-
     try {
       await ClaimService.sendClaim(formData);
       setSuccess(true);
-      setFormData({
-        type: '',
-        full_name: '',
-        email: '',
-        location: '',
-        description: '',
-      });
+      const resetData = {};
+      formConfig.fields.forEach(field => { resetData[field.name] = ""; });
+      setFormData(resetData);
     } catch (error) {
-      console.log(formData)
+      console.log(formData);
       setSubmitError("Ocurrió un error al enviar el formulario.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const renderField = (field) => {
+    const commonProps = {
+      name: field.name,
+      value: formData[field.name] || "",
+      onChange: handleChange,
+      "aria-invalid": !!errors[field.name],
+      className: "px-4 py-2 border rounded-lg"
     };
-  }
+
+    return (
+      <div key={field.name} className="flex flex-col gap-2">
+        <label className="text-sm font-medium">
+          {field.label} {field.required && "*"}
+        </label>
+
+        {field.type === "select" ? (
+          <select {...commonProps}>
+            <option value="">Seleccione</option>
+            {(formConfig?.claim_types || []).map(type => (
+              <option key={type} value={type}>{type}</option>
+            ))}
+          </select>
+        ) : field.type === "textarea" ? (
+          <textarea {...commonProps} rows={5} />
+        ) : (
+          <input {...commonProps} type={field.type} />
+        )}
+
+        {errors[field.name] && (
+          <p className="text-red-500 text-sm">{errors[field.name]}</p>
+        )}
+      </div>
+    );
+  };
+
+  if (configLoading) return null;
 
   return (
     <div className="bg-white min-h-screen flex flex-col items-center">
@@ -102,16 +124,13 @@ function Claim() {
       <div className="p-3 md:w-[70%] pt-20 md:pt-3 max-w-2xl">
 
         <section className="flex flex-col items-center text-center md:items-start mb-8">
-          <Title className="mb-4">Reclamos de Accesibilidad</Title>
-          <Text className="mb-6">
-            Complete el siguiente formulario para enviar su reclamo.
-          </Text>
+          <Title className="mb-4">{formConfig?.title}</Title>
+          <Text className="mb-6">{formConfig?.description}</Text>
           <Text className="mb-6 text-gray-500 italic text-center text-base font-medium">
-            Nota: Este formulario tiene fines informativos y de relevamiento. No constituye un canal oficial de reclamos.
+            {formConfig?.note}
           </Text>
         </section>
 
-        {/* MENSAJES POST-SUBMIT */}
         {success && (
           <div role="status" aria-live="polite" className="mb-4 p-3 bg-green-100 text-green-700 rounded">
             Reclamo enviado correctamente
@@ -126,85 +145,13 @@ function Claim() {
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
-          {/* TIPO */}
-          <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium">Tipo de queja *</label>
-            <select
-              name="type"
-              value={formData.type}
-              onChange={handleChange}
-              aria-invalid={!!errors.type}
-              className="px-4 py-2 border rounded-lg"
-            >
-              <option value="">Seleccione</option>
-              {claimType.map(type => (
-                <option key={type} value={type}>{type}</option>
-              ))}
-            </select>
-            {errors.type && <p className="text-red-500 text-sm">{errors.type}</p>}
-          </div>
+          {(formConfig?.fields || []).map(field => renderField(field))}
 
-          {/* NOMBRE */}
-          <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium">Nombre completo *</label>
-            <input
-              name="full_name"
-              value={formData.full_name}
-              onChange={handleChange}
-              aria-invalid={!!errors.full_name}
-              className="px-4 py-2 border rounded-lg"
-            />
-            {errors.full_name && <p className="text-red-500 text-sm">{errors.full_name}</p>}
-          </div>
-
-          {/* EMAIL */}
-          <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium">Email *</label>
-            <input
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              aria-invalid={!!errors.email}
-              className="px-4 py-2 border rounded-lg"
-            />
-            {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-          </div>
-
-          {/* UBICACION */}
-          <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium">Ubicación *</label>
-            <input
-              name="location"
-              value={formData.location}
-              onChange={handleChange}
-              aria-invalid={!!errors.location}
-              className="px-4 py-2 border rounded-lg"
-            />
-            {errors.location && <p className="text-red-500 text-sm">{errors.location}</p>}
-          </div>
-
-          {/* DESCRIPCION */}
-          <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium">Descripción *</label>
-            <textarea
-              name="description"
-              rows={5}
-              value={formData.description}
-              onChange={handleChange}
-              aria-invalid={!!errors.description}
-              className="px-4 py-2 border rounded-lg"
-            />
-            {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
-          </div>
-          
           <input type="text" name="_gotcha" style={{ display: "none" }} />
 
-          {/* BOTON SUBMIT */}
           <div className="mt-4">
             <Button type="submit" className="w-full" disabled={loading}>
-              <Text>
-                {loading ? "Enviando..." : "Enviar reclamo"}
-              </Text>
+              <Text>{loading ? "Enviando..." : "Enviar reclamo"}</Text>
             </Button>
           </div>
 
