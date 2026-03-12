@@ -5,6 +5,7 @@ import BtnBack from "../components/common/BtnBack";
 import Navbar from "../components/layout/Navbar";
 import { Title, Text } from "../components/Typography";
 import SectionBlock from "../components/sections/SectionBlock";
+import { StorageService } from "../api/services/StorageService";
 
 /**
  * Section
@@ -91,11 +92,20 @@ function Section({ data: initialData }) {
             )}
             {isEditing && (
               <div className="mt-2">
-                <label className="text-xs font-bold text-gray-500 uppercase">URL de la Imagen</label>
+                <label className="text-xs font-bold text-gray-500 uppercase">Cambiar imagen</label>
                 <input
-                  name="image"
-                  value={editData.image || ""}
-                  onChange={handleChange}
+                  type="file"
+                  accept="image/*"
+                  onChange={async (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    try {
+                      const url = await StorageService.uploadImage('section_covers', file);
+                      setEditData(prev => ({ ...prev, image: url }));
+                    } catch (err) {
+                      console.error("Error subiendo imagen:", err);
+                    }
+                  }}
                   className="w-full p-2 border rounded text-sm bg-white"
                 />
               </div>
