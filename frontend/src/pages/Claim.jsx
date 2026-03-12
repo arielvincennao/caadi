@@ -5,14 +5,19 @@ import Button from '../components/common/Button';
 import { Title, Text } from '../components/Typography';
 import { ClaimService } from '../api/services/ClaimService';
 import { useClaimForm } from '../hooks/useClaimForm';
+import { useAuth } from '../context/AuthContext';
 
 function Claim() {
   const { formConfig, loading: configLoading } = useClaimForm();
+  const { isAuthenticated } = useAuth();
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [submitError, setSubmitError] = useState(null);
+  const [showClaims, setShowClaims] = useState(false);
+  const [claims, setClaims] = useState([]);
+  const [claimsLoading, setClaimsLoading] = useState(false);
 
   useEffect(() => {
     if (formConfig?.fields) {
@@ -24,6 +29,21 @@ function Claim() {
     }
   }, [formConfig]);
 
+  const handleToggleClaims = async () => {
+    if (!showClaims && claims.length === 0) {
+      setClaimsLoading(true);
+      try {
+        const data = await ClaimService.getAll();
+        setClaims(data);
+      } catch (err) {
+        console.error("Error cargando reclamos:", err);
+      } finally {
+        setClaimsLoading(false);
+      }
+    }
+    setShowClaims(prev => !prev);
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -33,7 +53,6 @@ function Claim() {
   const validate = () => {
     const newErrors = {};
     const fields = formConfig?.fields || [];
-
     fields.forEach(field => {
       if (!field.required) return;
       const value = formData[field.name];
@@ -46,7 +65,6 @@ function Claim() {
         newErrors[field.name] = "Email inválido";
       }
     });
-
     return newErrors;
   };
 
@@ -54,13 +72,11 @@ function Claim() {
     e.preventDefault();
     setSuccess(false);
     setSubmitError(null);
-
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
-
     setLoading(true);
     try {
       await ClaimService.sendClaim(formData);
@@ -84,13 +100,11 @@ function Claim() {
       "aria-invalid": !!errors[field.name],
       className: "px-4 py-2 border rounded-lg"
     };
-
     return (
       <div key={field.name} className="flex flex-col gap-2">
         <label className="text-sm font-medium">
           {field.label} {field.required && "*"}
         </label>
-
         {field.type === "select" ? (
           <select {...commonProps}>
             <option value="">Seleccione</option>
@@ -103,7 +117,6 @@ function Claim() {
         ) : (
           <input {...commonProps} type={field.type} />
         )}
-
         {errors[field.name] && (
           <p className="text-red-500 text-sm">{errors[field.name]}</p>
         )}
@@ -121,7 +134,51 @@ function Claim() {
         <BtnBack />
       </div>
 
-      <div className="p-3 md:w-[70%] pt-20 md:pt-3 max-w-2xl">
+      <div className="p-3 md:w-[70%] pt-20 md:pt-3 max-w-2xl w-full">
+
+        {isAuthenticated && (
+          <div className="mb-6 p-4 bg-white border-l-4 border-blue-600 shadow-sm flex justify-between items-center rounded-r-lg">
+            <span className="font-bold text-blue-800">Panel de Administración</span>
+            <button
+              onClick={handleToggleClaims}
+              className="bg-blue-600 text-white px-4 py-2 rounded font-medium hover:bg-blue-700 transition"
+            >
+              {showClaims ? "Ocultar reclamos" : "Ver reclamos"}
+            </button>
+          </div>
+        )}
+
+        {showClaims && isAuthenticated && (
+          <div className="mb-8 border rounded-xl overflow-hidden shadow-sm">
+            <div className="bg-blue-50 px-4 py-3 border-b">
+              <span className="font-bold text-blue-800">Reclamos recibidos</span>
+            </div>
+            {claimsLoading ? (
+              <p className="p-4 text-sm text-gray-500">Cargando...</p>
+            ) : claims.length === 0 ? (
+              <p className="p-4 text-sm text-gray-500">No hay reclamos aún.</p>
+            ) : (
+              <div className="divide-y">
+                {claims.map(claim => (
+                  <div key={claim.id} className="p-4 flex flex-col gap-1">
+                    <div className="flex justify-between items-start">
+                      <span className="font-semibold text-sm">{claim.full_name}</span>
+                      <span className="text-xs text-gray-400">
+                        {new Date(claim.created_at).toLocaleDateString("es-AR", {
+                          day: "numeric", month: "long", year: "numeric"
+                        })}
+                      </span>
+                    </div>
+                    <span className="text-xs text-blue-600 font-medium">{claim.type}</span>
+                    <span className="text-xs text-gray-500">{claim.email}</span>
+                    {claim.location && <span className="text-xs text-gray-500">📍 {claim.location}</span>}
+                    <p className="text-sm text-gray-700 mt-1">{claim.description}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
 
         <section className="flex flex-col items-center text-center md:items-start mb-8">
           <Title className="mb-4">{formConfig?.title}</Title>
@@ -144,18 +201,15 @@ function Claim() {
         )}
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-
           {(formConfig?.fields || []).map(field => renderField(field))}
-
           <input type="text" name="_gotcha" style={{ display: "none" }} />
-
           <div className="mt-4">
             <Button type="submit" className="w-full" disabled={loading}>
               <Text>{loading ? "Enviando..." : "Enviar reclamo"}</Text>
             </Button>
           </div>
-
         </form>
+
       </div>
     </div>
   );
