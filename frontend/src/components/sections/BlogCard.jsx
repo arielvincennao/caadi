@@ -3,8 +3,9 @@ import { useAuth } from "../../context/AuthContext";
 import { ContentBlockService } from "../../api/services/ContentBlockService";
 import { Text } from "../Typography";
 import Button from "../common/Button";
+import { StorageService } from "../../api/services/StorageService";
 
-export default function BlogCard({ card: initialCard, className, blockId, allCards }) {
+export default function BlogCard({ card: initialCard, className, blockId }) {
   const { isAuthenticated } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [card, setCard] = useState(initialCard);
@@ -20,10 +21,7 @@ export default function BlogCard({ card: initialCard, className, blockId, allCar
 
   const handleSave = async () => {
     try {
-      const updatedCards = allCards.map(c =>
-        c.id === card.id ? card : c
-      );
-      await ContentBlockService.updateBlock(blockId, { cards: updatedCards });
+      await ContentBlockService.updateBlock(blockId, card);
       setIsEditing(false);
     } catch (err) {
       console.error("Error guardando card:", err);
@@ -62,7 +60,22 @@ export default function BlogCard({ card: initialCard, className, blockId, allCar
         <img src={card.image} alt={card.title} className="w-full h-48 object-cover" />
         {isEditing && (
           <div className="absolute inset-0 bg-black/40 flex items-center justify-center p-4">
-            <input name="image" value={card.image || ""} onChange={handleChange} placeholder="URL de la imagen" className="w-full p-2 text-xs rounded border border-white bg-white/90 outline-none" />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                try {
+                  const folder = card.ubication?.includes('cultura') ? 'cultura_card_covers' : 'centrodia_card_covers';
+                  const url = await StorageService.uploadImage(folder, file);
+                  setCard(prev => ({ ...prev, image: url }));
+                } catch (err) {
+                  console.error("Error subiendo imagen:", err);
+                }
+              }}
+              className="w-full p-2 text-xs rounded border border-white bg-white/90 outline-none"
+            />
           </div>
         )}
       </div>
