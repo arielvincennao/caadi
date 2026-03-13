@@ -1,6 +1,10 @@
 import { ClaimRepository } from "../repositories/ClaimRepository";
 
 export const ClaimService =  {
+    async getAll() {
+        return await ClaimRepository.getAll();
+    },
+    
     async sendClaim(formData) {
         await ClaimRepository.insert(formData);
         await ClaimService._sendEmail(formData);
