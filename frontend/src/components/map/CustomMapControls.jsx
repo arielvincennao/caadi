@@ -1,4 +1,3 @@
-// src/components/map/CustomMapControls.jsx
 import { useMap } from "react-leaflet";
 import Button from "../common/Button";
 

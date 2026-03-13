@@ -13,7 +13,7 @@ import OfficeMarker from "./OfficeMarker";
 const MapView = () => {
     const [searchParams] = useSearchParams();
     const section = searchParams.get("section");
-    const id = searchParams.get("id");
+    const id = searchParams.get("officeId");
     const customTitle = searchParams.get("mapTitle");
 
     const {
