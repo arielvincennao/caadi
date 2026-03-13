@@ -7,6 +7,7 @@ import Dashboard from './pages/admin/Dashboard'
 import Agradecimientos from './pages/Agradecimientos'
 import DynamicSection from './pages/DynamicSection.jsx'
 import Claim from './pages/Claim.jsx'
+import AddSection from './pages/AddSection.jsx'
 import { PrivateRoute, AuthProvider} from './context/AuthContext.jsx'
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/seccion/:slug" element={<DynamicSection />} />
         <Route path="/agradecimientos" element={<Agradecimientos />} />
         <Route path="/reclamos" element={<Claim />} />
+        <Route path="/add-seccion" element={<AddSection />} />
 
         <Route path="/admin" element={<Admin />} />
         <Route

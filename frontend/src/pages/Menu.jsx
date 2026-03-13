@@ -7,13 +7,24 @@ import { supabase } from "../../db/supabaseClient";
 
 function Menu() {
   const [menuOptions, setMenuOptions] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false); // Estado para el admin
 
   useEffect(() => {
-    async function fetchMenu() {
+    async function fetchData() {
+      // 1. Verificar sesión/rol del usuario
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      // Aquí podrías chequear un campo 'role' en tu tabla de perfiles
+      // Por ahora, simulamos que si existe un usuario, es admin (o podés hardcodear tu email)
+      if (user) {
+        setIsAdmin(true); 
+      }
+
+      // 2. Fetch del menú
       const { data, error } = await supabase
         .from("section")
         .select("title, icon, slug, position")
-        .order("position", { ascending: true }); //Ordena los items del menu por posición. Si se creara un nuevo item, se debe adjuntar la posición.
+        .order("position", { ascending: true });
 
       if (error) {
         console.error("Error:", error);
@@ -29,18 +40,19 @@ function Menu() {
       setMenuOptions(options);
     }
 
-    fetchMenu();
+    fetchData();
   }, []);
 
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       <div className="absolute top-23 left-4 mt-5 md:top-25 md:left-10 z-10">
         <BtnBack />
       </div>
       <section className="flex flex-col items-center pb-10 pt-20 md:pt-4">
         <Title className="m-4 md:text-2xl">Menú principal</Title>
         <ul className="space-y-5">
+          {/* Opciones normales */}
           {menuOptions.map((option) => (
             <li key={option.title}>
               <Card icon={option.icon} to={option.to} className="text-start">
@@ -48,17 +60,43 @@ function Menu() {
               </Card>
             </li>
           ))}
-          {/* El boton de reclamos de accesibilidad es estatico. Siempre estara debajo de las opciones del menu que vienen de la base de datos. */}
+
+
           <li key="reclamos-accesibilidad">
             <Card icon="reclamos" to="/reclamos" className="text-start">
               <span>Reclamos de accesibilidad</span>
             </Card>
           </li>
+
+
+          {/* Opciones de Admin con estilos distintos */}
+          {isAdmin && (
+            <>
+              <li key="agregar-seccion">
+                <Card 
+                  icon="add" 
+                  to="/add-seccion" 
+                  className="text-start border-dashed border-2 border-blue-500 bg-blue-50 opacity-90"
+                >
+                  <span className="font-bold text-blue-700 underline italic">Agregar una sección (Admin)</span>
+                </Card>
+              </li>
+              <li key="agregar-oficina">
+                <Card 
+                  icon="office" 
+                  to="" 
+                  className="text-start border-dashed border-2 border-blue-500 bg-blue-50 opacity-90"
+                >
+                  <span className="font-bold text-blue-700 underline italic">Agregar oficina (Admin)</span>
+                </Card>
+              </li>
+            </>
+          )}
         </ul>
+
       </section>
-    </div>  
-  )
+    </div>
+  );
 }
 
-export default Menu
-
+export default Menu;
