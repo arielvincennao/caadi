@@ -1,56 +1,55 @@
+import { useAuth } from "../../../context/AuthContext";
+import { ContentBlockService } from "../../../api/services/ContentBlockService";
 import BlogCard from "../BlogCard";
 
-export default function BlogBlock({ block, isEditing, isAdmin, onChange }) {
-  // cards are stored directly in the block's data under `cards` array
-  const cards = (block.data && block.data.cards) || [];
+export default function BlogBlock({ block, isEditing, isAdmin }) {
+  const { isAuthenticated } = useAuth();
+  const cards = block.children || [];
 
-  const handleAdd = () => {
-    const newCard = { id: `new-${Date.now()}` };
-    const updatedData = { ...(block.data || {}), cards: [...cards, newCard] };
-    onChange && onChange(block.id, updatedData);
-  };
-
-  const handleCardUpdate = (updatedCard) => {
-    const updatedCards = cards.map(c => (c.id === updatedCard.id ? updatedCard : c));
-    const updatedData = { ...(block.data || {}), cards: updatedCards };
-    onChange && onChange(block.id, updatedData);
-  };
-
-  const handleCardDelete = async (id) => {
-    const remaining = cards.filter(c => c.id !== id);
-    const updatedData = { ...(block.data || {}), cards: remaining };
-    // persist immediately if block exists
-    if (block.id && !String(block.id).startsWith('new-')) {
-      await ContentBlockService.updateBlock(block.id, updatedData);
+  const handleAdd = async () => {
+    try {
+      await ContentBlockService.createBlock(
+        block.section_id,
+        'card',
+        { image: '', title: 'Nueva card', description: '', date: '', ubication: '' },
+        cards.length,
+        block.id
+      );
+      window.location.reload();
+    } catch (err) {
+      console.error("Error agregando card:", err);
     }
-    onChange && onChange(block.id, updatedData);
-    window.location.reload();
+  };
+
+  const handleCardDelete = async (cardId) => {
+    try {
+      await ContentBlockService.deleteBlock(cardId);
+      window.location.reload();
+    } catch (err) {
+      console.error("Error eliminando card:", err);
+    }
   };
 
   return (
-    <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-      {isAdmin && isEditing && (
+    <section className="mb-10">
+      {isAuthenticated && isEditing && (
         <button
           onClick={handleAdd}
-          className="col-span-full mb-4 bg-blue-600 text-white px-4 py-2 rounded cursor-pointer"
+          className="w-full mb-4 bg-blue-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-700"
         >
-          Añadir entrada de blog
+          + Añadir entrada de blog
         </button>
       )}
-      {cards.map((card) => (
-        <BlogCard
-          card={card}
-          key={card.id}
-          blockId={block.id}          
-          allCards={cards}
-          isEditing={isEditing}
-          isAdmin={isAdmin}
-          onUpdate={handleCardUpdate}
-          onDelete={handleCardDelete}
-        />
-      ))}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {cards.map((card) => (
+          <BlogCard
+            card={card.data}
+            key={card.id}
+            blockId={card.id}
+            onDelete={isAuthenticated && isEditing ? handleCardDelete : null}
+          />
+        ))}
+      </div>
     </section>
   );
 }
-
-BlogBlock.hasEditor = true;

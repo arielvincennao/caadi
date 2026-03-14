@@ -36,6 +36,7 @@ export function mapBlock(block) {
   return {
     id: block.id,
     type: String(block.type || ""),
+    section_id: block.section_id,
     data,
     ...data,
   };
