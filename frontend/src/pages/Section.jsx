@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { SectionService } from "../api/services/SectionService";
+import { ContentBlockService } from "../api/services/ContentBlockService";
 import BtnBack from "../components/common/BtnBack";
 import Navbar from "../components/layout/Navbar";
 import { Title, Text } from "../components/Typography";
@@ -19,6 +20,7 @@ function Section({ data: initialData }) {
   const { isAuthenticated } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState(initialData || {});
+  const [newBlockType, setNewBlockType] = useState("");
 
   useEffect(() => {
     if (initialData) setEditData(initialData);
@@ -33,11 +35,57 @@ function Section({ data: initialData }) {
 
   const handleSave = async () => {
     try {
+      // primero actualizamos los datos básicos de la sección
       await SectionService.update(editData.id, {
         title: editData.title,
         description: editData.description,
         image: editData.image
       });
+
+      // luego persistimos cambios en los bloques (creación/actualización)
+      const persistBlocks = async (blocks, parentId = null) => {
+        for (let i = 0; i < blocks.length; i++) {
+          const b = blocks[i];
+          if (String(b.id).startsWith("new-")) {
+            // crear bloque nuevo y reemplazar el id en estado
+            const created = await ContentBlockService.createBlock(
+              editData.id,
+              b.type,
+              b.data || {},
+              i,
+              parentId
+            );
+            // update local state id
+            setEditData(prev => {
+              const replaceId = (blocksList) => {
+                return blocksList.map(x => {
+                  if (x.id === b.id) {
+                    return { ...x, id: created.id };
+                  }
+                  if (x.children) {
+                    return { ...x, children: replaceId(x.children) };
+                  }
+                  return x;
+                });
+              };
+              return {
+                ...prev,
+                rootBlocks: replaceId(prev.rootBlocks || [])
+              };
+            });
+            // continue with children if any (unlikely initially)
+            await persistBlocks(b.children || [], created.id);
+          } else {
+            await ContentBlockService.updateBlock(b.id, b.data || {});
+            if (b.children && b.children.length) {
+              await persistBlocks(b.children, b.id);
+            }
+          }
+        }
+      };
+
+      await persistBlocks(editData.rootBlocks || []);
+
       setIsEditing(false);
     } catch (err) {
       console.error("Error guardando sección:", err);
@@ -45,6 +93,92 @@ function Section({ data: initialData }) {
   };
 
   const rootBlocks = editData.rootBlocks ?? [];
+
+  // helper to update a block recursively by id
+  const updateBlockById = (blocks, id, updater) => {
+    return blocks.map(b => {
+      if (b.id === id) {
+        return typeof updater === 'function' ? updater(b) : updater;
+      }
+      if (b.children) {
+        return { ...b, children: updateBlockById(b.children, id, updater) };
+      }
+      return b;
+    });
+  };
+
+  // remove a block (and its descendants) from the tree by id
+  const removeBlockById = (blocks, id) => {
+    return blocks
+      .filter(b => b.id !== id)
+      .map(b => {
+        if (b.children) {
+          return { ...b, children: removeBlockById(b.children, id) };
+        }
+        return b;
+      });
+  };
+
+  const handleBlockChange = (id, newData) => {
+    setEditData(prev => ({
+      ...prev,
+      rootBlocks: updateBlockById(prev.rootBlocks || [], id, b => ({ ...b, data: newData }))
+    }));
+  };
+
+  const handleBlockDelete = async (id) => {
+    // optimistically remove from state
+    setEditData(prev => ({
+      ...prev,
+      rootBlocks: removeBlockById(prev.rootBlocks || [], id)
+    }));
+
+    // if block already exists in DB, delete it immediately
+    if (id && !String(id).startsWith("new-")) {
+      try {
+        await ContentBlockService.deleteBlock(id);
+      } catch (err) {
+        console.error("Error borrando bloque en la DB:", err);
+      }
+    }
+    // refresh page after deletion to reflect backend state
+    window.location.reload();
+  };
+
+
+  const handleAddBlock = (type) => {
+    let newBlock = { id: `new-${Date.now()}`, type, children: [] };
+    switch (type) {
+      case 'card':
+        newBlock.data = {};
+        break;
+      case 'link':
+        newBlock.data = { name: '', href: '', icon: '' };
+        break;
+      case 'map':
+        newBlock.data = { section: '', officeId: '', title: '' };
+        break;
+      case 'steps':
+        newBlock.data = { title: '', steps: [] };
+        break;
+      case 'list':
+        // start with a single example list item for convenience
+        newBlock.data = { title: '', list: [{ id: 1, text: 'Ejemplo de texto' }] };
+        break;
+      case 'expandedCardsGroup':
+        // start with empty children array
+        break;
+      case 'blogEntry':
+        // will create container for cards
+        break;
+      default:
+        newBlock.data = {};
+    }
+    setEditData(prev => ({
+      ...prev,
+      rootBlocks: [...(prev.rootBlocks || []), newBlock]
+    }));
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center">
@@ -146,8 +280,46 @@ function Section({ data: initialData }) {
           </div>
         </section>
 
+        {isAuthenticated && isEditing && (
+          <div className="mb-4 flex items-center gap-2">
+            <select
+              value={newBlockType}
+              onChange={(e) => setNewBlockType(e.target.value)}
+              className="p-2 border rounded"
+            >
+              <option value="" disabled>Seleccione tipo de bloque</option>
+              <option value="card">Card</option>
+              <option value="link">Link</option>
+              <option value="map">Map</option>
+              <option value="steps">Steps</option>
+              <option value="list">List</option>
+              <option value="expandedCardsGroup">Expanded Cards Group</option>
+              <option value="blogEntry">Blog Entry</option>
+            </select>
+            <button
+              disabled={!newBlockType}
+              onClick={() => {
+                if (newBlockType) {
+                  handleAddBlock(newBlockType);
+                  setNewBlockType("");
+                }
+              }}
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Añadir bloque
+            </button>
+          </div>
+        )}
+
         {rootBlocks.map((block) => (
-          <SectionBlock key={block.id} block={block} />
+          <SectionBlock
+            key={block.id}
+            block={block}
+            isEditing={isEditing}
+            isAdmin={isAuthenticated}
+            onChange={handleBlockChange}
+            onDelete={handleBlockDelete}
+          />
         ))}
       </div>
     </div>

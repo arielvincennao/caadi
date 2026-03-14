@@ -4,13 +4,13 @@ import { Text } from "../Typography";
 import { Icon } from "../common/Icon";
 import { ContentBlockService } from "../../api/services/ContentBlockService";
 
-export default function CardSection({ card: initialCard, blockId, className, onClick, isActive }) {
+export default function CardSection({ card: initialCard, blockId, className, onClick, isActive, isEditing: propEditing, isAdmin, onUpdate }) {
   const { isAuthenticated } = useAuth();
-  const [isEditing, setIsEditing] = useState(false);
-  const [card, setCard] = useState(initialCard);
+  const [localEditing, setLocalEditing] = useState(false);
+  const [card, setCard] = useState(initialCard || {});
 
   useEffect(() => {
-    setCard(initialCard);
+    setCard(initialCard || {});
   }, [initialCard]);
 
   const handleChange = (e) => {
@@ -21,8 +21,10 @@ export default function CardSection({ card: initialCard, blockId, className, onC
   const handleSave = async (e) => {
     if (e) e.stopPropagation();
     try {
-      await ContentBlockService.updateBlock(blockId, initialCard)
-      setIsEditing(false);
+      await ContentBlockService.updateBlock(blockId, card);
+      setLocalEditing(false);
+      // inform parent component about changed data
+      if (onUpdate) onUpdate(card);
     } catch (err) {
       console.error("Error guardando card:", err);
     }
@@ -30,22 +32,23 @@ export default function CardSection({ card: initialCard, blockId, className, onC
 
   const isLink = Boolean(card.href);
   const isExpanded = Boolean(onClick);
-  const Wrapper = isEditing ? "div" : (isLink ? "a" : isExpanded ? "button" : "div");
+  const activeEditing = propEditing || localEditing;
+  const Wrapper = activeEditing ? "div" : (isLink ? "a" : isExpanded ? "button" : "div");
 
   return (
     <Wrapper
-      {...(isLink && !isEditing && { href: card.href, target: "_blank" })}
-      {...(isExpanded && !isEditing && { type: "button", onClick, "aria-expanded": isActive, "aria-controls": `card-content-${blockId}`})}
+      {...(isLink && !activeEditing && { href: card.href, target: "_blank" })}
+      {...(isExpanded && !activeEditing && { type: "button", onClick, "aria-expanded": isActive, "aria-controls": `card-content-${blockId}`})}
       style={isActive ? { borderColor: '#475569', backgroundColor: '#f1f5f9', borderWidth: '2px' } : {}}
-      className={`flex flex-col items-center text-center max-w-sm p-6 border rounded-2xl bg-[#FCFCFC] border-gray-400 relative group ${!isEditing ? 'cursor-pointer' : ''} ${className ?? ''}`}
+      className={`flex flex-col items-center text-center max-w-sm p-6 border rounded-2xl bg-[#FCFCFC] border-gray-400 relative group ${!activeEditing ? 'cursor-pointer' : ''} ${className ?? ''}`}
     >
       {isAuthenticated && (
         <div className="absolute top-2 right-2 z-10 flex gap-1">
-          {!isEditing ? (
+          {!propEditing && !localEditing ? (
             <div
               role="button"
               tabIndex={0}
-              onClick={(e) => { e.stopPropagation(); setIsEditing(true); }}
+              onClick={(e) => { e.stopPropagation(); setLocalEditing(true); }}
               className="bg-blue-600 text-white p-1.5 rounded-full group-hover:opacity-100 transition-opacity shadow-sm cursor-pointer"
               title="Editar Card"
             >
@@ -56,15 +59,15 @@ export default function CardSection({ card: initialCard, blockId, className, onC
           ) : (
             <div className="flex gap-1">
               <div role="button" tabIndex={0} onClick={handleSave} className="bg-green-600 text-white px-2 py-1 rounded text-[10px] font-bold shadow-sm cursor-pointer">OK</div>
-              <div role="button" tabIndex={0} onClick={(e) => { e.stopPropagation(); setIsEditing(false); setCard(initialCard); }} className="bg-gray-500 text-white px-2 py-1 rounded text-[10px] font-bold shadow-sm cursor-pointer">X</div>
+              <div role="button" tabIndex={0} onClick={(e) => { e.stopPropagation(); setLocalEditing(false); setCard(initialCard); }} className="bg-gray-500 text-white px-2 py-1 rounded text-[10px] font-bold shadow-sm cursor-pointer">X</div>
             </div>
           )}
         </div>
       )}
 
       <div className="flex flex-col items-center mb-4">
-        <Icon name={card.icon} className={`w-16 h-16 ${isEditing ? 'opacity-40' : ''}`} />
-        {isEditing && (
+        <Icon name={card.icon} className={`w-16 h-16 ${activeEditing ? 'opacity-40' : ''}`} />
+        {activeEditing && (
           <input
             name="icon"
             value={card.icon || ""}
@@ -76,7 +79,7 @@ export default function CardSection({ card: initialCard, blockId, className, onC
         )}
       </div>
 
-      {isEditing ? (
+      {activeEditing ? (
         <input
           name="title"
           value={card.title || ""}
@@ -88,7 +91,7 @@ export default function CardSection({ card: initialCard, blockId, className, onC
         <h4 id={`card-title-${blockId}`} className="mb-3 text-2xl font-semibold leading-8">{card.title}</h4>
       )}
 
-      {isEditing ? (
+      {activeEditing ? (
         <textarea
           name="description"
           value={card.description || ""}
@@ -101,7 +104,7 @@ export default function CardSection({ card: initialCard, blockId, className, onC
         <Text>{card.description}</Text>
       )}
 
-      {isEditing && card.href && (
+      {(propEditing || localEditing) && card.href && (
         <div className="mt-4 w-full">
           <label className="text-[10px] font-bold text-gray-400 uppercase italic">Link destino:</label>
           <input

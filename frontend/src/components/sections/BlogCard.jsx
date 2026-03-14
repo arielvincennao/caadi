@@ -5,7 +5,7 @@ import { Text } from "../Typography";
 import Button from "../common/Button";
 import { StorageService } from "../../api/services/StorageService";
 
-export default function BlogCard({ card: initialCard, className, blockId }) {
+export default function BlogCard({ card: initialCard, className, blockId, onDelete }) {
   const { isAuthenticated } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [card, setCard] = useState(initialCard);
@@ -44,9 +44,16 @@ export default function BlogCard({ card: initialCard, className, blockId }) {
       {isAuthenticated && (
         <div className="absolute top-2 right-2 z-10 flex gap-2">
           {!isEditing ? (
-            <button onClick={() => setIsEditing(true)} className="bg-blue-600 text-white p-2 rounded-full shadow-md hover:bg-blue-700 transition" title="Editar Card">
-              ✏️
-            </button>
+            <>
+              <button onClick={() => setIsEditing(true)} className="bg-blue-600 text-white p-2 rounded-full shadow-md hover:bg-blue-700 transition" title="Editar Card">
+                ✏️
+              </button>
+              {onDelete && (
+                <button onClick={() => onDelete(blockId)} className="bg-red-600 text-white p-2 rounded-full shadow-md hover:bg-red-700 transition" title="Eliminar Card">
+                  🗑
+                </button>
+              )}
+            </>
           ) : (
             <>
               <button onClick={handleSave} className="bg-green-600 text-white px-3 py-1 rounded-lg shadow-md font-bold text-xs">Guardar</button>
@@ -57,9 +64,11 @@ export default function BlogCard({ card: initialCard, className, blockId }) {
       )}
 
       <div className="relative">
-        <img src={card.image} alt={card.title} className="w-full h-48 object-cover" />
+        {card.image && (
+          <img src={card.image} alt={card.title} className="w-full h-48 object-cover" />
+        )}
         {isEditing && (
-          <div className="absolute inset-0 bg-black/40 flex items-center justify-center p-4">
+          <div className={`${card.image ? 'absolute inset-0 bg-black/40' : 'h-48 bg-gray-100'} flex items-center justify-center p-4`}>
             <input
               type="file"
               accept="image/*"
