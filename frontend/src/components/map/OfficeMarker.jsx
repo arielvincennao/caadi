@@ -1,4 +1,3 @@
-// src/components/map/OfficeMarker.jsx
 import { Marker, Tooltip } from "react-leaflet";
 import { Icon } from "leaflet";
 import placeholderIcon from "./icons/placeholder.png";
