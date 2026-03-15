@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import CardSection from "../CardSection";
 import SectionBlock from "../SectionBlock";
 
-export default function ExpandedCardsGroup({ block }) {
+export default function ExpandedCardsGroup({ block, isEditing, isAdmin, onChange }) {
   const [activeId, setActiveId] = useState(null);
 
   const cardRefs = useRef({});
@@ -51,6 +51,7 @@ export default function ExpandedCardsGroup({ block }) {
 
   }, [activeCard]);
 
+  
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
@@ -63,14 +64,15 @@ export default function ExpandedCardsGroup({ block }) {
                 blockId={card.id}
                 onClick={() => setActiveId(isActive ? null : card.id)}
                 isActive={isActive}
+                isEditing={isEditing}
+                isAdmin={isAdmin}
+                onUpdate={(newData) => onChange && onChange(card.id, newData)}
               />
               {isActive && (
                 <div id={`card-content-${card.id}`} className="md:hidden p-6 rounded-xl mt-4 bg-white shadow-sm">
                   {card.children?.map(innerBlock => (
-                    <SectionBlock key={innerBlock.id} block={innerBlock} />
+                    <SectionBlock key={innerBlock.id} block={innerBlock} isEditing={isEditing} isAdmin={isAdmin} onChange={onChange} />
                   ))}
-
-
                 </div>
               )}
             </div>
@@ -95,12 +97,15 @@ export default function ExpandedCardsGroup({ block }) {
               }
             }}> 
             {activeCard.children?.map(innerBlock => (
-              <SectionBlock key={innerBlock.id} block={innerBlock} />
+              <SectionBlock key={innerBlock.id} block={innerBlock} isEditing={isEditing} isAdmin={isAdmin} onChange={onChange} />
             ))}
-
+          
           </div>
         </div>
       )}
     </>
   );
 }
+
+// the group itself doesn't need generic data textarea
+ExpandedCardsGroup.hasEditor = true;
