@@ -3,19 +3,26 @@ import { supabase } from "../../../db/supabaseClient";
 export const OfficeRepository = {
   async getAll() {
     const { data, error } = await supabase
-      .from("*, office_section(section_id)")
-      .select("*");
+      .from("office")
+      .select("*, office_section(section_id)");
     if (error) throw error;
     return data || [];
   },
 
   async getBySection(sectionSlug) {
+    const { data: sectionData, error: sectionError } = await supabase
+      .from("section")
+      .select("id")
+      .eq("slug", sectionSlug)
+      .single();
+    if (sectionError) throw sectionError;
+
     const { data, error } = await supabase
-      .from("office")
-      .select("*, office_section!inner(section_id, section!inner(slug))")
-      .eq("office_section.section.slug", sectionSlug);
+      .from("office_section")
+      .select("office:office_id(*)")
+      .eq("section_id", sectionData.id);
     if (error) throw error;
-    return data || [];
+    return data?.map(row => row.office) || [];
   },
 
   async getById(id) {
@@ -58,10 +65,10 @@ export const OfficeRepository = {
   },
 
   async linkSection(officeId, sectionId) {
-  const { error } = await supabase
-    .from("office_section")
-    .insert({ office_id: officeId, section_id: sectionId });
-  if (error) throw error;
-}
+    const { error } = await supabase
+      .from("office_section")
+      .insert({ office_id: officeId, section_id: sectionId });
+    if (error) throw error;
+  }
 
 }

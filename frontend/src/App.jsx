@@ -7,6 +7,8 @@ import Dashboard from './pages/admin/Dashboard'
 import Agradecimientos from './pages/Agradecimientos'
 import DynamicSection from './pages/DynamicSection.jsx'
 import Claim from './pages/Claim.jsx'
+import Oficinas from './pages/admin/oficinas/Oficinas.jsx'
+import FormularioOficina from './pages/admin/oficinas/FormularioOficina.jsx'
 import AddSection from './pages/AddSection.jsx'
 import { PrivateRoute, AuthProvider} from './context/AuthContext.jsx'
 
