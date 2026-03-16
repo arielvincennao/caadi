@@ -6,6 +6,10 @@ export const OfficeService = {
     return await OfficeRepository.getBySection(slug);
   },
 
+  async getAll() {
+    return await OfficeRepository.getAll();
+  },
+
   async getById(id) {
     const office = await OfficeRepository.getById(id);
     return office ? [office] : [];

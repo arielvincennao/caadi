@@ -28,19 +28,19 @@ export default function MapBlock({ block, isEditing, isAdmin, onChange }) {
         }
         
         if (officeId) {
-            params.append('id', officeId);
+            params.append('officeId', officeId);
         }
 
-        if (title) {
-            params.append('title', title);
+        if (mapTitle) {
+            params.append('mapTitle', mapTitle);
         }
 
         const queryString = params.toString();
 
         if (queryString) {
-            navigate(`/map?${queryString}`);
+            navigate(`/mapa?${queryString}`);
         } else {
-            navigate('/map');
+            navigate('/mapa');
         }
     };
 

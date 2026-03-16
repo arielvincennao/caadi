@@ -1,4 +1,3 @@
-// src/components/map/RecenterMap.jsx
 import { useEffect } from "react";
 import { useMap } from "react-leaflet";
 
