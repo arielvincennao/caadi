@@ -5,6 +5,7 @@ export default function LinkBlock({ block, isEditing, isAdmin, onChange }) {
   const [data, setData] = useState(block.data || {});
   const [localEditing, setLocalEditing] = useState(false);
 
+
   useEffect(() => {
     setData(block.data || {});
   }, [block.data]);
@@ -15,6 +16,8 @@ export default function LinkBlock({ block, isEditing, isAdmin, onChange }) {
     setData(updated);
     onChange && onChange(block.id, updated);
   };
+
+  
 
   return (
     <div className="relative">

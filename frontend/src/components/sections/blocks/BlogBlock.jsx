@@ -2,7 +2,7 @@ import { useAuth } from "../../../context/AuthContext";
 import { ContentBlockService } from "../../../api/services/ContentBlockService";
 import BlogCard from "../BlogCard";
 
-export default function BlogBlock({ block, isEditing, isAdmin }) {
+export default function BlogBlock({ block, isEditing }) {
   const { isAuthenticated } = useAuth();
   const cards = block.children || [];
 

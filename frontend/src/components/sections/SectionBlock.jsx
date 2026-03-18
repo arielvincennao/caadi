@@ -5,43 +5,35 @@ import ListBlock from "./blocks/ListBlock";
 import BlogBlock from "./blocks/BlogBlock";
 import MapBlock from "./blocks/MapBlock";
 import ExpandedCardsGroup from "./blocks/ExpandedCardsGroup";
+import BtnControl from "../common/BtnControl";
+import { Icon } from "../common/Icon";
 
 const BLOCK_RENDER = {
-    card: CardBlock,
-    link: LinkBlock,
-    map: MapBlock,
-    steps: StepsBlock,
-    list: ListBlock,
-    expandedCardsGroup : ExpandedCardsGroup,
-    blogEntry: BlogBlock
+  card: CardBlock,
+  link: LinkBlock,
+  map: MapBlock,
+  steps: StepsBlock,
+  list: ListBlock,
+  expandedCardsGroup: ExpandedCardsGroup,
+  blogEntry: BlogBlock
 };
 
 export default function SectionBlock({ block, isEditing, isAdmin, onChange, onDelete }) {
   const BlockComponent = BLOCK_RENDER[block.type];
 
-  const handleDataChange = (e) => {
-    if (!onChange) return;
-    try {
-      const parsed = JSON.parse(e.target.value);
-      onChange(block.id, parsed);
-    } catch (_) {
-      // ignore invalid JSON while typing
-    }
-  };
-
   if (!BlockComponent) return null;
 
-  // generic editor removed; each component handles its own UI
   return (
-    <div className="w-full relative mb-8">
+    <div className="w-full mb-8">
       {isAdmin && isEditing && onDelete && (
-        <button
-          onClick={() => onDelete(block.id)}
-          className="absolute top-2 right-10 z-20 bg-red-600 text-white p-1 rounded-full shadow-md hover:bg-red-700 cursor-pointer"
-          title="Eliminar bloque"
+
+        <BtnControl onClick={() => onDelete(block.id)}
+          title={"Eliminar bloque"}
+          className="bg-red-600 hover:bg-red-700 p-2"
         >
-          🗑
-        </button>
+          <Icon name={"eliminar"} className={"w-5 h-5"} />
+        </BtnControl>
+
       )}
 
       <BlockComponent
@@ -50,16 +42,6 @@ export default function SectionBlock({ block, isEditing, isAdmin, onChange, onDe
         isAdmin={isAdmin}
         onChange={onChange}
       >
-        {block.children?.map(child => (
-          <SectionBlock
-            key={child.id}
-            block={child}
-            isEditing={isEditing}
-            isAdmin={isAdmin}
-            onChange={onChange}
-            onDelete={onDelete}
-          />
-        ))}
       </BlockComponent>
     </div>
   );

@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../../context/AuthContext";
 import { Text } from "../Typography";
 import { Icon } from "../common/Icon";
-import { ContentBlockService } from "../../api/services/ContentBlockService";
 
-export default function CardSection({ card: initialCard, blockId, className, onClick, isActive, isEditing: propEditing, isAdmin, onUpdate }) {
-  const { isAuthenticated } = useAuth();
+
+export default function CardSection({ card: initialCard, className, onClick, isActive, isEditing: propEditing, isAdmin, onUpdate }) {;
   const [localEditing, setLocalEditing] = useState(false);
   const [card, setCard] = useState(initialCard || {});
 
@@ -18,16 +16,8 @@ export default function CardSection({ card: initialCard, blockId, className, onC
     setCard(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSave = async (e) => {
-    if (e) e.stopPropagation();
-    try {
-      await ContentBlockService.updateBlock(blockId, card);
-      setLocalEditing(false);
-      // inform parent component about changed data
-      if (onUpdate) onUpdate(card);
-    } catch (err) {
-      console.error("Error guardando card:", err);
-    }
+  const handleSave =  () => {
+   
   };
 
   const isLink = Boolean(card.href);
@@ -42,7 +32,7 @@ export default function CardSection({ card: initialCard, blockId, className, onC
       style={isActive ? { borderColor: '#475569', backgroundColor: '#f1f5f9', borderWidth: '2px' } : {}}
       className={`flex flex-col items-center text-center max-w-sm p-6 border rounded-2xl bg-[#FCFCFC] border-gray-400 relative group ${!activeEditing ? 'cursor-pointer' : ''} ${className ?? ''}`}
     >
-      {isAuthenticated && (
+      {isAdmin && (
         <div className="absolute top-2 right-2 z-10 flex gap-1">
           {!propEditing && !localEditing ? (
             <div
@@ -88,7 +78,7 @@ export default function CardSection({ card: initialCard, blockId, className, onC
           className="mb-3 text-2xl font-semibold leading-8 text-center border-b border-blue-400 bg-transparent w-full outline-none"
         />
       ) : (
-        <h4 id={`card-title-${blockId}`} className="mb-3 text-2xl font-semibold leading-8">{card.title}</h4>
+        <h4 id={`card-title-${card.id}`} className="mb-3 text-2xl font-semibold leading-8">{card.title}</h4>
       )}
 
       {activeEditing ? (

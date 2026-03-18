@@ -46,7 +46,7 @@ function Button({
             type={type || 'button'}
             disabled={disabled}
         >
-            {icon ? <Icon name={icon} className='shrink-0 object-contain scale-50  text-white' /> : null}
+            {icon ? <Icon name={icon} className='object-contain w-6 h-5  text-white' /> : null}
             {children}
         </button>
     );
