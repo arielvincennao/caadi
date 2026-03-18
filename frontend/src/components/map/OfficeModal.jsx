@@ -1,10 +1,9 @@
 import { useEffect, useRef } from "react";
-import Button from "../common/Button"; // Ajusta la ruta de importación si es necesario
+import Button from "../common/Button";
 
 const OfficeModal = ({ office, onClose }) => {
 const modalRef = useRef(null);
 
-// Control de teclado y foco
 useEffect(() => {
 modalRef.current?.focus();
 
@@ -18,7 +17,6 @@ document.removeEventListener("keydown", handleKeyDown);
 };
 }, [onClose]);
 
-// Renderizado
 return (
 <div
 role="dialog"

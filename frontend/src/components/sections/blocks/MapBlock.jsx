@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button';
 import { OfficeService } from "../../../api/services/OfficeService";
 import { ContentBlockService } from "../../../api/services/ContentBlockService";
+import { Icon } from "../../common/Icon";
 
 export default function MapBlock({ block, isEditing, isAdmin, onChange }) {
     const navigate = useNavigate();
@@ -36,8 +37,7 @@ export default function MapBlock({ block, isEditing, isAdmin, onChange }) {
         const updated = {
             ...data,
             officeId: selectedId,
-            section: selectedOffice.sectionSlug || data.section,
-            title: data.title || selectedOffice.name 
+            section: selectedOffice.sectionSlug || data.section
         };
 
         setData(updated);
@@ -76,7 +76,7 @@ export default function MapBlock({ block, isEditing, isAdmin, onChange }) {
             {isAdmin && isEditing && (
                 <div className="absolute top-1 right-2 z-10 flex gap-1">
                     {!localEditing ? (
-                        <button onClick={() => setLocalEditing(true)} className="p-1 bg-blue-600 text-white rounded-full cursor-pointer">✏️</button>
+                        <button onClick={() => setLocalEditing(true)} className="p-1 bg-blue-600 text-white rounded-full cursor-pointer"><Icon name={"editar"} className={"w-6 h-6 p-1"} /></button>
                     ) : (
                         <>
                             <button onClick={handleSave} className="px-2 font-bold bg-green-500 text-sm text-white rounded-full cursor-pointer" title="Guardar cambios">Guardar cambios</button>
