@@ -1,39 +1,66 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button';
+import { OfficeService } from "../../../api/services/OfficeService";
+import { ContentBlockService } from "../../../api/services/ContentBlockService";
 
 export default function MapBlock({ block, isEditing, isAdmin, onChange }) {
     const navigate = useNavigate();
     const [data, setData] = useState(block.data || {});
     const [localEditing, setLocalEditing] = useState(false);
+    const [offices, setOffices] = useState([]);
 
     useEffect(() => {
-      setData(block.data || {});
+        setData(block.data || {});
     }, [block.data]);
 
+    useEffect(() => {
+        if (localEditing) {
+            OfficeService.getAll()
+                .then(setOffices)
+                .catch(err => console.error("Error cargando oficinas:", err));
+        }
+    }, [localEditing]);
+
     const handleChange = (e) => {
-      const { name, value } = e.target;
-      const updated = { ...data, [name]: value };
-      setData(updated);
-      onChange && onChange(block.id, updated);
+        const { name, value } = e.target;
+        const updated = { ...data, [name]: value };
+        setData(updated);
+        onChange && onChange(block.id, updated);
     };
 
-    const { section, officeId, title } = data;
+    const handleOfficeSelect = (e) => {
+        const selectedId = e.target.value;
+        const selectedOffice = offices.find(o => o.id === selectedId) || {};
+
+        const updated = {
+            ...data,
+            officeId: selectedId,
+            section: selectedOffice.sectionSlug || data.section,
+            title: data.title || selectedOffice.name 
+        };
+
+        setData(updated);
+        onChange && onChange(block.id, updated);
+    };
+
+    const handleSave = async () => {
+        try {
+            await ContentBlockService.updateBlock(block.id, data);
+            setLocalEditing(false);
+        } catch (error) {
+            console.error("Error al guardar el bloque de contenido:", error);
+        }
+    };
+
+    const { section, officeId, title, mapTitle } = data;
 
     const handleNavigation = () => {
         const params = new URLSearchParams();
 
-        if (section) {
-            params.append('section', section);
-        }
-        
-        if (officeId) {
-            params.append('officeId', officeId);
-        }
-
-        if (mapTitle) {
-            params.append('mapTitle', mapTitle);
-        }
+        if (section) params.append('section', section);
+        if (officeId) params.append('officeId', officeId);
+        if (mapTitle) params.append('mapTitle', mapTitle);
 
         const queryString = params.toString();
 
@@ -46,43 +73,62 @@ export default function MapBlock({ block, isEditing, isAdmin, onChange }) {
 
     return (
         <div className="relative">
-          {isAdmin && isEditing && (
-            <div className="absolute top-1 right-2 z-10">
-              {!localEditing ? (
-                <button onClick={() => setLocalEditing(true)} className="p-1 bg-blue-600 text-white rounded-full cursor-pointer">✏️</button>
-              ) : (
-                <button onClick={() => setLocalEditing(false)} className="p-1 bg-gray-500 text-white rounded-full cursor-pointer">✖</button>
-              )}
-            </div>
-          )}
-          {isAdmin && isEditing && localEditing && (
-            <div className="mb-3 p-2 bg-white border rounded">
-              <input
-                name="title"
-                value={data.title || ""}
-                onChange={handleChange}
-                placeholder="Etiqueta"
-                className="w-full mb-1 p-1 border rounded"
-              />
-              <input
-                name="section"
-                value={data.section || ""}
-                onChange={handleChange}
-                placeholder="Sección (slug)"
-                className="w-full mb-1 p-1 border rounded"
-              />
-              <input
-                name="officeId"
-                value={data.officeId || ""}
-                onChange={handleChange}
-                placeholder="Office ID"
-                className="w-full p-1 border rounded"
-              />
-            </div>
-          )}
-          <Button onClick={handleNavigation}>
-            {title || "Ver ubicación"}
-          </Button>
+            {isAdmin && isEditing && (
+                <div className="absolute top-1 right-2 z-10 flex gap-1">
+                    {!localEditing ? (
+                        <button onClick={() => setLocalEditing(true)} className="p-1 bg-blue-600 text-white rounded-full cursor-pointer">✏️</button>
+                    ) : (
+                        <>
+                            <button onClick={handleSave} className="px-2 font-bold bg-green-500 text-sm text-white rounded-full cursor-pointer" title="Guardar cambios">Guardar cambios</button>
+                            <button onClick={() => setLocalEditing(false)} className="px-1 bg-gray-500 text-white rounded-full cursor-pointer" title="Cancelar">✖</button>
+                        </>
+                    )}
+                </div>
+            )}
+            {isAdmin && isEditing && localEditing && (
+                <div className="mb-3 bg-white border rounded pt-3 px-2 pb-2">
+                    
+                    <label className="text-sm mt-1">Oficina que se mostrará en el mapa.</label>
+                    <select
+                        name="officeId"
+                        value={data.officeId || ""}
+                        onChange={handleOfficeSelect}
+                        className="w-full p-1 border rounded"
+                    >
+                        <option value="">Selecciona una oficina...</option>
+                        {offices.map(office => (
+                            <option key={office.id} value={office.id}>
+                                {office.name}
+                            </option>
+                        ))}
+                    </select>
+
+                    <p className="text-sm ms-1 text-gray-500">
+                        Si desea agregar un nuevo lugar/oficina, lo puede hacer volviendo al menú principal, en el botón de "Gestionar oficinas/lugares del mapa".
+                    </p>
+
+                    <label className="text-sm mt-4">Titulo del botón (opcional)</label>
+                    <input
+                        name="title"
+                        value={data.title || ""}
+                        onChange={handleChange}
+                        placeholder="Ver ubicación en el mapa"
+                        className="w-full mb-2 p-1 border rounded"
+                    />
+
+                    <label className="text-sm mt-4">Título que se mostrará en el mapa (opcional)</label>
+                    <input
+                        name="mapTitle"
+                        value={data.mapTitle || ""}
+                        onChange={handleChange}
+                        placeholder="Ejemplo: Oficinas para tramitar el pase"
+                        className="w-full mb-2 p-1 border rounded"
+                    />
+                </div>
+            )}
+            <Button onClick={handleNavigation} icon="ubicacion">
+                {title || "Ver ubicación en el mapa"}
+            </Button>
         </div>
     );
 }
