@@ -1,20 +1,39 @@
 import { useState, useRef, useEffect } from "react";
+import { ContentBlockService } from "../../../api/services/ContentBlockService";
+import Modal from "../../common/Modal";
+import CardForm from "../../forms/CardForm";
 import CardSection from "../CardSection";
 import SectionBlock from "../SectionBlock";
 
-export default function ExpandedCardsGroup({ block, isEditing, isAdmin, onChange }) {
+export default function ExpandedCardsGroup({ block, isEditing, isAdmin }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeId, setActiveId] = useState(null);
 
   const cardRefs = useRef({});
   const desktopContentRef = useRef(null);
 
-
   const cards = block.children || [];
+
   const activeCard = cards.find(card => card.id === activeId);
 
   //busco el id de la card actual y busco la siguiente. Lógica para poder navegar a la siguiente card con el lector de pantalla con el TAB
   const currentIndex = cards.findIndex(card => card.id === activeId);
   const nextCard = currentIndex >= 0 ? cards[currentIndex + 1] : null;
+
+  const handleAdd = async (cardData) => {
+    try {
+      await ContentBlockService.createBlock(
+        block.section_id,
+        'card',
+        { icon: "", title: "", description: "" },
+        cards.length,
+        block.id
+      );
+      window.location.reload();
+    } catch (err) {
+      console.error("Error agregando card:", err);
+    }
+  };
 
   //scroll automatico al contenido de la card clickeada
   useEffect(() => {
@@ -51,7 +70,7 @@ export default function ExpandedCardsGroup({ block, isEditing, isAdmin, onChange
 
   }, [activeCard]);
 
-  
+
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
@@ -88,24 +107,44 @@ export default function ExpandedCardsGroup({ block, isEditing, isAdmin, onChange
             aria-labelledby={`card-title-${activeCard.id}`}
             aria-live="polite"
             className="max-w-5xl mx-auto px-6 space-y-5"
-            
+
             onKeyDown={(e) => {
-              if (e.key === "Tab" && !e.shiftKey && nextCard) { {/* si se presiona tab, se puede seguir navegando a la siguiente luego de leer el contenido expandido. shift + tab, vuelve a la card anterior */}
+              if (e.key === "Tab" && !e.shiftKey && nextCard) {
+                {/* si se presiona tab, se puede seguir navegando a la siguiente luego de leer el contenido expandido. shift + tab, vuelve a la card anterior */ }
                 e.preventDefault();
                 const next = cardRefs.current[nextCard.id];
-                next?.querySelector("button, a")?.focus(); 
+                next?.querySelector("button, a")?.focus();
               }
-            }}> 
+            }}>
             {activeCard.children?.map(innerBlock => (
               <SectionBlock key={innerBlock.id} block={innerBlock} isEditing={isEditing} isAdmin={isAdmin} onChange={onChange} />
             ))}
-          
+
           </div>
         </div>
       )}
+
+      {isAdmin && isEditing && (
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg cursor-pointer hover:bg-blue-700"
+        >
+          + Añadir card
+        </button>
+      )}
+
+      <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <CardForm
+          onSubmit={(cardData) => {
+            handleAdd(cardData);
+            setIsModalOpen(false);
+          }}
+          onCancel={() => setIsModalOpen(false)}
+          showHref={false}
+        />
+      </Modal>
     </>
   );
 }
 
-// the group itself doesn't need generic data textarea
 ExpandedCardsGroup.hasEditor = true;

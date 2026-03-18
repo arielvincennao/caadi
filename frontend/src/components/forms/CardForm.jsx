@@ -2,19 +2,19 @@ import { useState } from "react";
 import { ICON_OPTIONS } from "../../utils/iconOptions.JS";
 import { Icon } from "../common/Icon";
 
-export default function CardForm({ onSubmit, onCancel }) {
+export default function CardForm({ onSubmit, onCancel, showHref = true }) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [icon, setIcon] = useState("");
     const [href, setHref] = useState("");
 
-  
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!description || !icon) return;
 
-        onSubmit({ title, description, icon, href });
+        onSubmit({ title, description, icon, ...(showHref && { href }) });
     };
 
     return (
@@ -44,14 +44,16 @@ export default function CardForm({ onSubmit, onCancel }) {
                     className="p-2 border rounded"
                     rows={3}
                 />
-                <input
-                    name="href"
-                    value={href}
-                    onChange={(e) => setHref(e.target.value)}
-                    placeholder="URL destino"
-                    className="w-full p-2 border rounded"
-                />
 
+                {showHref && (
+                    <input
+                        name="href"
+                        value={href}
+                        onChange={(e) => setHref(e.target.value)}
+                        placeholder="URL destino"
+                        className="w-full p-2 border rounded"
+                    />
+                )}
 
                 <div className="flex justify-end gap-2 mt-2">
                     <button
