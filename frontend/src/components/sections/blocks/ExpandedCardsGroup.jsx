@@ -20,12 +20,14 @@ export default function ExpandedCardsGroup({ block, isEditing, isAdmin }) {
   const currentIndex = cards.findIndex(card => card.id === activeId);
   const nextCard = currentIndex >= 0 ? cards[currentIndex + 1] : null;
 
-  const handleAdd = async (cardData) => {
+  const handleAdd = async (formData) => {
+    console.log('block.section_id:', block.section_id)
+    console.log('block.id:', block.id)
     try {
       await ContentBlockService.createBlock(
         block.section_id,
         'card',
-        { icon: "", title: "", description: "" },
+        formData,
         cards.length,
         block.id
       );
@@ -135,8 +137,8 @@ export default function ExpandedCardsGroup({ block, isEditing, isAdmin }) {
 
       <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <CardForm
-          onSubmit={(cardData) => {
-            handleAdd(cardData);
+          onSubmit={(formData) => {
+            handleAdd(formData);
             setIsModalOpen(false);
           }}
           onCancel={() => setIsModalOpen(false)}

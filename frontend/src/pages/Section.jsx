@@ -206,17 +206,41 @@ function Section({ data: initialData }) {
             <AddBlockSelector
               newBlockType={newBlockType}
               setNewBlockType={setNewBlockType}
-              onAdd={(type) => {
+              onAdd={async (type) => {
                 if (BLOCKS_WITH_MODAL.includes(type)) {
                   setModalBlockType(type);
                   setIsModalOpen(true);
                   setNewBlockType("");
                   return;
                 }
+                
+                //si es de este tipo, se crea en la base de datos inmediatamente para obtener el id y poder agregarlo al estado con el id real (no el temporal "new-")
+                if (type === 'expandedCardsGroup' || type === 'blogEntry') {
+                  try {
+                    const created = await ContentBlockService.createBlock(
+                      editData.id, type, {}, editData.rootBlocks?.length || 0, null
+                    );
+                    setEditData(prev => ({
+                      ...prev,
+                      rootBlocks: [...(prev.rootBlocks || []), {
+                        id: created.id,
+                        type,
+                        data: {},
+                        children: [],
+                        section_id: editData.id
+                      }]
+                    }));
+                  } catch (err) {
+                    console.error("Error creando bloque:", err);
+                  }
+                  setNewBlockType("");
+                  return;
+                }
 
                 handleAddBlock(type);
                 setNewBlockType("");
-              }} />
+              }}
+            />
           )}
 
           {rootBlocks.map((block) => (
