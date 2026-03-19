@@ -12,7 +12,7 @@ import OfficeMarker from "./OfficeMarker";
 const MapView = () => {
     const [searchParams] = useSearchParams();
     const section = searchParams.get("seccion");
-    const id = searchParams.get("id");
+    const officeId = searchParams.get("officeId");
     const customTitle = searchParams.get("mapTitle");
 
     const {
@@ -23,7 +23,7 @@ const MapView = () => {
         mapZoom,
         setMapZoom,
         refetch
-    } = useFetchOffices(section, id);
+    } = useFetchOffices(section, officeId);
 
     const [selectedOffice, setSelectedOffice] = useState(null);
     const [userPosition, setUserPosition] = useState(null);
@@ -35,8 +35,8 @@ const MapView = () => {
         titulosection = customTitle;
     } else if (section) {
         titulosection = section.charAt(0).toUpperCase() + section.slice(1);
-    } else if (id) {
-        const oficinaSeleccionada = offices.find(o => o.id.toString() === id);
+    } else if (officeId) {
+        const oficinaSeleccionada = offices.find(o => o.id.toString() === officeId);
 
         if (oficinaSeleccionada) {
             titulosection = oficinaSeleccionada.name;

@@ -9,6 +9,7 @@ export default function AddBlockSelector({ newBlockType, setNewBlockType, onAdd 
                 <option value="" disabled>Seleccione tipo de bloque</option>
                 <option value="card">Tarjeta</option>
                 <option value="link">Botón con redireccionamiento</option>
+                <option value="map">Botón para mostrar oficina/lugar en el mapa</option>
                 <option value="steps">Listado de pasos</option>
                 <option value="list">Lista de items</option>
                 <option value="expandedCardsGroup">Tarjetas desplegables</option>
