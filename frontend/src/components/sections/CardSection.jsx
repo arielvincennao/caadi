@@ -16,8 +16,12 @@ export default function CardSection({ card: initialCard, className, onClick, isA
     setCard(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSave =  () => {
-   
+  const handleSave =  (e) => {
+    e.stopPropagation();
+
+    if(onUpdate) onUpdate(card);
+
+    setLocalEditing(false);
   };
 
   const isLink = Boolean(card.href);
@@ -28,7 +32,7 @@ export default function CardSection({ card: initialCard, className, onClick, isA
   return (
     <Wrapper
       {...(isLink && !activeEditing && { href: card.href, target: "_blank" })}
-      {...(isExpanded && !activeEditing && { type: "button", onClick, "aria-expanded": isActive, "aria-controls": `card-content-${blockId}`})}
+      {...(isExpanded && !activeEditing && { type: "button", onClick, "aria-expanded": isActive, "aria-controls": `card-content-${card.id}`})}
       style={isActive ? { borderColor: '#475569', backgroundColor: '#f1f5f9', borderWidth: '2px' } : {}}
       className={`flex flex-col items-center text-center max-w-sm p-6 border rounded-2xl bg-[#FCFCFC] border-gray-400 relative group ${!activeEditing ? 'cursor-pointer' : ''} ${className ?? ''}`}
     >

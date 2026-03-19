@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Button from "../../common/Button";
+import { updateBlockData } from "../../../utils/blockHelpers";
 
 export default function LinkBlock({ block, isEditing, isAdmin, onChange }) {
   const [data, setData] = useState(block.data || {});
@@ -14,7 +15,7 @@ export default function LinkBlock({ block, isEditing, isAdmin, onChange }) {
     const { name, value } = e.target;
     const updated = { ...data, [name]: value };
     setData(updated);
-    onChange && onChange(block.id, updated);
+    updateBlockData(block, onChange, { [name]: value });
   };
 
   

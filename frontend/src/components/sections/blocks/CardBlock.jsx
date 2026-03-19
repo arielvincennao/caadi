@@ -3,7 +3,7 @@ import CardSection from "../CardSection";
 import Modal from "../../common/Modal";
 import CardForm from "../../forms/CardForm";
 
-export default function CardBlock({ block, isEditing, isAdmin, onChange }) {
+export default function CardBlock({ block, isEditing, isAdmin, onChange, onChildrenChange }) {
   const cards = block.children || [];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,9 +17,7 @@ export default function CardBlock({ block, isEditing, isAdmin, onChange }) {
   const handleDelete = (id) => {
     const newChildren = cards.filter(c => c.id !== id);
 
-    onChange(block.id, {
-      children: newChildren
-    });
+    onChildrenChange(block.id, newChildren);
   };
 
   return (
@@ -52,7 +50,7 @@ export default function CardBlock({ block, isEditing, isAdmin, onChange }) {
       </section>
 
       {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
+        <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <CardForm
             initialData={editingCard?.data}
             onSubmit={(formData) => {
@@ -74,9 +72,7 @@ export default function CardBlock({ block, isEditing, isAdmin, onChange }) {
                 updatedChildren = [...cards, newCard];
               }
 
-              onChange(block.id, {
-                children: updatedChildren
-              });
+             onChildrenChange?.(block.id, updatedChildren);
 
               setIsModalOpen(false);
               setEditingCard(null);

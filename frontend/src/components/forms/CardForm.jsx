@@ -34,7 +34,7 @@ export default function CardForm({ onSubmit, onCancel }) {
                         </button>
                     ))}
                 </div>
-                <input type="text" name="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                <input name="title" value={title} onChange={(e) => setTitle(e.target.value)}  placeholder="titulo" className="w-full p-2 border rounded"/>
 
                 <textarea
                     name="description"

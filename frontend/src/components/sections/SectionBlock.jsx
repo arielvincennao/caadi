@@ -18,7 +18,7 @@ const BLOCK_RENDER = {
   blogEntry: BlogBlock
 };
 
-export default function SectionBlock({ block, isEditing, isAdmin, onChange, onDelete }) {
+export default function SectionBlock({ block, isEditing, isAdmin, onChange, onDelete, onChildrenChange }) {
   const BlockComponent = BLOCK_RENDER[block.type];
 
   if (!BlockComponent) return null;
@@ -41,6 +41,7 @@ export default function SectionBlock({ block, isEditing, isAdmin, onChange, onDe
         isEditing={isEditing}
         isAdmin={isAdmin}
         onChange={onChange}
+        onChildrenChange={onChildrenChange}
       >
       </BlockComponent>
     </div>

@@ -21,7 +21,7 @@ import Modal from "../components/common/Modal";
  * - Permitir edición si el usuario es admin
  */
 
-const BLOCKS_WITH_MODAL = ["link", "card", "blogEntry"];
+const BLOCKS_WITH_MODAL = ["link", "blogEntry"];
 
 function Section({ data: initialData }) {
   const { isAuthenticated } = useAuth();
@@ -106,19 +106,21 @@ function Section({ data: initialData }) {
 
   // helper to update a block recursively by id
   const updateBlockById = (blocks, id, updater) => {
-    return blocks.map(block => {
-      if (block.id === id) {
-        return updater(block);
-      }
-      if (block.children?.length) {
-        return {
-          ...block,
-          children: updateBlockById(block.children, id, updater)
-        };
-      }
-      return block;
-    });
-  };
+  return blocks.map(block => {
+    if (block.id === id) {
+      return updater(block);
+    }
+
+    if (Array.isArray(block.children)) {
+      return {
+        ...block,
+        children: updateBlockById(block.children, id, updater)
+      };
+    }
+
+    return block;
+  });
+};
 
   // remove a block (and its descendants) from the tree by id
   const removeBlockById = (blocks, id) => {
@@ -133,11 +135,35 @@ function Section({ data: initialData }) {
   };
 
   const handleBlockChange = (id, newData) => {
-    setEditData(prev => ({
-      ...prev,
-      rootBlocks: updateBlockById(prev.rootBlocks || [], id, b => ({ ...b, data: newData }))
-    }));
-  };
+  setEditData(prev => ({
+    ...prev,
+    rootBlocks: updateBlockById(
+      prev.rootBlocks || [],
+      id,
+      (b) => ({
+        ...b,
+        data: {
+          ...(b.data || {}),
+          ...newData
+        }
+      })
+    )
+  }));
+};
+
+const handleBlockChildrenChange = (id, newChildren) => {
+  setEditData(prev => ({
+    ...prev,
+    rootBlocks: updateBlockById(
+      prev.rootBlocks || [],
+      id,
+      (b) => ({
+        ...b,
+        children: newChildren // 👈 SIEMPRE lo setea
+      })
+    )
+  }));
+};
 
   const handleBlockDelete = async (id) => {
     // optimistically remove from state
@@ -162,8 +188,12 @@ function Section({ data: initialData }) {
       id: `new-${Date.now()}`,
       type,
       data: formData || config.data || {},
-      children: config.children || []
+    
     };
+
+    if (config.children) {
+  newBlock.children = config.children;
+}
 
     setEditData(prev => ({
       ...prev,
@@ -226,6 +256,7 @@ function Section({ data: initialData }) {
               isEditing={isEditing}
               isAdmin={isAuthenticated}
               onChange={handleBlockChange}
+              onChildrenChange={handleBlockChildrenChange}
               onDelete={handleBlockDelete}
             />
           ))}
