@@ -3,7 +3,7 @@ import CardSection from "../CardSection";
 import Modal from "../../common/Modal";
 import CardForm from "../../forms/CardForm";
 
-export default function CardBlock({ block, isEditing, isAdmin, onChange, onChildrenChange }) {
+export default function CardBlock({ block, isEditing, isAdmin, onChildrenChange }) {
   const cards = block.children || [];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,16 +23,6 @@ export default function CardBlock({ block, isEditing, isAdmin, onChange, onChild
   return (
     <>
       <section className="my-6 flex flex-col items-center">
-
-        {isAdmin && isEditing && (
-          <button
-            onClick={handleAdd}
-            className="mb-4 bg-blue-600 text-white px-4 py-2 rounded"
-          >
-            + Añadir tarjeta
-          </button>
-        )}
-
         <div className="flex flex-wrap gap-6 justify-center">
           {cards.map((card) => (
             <CardSection
@@ -56,23 +46,15 @@ export default function CardBlock({ block, isEditing, isAdmin, onChange, onChild
             onSubmit={(formData) => {
               let updatedChildren;
 
-              if (editingCard) {
-                updatedChildren = cards.map(c =>
-                  c.id === editingCard.id
-                    ? { ...c, data: formData }
-                    : c
-                );
-              } else {
-                const newCard = {
-                  id: `new-${Date.now()}`,
-                  type: "card",
-                  data: formData
-                };
+              const newCard = {
+                id: `new-${Date.now()}`,
+                type: "card",
+                data: formData
+              };
 
-                updatedChildren = [...cards, newCard];
-              }
+              updatedChildren = [...cards, newCard];
 
-             onChildrenChange?.(block.id, updatedChildren);
+              onChildrenChange?.(block.id, updatedChildren);
 
               setIsModalOpen(false);
               setEditingCard(null);
@@ -84,6 +66,14 @@ export default function CardBlock({ block, isEditing, isAdmin, onChange, onChild
           />
         </Modal>
       )}
+      {isAdmin && isEditing && (
+          <button
+            onClick={handleAdd}
+            className="mb-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
+          >
+            + Añadir tarjeta
+          </button>
+        )}
     </>
   );
 }

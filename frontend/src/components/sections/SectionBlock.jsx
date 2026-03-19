@@ -24,12 +24,12 @@ export default function SectionBlock({ block, isEditing, isAdmin, onChange, onDe
   if (!BlockComponent) return null;
 
   return (
-    <div className="w-full mb-8">
+    <div className="w-full mb-8 flex flex-col">
       {isAdmin && isEditing && onDelete && (
 
         <BtnControl onClick={() => onDelete(block.id)}
           title={"Eliminar bloque"}
-          className="bg-red-600 hover:bg-red-700 p-2"
+          className="bg-red-600 hover:bg-red-700 p-2 justify-end w-9 h-9 ml-auto mr-2"
         >
           <Icon name={"eliminar"} className={"w-5 h-5"} />
         </BtnControl>

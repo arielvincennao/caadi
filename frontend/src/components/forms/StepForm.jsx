@@ -17,27 +17,29 @@ export default function StepForm({ onSubmit, onCancel }) {
     return (
         <div className="flex flex-col gap-3">
 
-            <h3 className="text-lg font-bold">Nuevo paso</h3>
-            <form>
+            <h3 className="text-3xl font-bold text-center">Nuevo paso</h3>
+            <form className="flex flex-col gap-2">
+                <label className="text-sm font-bold text-blue-600 uppercase">Seleccione un icono</label>
+
                 <div className="flex gap-2 flex-wrap">
                     {ICON_OPTIONS.map((ico) => (
                         <button
                             key={ico}
                             type="button"
                             onClick={() => setIcon(ico)}
-                            className={`p-2 border rounded ${icon === ico ? 'bg-blue-200' : ''}`}
+                            className={`p-2 border rounded ${icon === ico ? 'bg-blue-100 border-blue-600 border-2' : ''}`}
                         >
                             <Icon name={ico} className="w-6 h-6" />
                         </button>
                     ))}
                 </div>
+                <label className="text-sm font-bold text-blue-600 uppercase">Escriba una breve descripción</label>
 
                 <textarea
                     name="description"
-                    placeholder="Descripción"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="p-2 border rounded"
+                    className="w-full p-2 border rounded border-blue-600"
                     rows={3}
                 />
 

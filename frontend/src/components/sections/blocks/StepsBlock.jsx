@@ -75,10 +75,11 @@ export default function StepsBlock({ block, isEditing, isAdmin, onChange }) {
         <Subtitle>{title}</Subtitle>
       )}
       <ol className="space-y-2">
-        {steps?.map((step) => (
+        {steps?.map((step, index) => (
           <Step
             step={step}
             key={step.id}
+            stepNumber={index + 1}
             isEditing={isEditing}
             isAdmin={isAdmin}
             onUpdate={handleStepUpdate}
