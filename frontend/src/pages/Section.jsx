@@ -21,7 +21,7 @@ import Modal from "../components/common/Modal";
  * - Permitir edición si el usuario es admin
  */
 
-const BLOCKS_WITH_MODAL = ["link", "card", "blogEntry"];
+const BLOCKS_WITH_MODAL = ["link", "card"]; //de aca saque blogentry
 
 function Section({ data: initialData }) {
   const { isAuthenticated } = useAuth();

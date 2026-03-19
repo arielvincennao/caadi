@@ -1,17 +1,21 @@
+import { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { ContentBlockService } from "../../../api/services/ContentBlockService";
 import BlogCard from "../BlogCard";
+import Modal from "../../common/Modal";
+import BlogForm from "../../forms/BlogForm";
 
 export default function BlogBlock({ block, isEditing }) {
   const { isAuthenticated } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const cards = block.children || [];
 
-  const handleAdd = async () => {
+  const handleAdd = async (formData) => {
     try {
       await ContentBlockService.createBlock(
         block.section_id,
         'card',
-        { image: '', title: 'Nueva card', description: '', date: '', ubication: '' },
+        formData,
         cards.length,
         block.id
       );
@@ -34,7 +38,7 @@ export default function BlogBlock({ block, isEditing }) {
     <section className="mb-10">
       {isAuthenticated && isEditing && (
         <button
-          onClick={handleAdd}
+          onClick={() => setIsModalOpen(true)}
           className="w-full mb-4 bg-blue-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-700"
         >
           + Añadir entrada de blog
@@ -50,6 +54,15 @@ export default function BlogBlock({ block, isEditing }) {
           />
         ))}
       </div>
+      <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <BlogForm
+          onSubmit={(formData) => {
+            handleAdd(formData);
+            setIsModalOpen(false);
+          }}
+          onCancel={() => setIsModalOpen(false)}
+        />
+      </Modal>
     </section>
   );
 }
