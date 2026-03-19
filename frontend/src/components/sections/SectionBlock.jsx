@@ -33,12 +33,6 @@ export default function SectionBlock({ block, isEditing, isAdmin, onChange, onDe
           : ""
       }`}
     >
-      {/* Etiqueta indicadora del tipo de bloque (solo visible al editar) */}
-      {isEditMode && (
-        <div className="absolute -top-3 left-4 bg-blue-600 text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider z-10 shadow-md">
-          Bloque: {block.type}
-        </div>
-      )}
 
       {/* Botón de eliminar (reubicado para que flote en la esquina de la card) */}
       {isEditMode && onDelete && (

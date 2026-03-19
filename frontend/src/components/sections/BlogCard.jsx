@@ -4,6 +4,7 @@ import { ContentBlockService } from "../../api/services/ContentBlockService";
 import { Text } from "../Typography";
 import Button from "../common/Button";
 import { StorageService } from "../../api/services/StorageService";
+import { Icon } from "../common/Icon";
 
 export default function BlogCard({ card: initialCard, className, blockId, onDelete, onUpdate }) {
     const { isAuthenticated } = useAuth();
@@ -21,7 +22,7 @@ export default function BlogCard({ card: initialCard, className, blockId, onDele
 
     const handleSave = async () => {
         try {
-            // Validamos que exista un blockId y que NO sea un ID temporal, que todavía no existe en la db
+            // Validamos que exista un blockId y que NO sea un ID temporal, que todavía no existe en la
             const isTempId = String(blockId).startsWith("new-");
 
             if (blockId && !isTempId) {
@@ -55,19 +56,25 @@ export default function BlogCard({ card: initialCard, className, blockId, onDele
                 <div className="absolute top-2 right-2 z-10 flex gap-2">
                     {!isEditing ? (
                         <>
-                            <button onClick={() => setIsEditing(true)} className="bg-blue-600 text-white p-2 rounded-full shadow-md hover:bg-blue-700 transition" title="Editar Card">
-                                ✏️
+                            <button
+                                onClick={() => setIsEditing(true)}
+                                className="bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-md cursor-pointer px-2"
+                                title="Editar"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                </svg>
                             </button>
                             {onDelete && (
-                                <button onClick={() => onDelete(blockId)} className="bg-red-600 text-white p-2 rounded-full shadow-md hover:bg-red-700 transition" title="Eliminar Card">
-                                    🗑
+                                <button onClick={() => onDelete(blockId)} className="bg-red-600 text-white p-2 rounded-full shadow-md hover:bg-red-700 cursor-pointer transition" title="Eliminar Card">
+                                    <Icon name={"eliminar"} className={"w-5 h-5 text-white"} />
                                 </button>
                             )}
                         </>
                     ) : (
                         <>
-                            <button onClick={handleSave} className="bg-green-600 text-white px-3 py-1 rounded-lg shadow-md font-bold text-xs">Guardar</button>
-                            <button onClick={() => { setIsEditing(false); setCard(initialCard); }} className="bg-gray-500 text-white px-3 py-1 rounded-lg shadow-md font-bold text-xs">X</button>
+                            <button onClick={handleSave} className="bg-green-600 text-white px-3 py-1 rounded-lg shadow-md font-bold text-xs cursor-pointer ">Guardar</button>
+                            <button onClick={() => { setIsEditing(false); setCard(initialCard); }} className="bg-gray-500 text-white px-3 py-1 rounded-lg shadow-md font-bold text-xs cursor-pointer ">X</button>
                         </>
                     )}
                 </div>
