@@ -18,31 +18,43 @@ const BLOCK_RENDER = {
   blogEntry: BlogBlock
 };
 
-export default function SectionBlock({ block, isEditing, isAdmin, onChange, onDelete }) {
+export default function SectionBlock({ block, isEditing, isAdmin, onChange, onDelete, onChildrenChange }) {
   const BlockComponent = BLOCK_RENDER[block.type];
 
   if (!BlockComponent) return null;
 
+  const isEditMode = isAdmin && isEditing;
+
   return (
-    <div className="w-full mb-8">
-      {isAdmin && isEditing && onDelete && (
+    <div 
+      className={`w-full mb-8 flex flex-col relative transition-all duration-300 ${
+        isEditMode 
+          ? "p-5 sm:p-6 border-2 border-dashed border-blue-400 bg-blue-50/40 rounded-2xl shadow-sm mt-6" 
+          : ""
+      }`}
+    >
 
-        <BtnControl onClick={() => onDelete(block.id)}
+      {/* Botón de eliminar (reubicado para que flote en la esquina de la card) */}
+      {isEditMode && onDelete && (
+        <BtnControl 
+          onClick={() => onDelete(block.id)}
           title={"Eliminar bloque"}
-          className="bg-red-600 hover:bg-red-700 p-2"
+          className="absolute -top-3 right-4 bg-red-600 hover:bg-red-700 p-2 w-9 h-9 z-10 shadow-md"
         >
-          <Icon name={"eliminar"} className={"w-5 h-5"} />
+          <Icon name={"eliminar"} className={"w-5 h-5 text-white"} />
         </BtnControl>
-
       )}
 
-      <BlockComponent
-        block={block}
-        isEditing={isEditing}
-        isAdmin={isAdmin}
-        onChange={onChange}
-      >
-      </BlockComponent>
+      {/* Contenedor del componente hijo con margen superior si estamos editando para que no pise la etiqueta */}
+      <div className={isEditMode ? "mt-4" : ""}>
+        <BlockComponent
+          block={block}
+          isEditing={isEditing}
+          isAdmin={isAdmin}
+          onChange={onChange}
+          onChildrenChange={onChildrenChange}
+        />
+      </div>
     </div>
   );
 }

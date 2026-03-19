@@ -3,7 +3,7 @@ import { Subsubtitle } from "../Typography";
 import { Icon } from "../common/Icon";
 import { ICON_OPTIONS } from "../../utils/iconOptions.JS";
 
-export default function Step({ step: initialStep, isEditing: sectionEditing, isAdmin, onUpdate, onDelete }) {
+export default function Step({ step: initialStep, stepNumber, isEditing: sectionEditing, isAdmin, onUpdate, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
   const [step, setStep] = useState(initialStep);
 
@@ -110,7 +110,7 @@ export default function Step({ step: initialStep, isEditing: sectionEditing, isA
           </div>
         ) : (
           <>
-            <Subsubtitle className="md:text-xl">Paso {step.id}</Subsubtitle>
+            <Subsubtitle className="md:text-xl">Paso {stepNumber}</Subsubtitle>
             <p className="text-gray-700">{step.description}</p>
           </>
         )}

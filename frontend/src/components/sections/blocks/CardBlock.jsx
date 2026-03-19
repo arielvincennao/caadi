@@ -3,7 +3,7 @@ import CardSection from "../CardSection";
 import Modal from "../../common/Modal";
 import CardForm from "../../forms/CardForm";
 
-export default function CardBlock({ block, isEditing, isAdmin, onChange }) {
+export default function CardBlock({ block, isEditing, isAdmin, onChildrenChange }) {
   const cards = block.children || [];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,24 +17,12 @@ export default function CardBlock({ block, isEditing, isAdmin, onChange }) {
   const handleDelete = (id) => {
     const newChildren = cards.filter(c => c.id !== id);
 
-    onChange(block.id, {
-      children: newChildren
-    });
+    onChildrenChange(block.id, newChildren);
   };
 
   return (
     <>
       <section className="my-6 flex flex-col items-center">
-
-        {isAdmin && isEditing && (
-          <button
-            onClick={handleAdd}
-            className="mb-4 bg-blue-600 text-white px-4 py-2 rounded"
-          >
-            + Añadir tarjeta
-          </button>
-        )}
-
         <div className="flex flex-wrap gap-6 justify-center">
           {cards.map((card) => (
             <CardSection
@@ -52,31 +40,21 @@ export default function CardBlock({ block, isEditing, isAdmin, onChange }) {
       </section>
 
       {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
+        <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <CardForm
             initialData={editingCard?.data}
             onSubmit={(formData) => {
               let updatedChildren;
 
-              if (editingCard) {
-                updatedChildren = cards.map(c =>
-                  c.id === editingCard.id
-                    ? { ...c, data: formData }
-                    : c
-                );
-              } else {
-                const newCard = {
-                  id: `new-${Date.now()}`,
-                  type: "card",
-                  data: formData
-                };
+              const newCard = {
+                id: `new-${Date.now()}`,
+                type: "card",
+                data: formData
+              };
 
-                updatedChildren = [...cards, newCard];
-              }
+              updatedChildren = [...cards, newCard];
 
-              onChange(block.id, {
-                children: updatedChildren
-              });
+              onChildrenChange?.(block.id, updatedChildren);
 
               setIsModalOpen(false);
               setEditingCard(null);
@@ -88,6 +66,14 @@ export default function CardBlock({ block, isEditing, isAdmin, onChange }) {
           />
         </Modal>
       )}
+      {isAdmin && isEditing && (
+          <button
+            onClick={handleAdd}
+            className="mb-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
+          >
+            + Añadir tarjeta
+          </button>
+        )}
     </>
   );
 }

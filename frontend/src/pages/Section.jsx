@@ -21,7 +21,7 @@ import Modal from "../components/common/Modal";
  * - Permitir edición si el usuario es admin
  */
 
-const BLOCKS_WITH_MODAL = ["link", "card", "blogEntry"];
+const BLOCKS_WITH_MODAL = ["link", "list", "steps"];
 
 function Section({ data: initialData }) {
   const { isAuthenticated } = useAuth();
@@ -106,19 +106,21 @@ function Section({ data: initialData }) {
 
   // helper to update a block recursively by id
   const updateBlockById = (blocks, id, updater) => {
-    return blocks.map(block => {
-      if (block.id === id) {
-        return updater(block);
-      }
-      if (block.children?.length) {
-        return {
-          ...block,
-          children: updateBlockById(block.children, id, updater)
-        };
-      }
-      return block;
-    });
-  };
+  return blocks.map(block => {
+    if (block.id === id) {
+      return updater(block);
+    }
+
+    if (Array.isArray(block.children)) {
+      return {
+        ...block,
+        children: updateBlockById(block.children, id, updater)
+      };
+    }
+
+    return block;
+  });
+};
 
   // remove a block (and its descendants) from the tree by id
   const removeBlockById = (blocks, id) => {
@@ -133,11 +135,35 @@ function Section({ data: initialData }) {
   };
 
   const handleBlockChange = (id, newData) => {
-    setEditData(prev => ({
-      ...prev,
-      rootBlocks: updateBlockById(prev.rootBlocks || [], id, b => ({ ...b, data: newData }))
-    }));
-  };
+  setEditData(prev => ({
+    ...prev,
+    rootBlocks: updateBlockById(
+      prev.rootBlocks || [],
+      id,
+      (b) => ({
+        ...b,
+        data: {
+          ...(b.data || {}),
+          ...newData
+        }
+      })
+    )
+  }));
+};
+
+const handleBlockChildrenChange = (id, newChildren) => {
+  setEditData(prev => ({
+    ...prev,
+    rootBlocks: updateBlockById(
+      prev.rootBlocks || [],
+      id,
+      (b) => ({
+        ...b,
+        children: newChildren // 👈 SIEMPRE lo setea
+      })
+    )
+  }));
+};
 
   const handleBlockDelete = async (id) => {
     // optimistically remove from state
@@ -162,8 +188,12 @@ function Section({ data: initialData }) {
       id: `new-${Date.now()}`,
       type,
       data: formData || config.data || {},
-      children: config.children || []
+    
     };
+
+    if (config.children) {
+  newBlock.children = config.children;
+}
 
     setEditData(prev => ({
       ...prev,
@@ -206,17 +236,41 @@ function Section({ data: initialData }) {
             <AddBlockSelector
               newBlockType={newBlockType}
               setNewBlockType={setNewBlockType}
-              onAdd={(type) => {
+              onAdd={async (type) => {
                 if (BLOCKS_WITH_MODAL.includes(type)) {
                   setModalBlockType(type);
                   setIsModalOpen(true);
                   setNewBlockType("");
                   return;
                 }
+                
+                //si es de este tipo, se crea en la base de datos inmediatamente para obtener el id y poder agregarlo al estado con el id real (no el temporal "new-")
+                if (type === 'expandedCardsGroup' || type === 'blogEntry') {
+                  try {
+                    const created = await ContentBlockService.createBlock(
+                      editData.id, type, {}, editData.rootBlocks?.length || 0, null
+                    );
+                    setEditData(prev => ({
+                      ...prev,
+                      rootBlocks: [...(prev.rootBlocks || []), {
+                        id: created.id,
+                        type,
+                        data: {},
+                        children: [],
+                        section_id: editData.id
+                      }]
+                    }));
+                  } catch (err) {
+                    console.error("Error creando bloque:", err);
+                  }
+                  setNewBlockType("");
+                  return;
+                }
 
                 handleAddBlock(type);
                 setNewBlockType("");
-              }} />
+              }}
+            />
           )}
 
           {rootBlocks.map((block) => (
@@ -226,6 +280,7 @@ function Section({ data: initialData }) {
               isEditing={isEditing}
               isAdmin={isAuthenticated}
               onChange={handleBlockChange}
+              onChildrenChange={handleBlockChildrenChange}
               onDelete={handleBlockDelete}
             />
           ))}

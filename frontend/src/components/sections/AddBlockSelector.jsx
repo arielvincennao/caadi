@@ -4,11 +4,12 @@ export default function AddBlockSelector({ newBlockType, setNewBlockType, onAdd 
             <select
                 value={newBlockType}
                 onChange={(e) => setNewBlockType(e.target.value)}
-                className="p-2 border rounded"
+                className="p-2 border rounded border-blue-600"
             >
                 <option value="" disabled>Seleccione tipo de bloque</option>
                 <option value="card">Tarjeta</option>
                 <option value="link">Botón con redireccionamiento</option>
+                <option value="map">Botón para mostrar oficina/lugar en el mapa</option>
                 <option value="steps">Listado de pasos</option>
                 <option value="list">Lista de items</option>
                 <option value="expandedCardsGroup">Tarjetas desplegables</option>

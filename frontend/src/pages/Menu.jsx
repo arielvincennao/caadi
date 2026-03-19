@@ -92,12 +92,12 @@ function Menu() {
               </li>
 
               <li key="agregar-oficina">
-                <Card
-                  icon="office"
-                  to=""
-                  className="text-start border-dashed border-2 border-blue-500 bg-blue-50 opacity-90"
+                <Card 
+                  icon="office" 
+                  to="/admin/oficinas" 
+                  className="text-start justify-center border-dashed border-2 border-blue-500 bg-blue-50 opacity-90"
                 >
-                  <span className="font-bold text-blue-700 underline italic">Agregar oficina (Admin)</span>
+                  <span className="font-bold text-blue-700 underline italic">Gestionar oficinas/lugares del mapa (Admin)</span>
                 </Card>
               </li>
             </>
