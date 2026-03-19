@@ -4,7 +4,7 @@ import Modal from "../../common/Modal";
 import CardForm from "../../forms/CardForm";
 
 export default function CardBlock({ block, isEditing, isAdmin, onChildrenChange }) {
-  const cards = block.children || [];
+  const cards = block.children?.length > 0 ? block.children : [block];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCard, setEditingCard] = useState(null);
