@@ -4,6 +4,7 @@ import { StorageService } from "../../api/services/StorageService";
 
 export default function BlogForm({ initialData = {}, onSubmit, onCancel }) {
   const [form, setForm] = useState({
+    id: initialData.id || undefined,
     title: initialData.title || "",
     description: initialData.description || "",
     date: initialData.date || "",
@@ -98,7 +99,6 @@ export default function BlogForm({ initialData = {}, onSubmit, onCancel }) {
           name="image"
           type="file"
           accept="image/*"
-          value={form.image}
           onChange={handleFileChange}
           className="w-full p-2 border rounded border-blue-600"
         />
