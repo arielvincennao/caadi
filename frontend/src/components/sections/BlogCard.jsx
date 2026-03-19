@@ -111,9 +111,10 @@ export default function BlogCard({ card: initialCard, className, blockId, onDele
         {(card.phone || isEditing) && (
           <div className="mb-2">
             {isEditing ? (
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-bold text-gray-400 uppercase">Tel:</span>
-                <input name="phone" value={card.phone || ""} onChange={handleChange} className="text-sm border-b w-full outline-none" placeholder="Número de teléfono" />
+              <div>
+                <label className="text-sm font-bold text-blue-600 uppercase">Telefono</label>
+
+                <input name="phone" value={card.phone || ""} onChange={handleChange} className="text-sm outline-none w-full p-2 border rounded border-blue-600" placeholder="Número de teléfono" />
               </div>
             ) : (
               <Text>Tel: {card.phone}</Text>
@@ -123,8 +124,9 @@ export default function BlogCard({ card: initialCard, className, blockId, onDele
 
         {isEditing ? (
           <div className="mt-auto pt-4">
-            <label className="text-[10px] font-bold text-gray-400 uppercase">Link Ubicación:</label>
-            <input name="ubication" value={card.ubication || ""} onChange={handleChange} className="w-full text-xs border p-1 rounded" placeholder="URL de Google Maps" />
+            <label className="text-sm font-bold text-blue-600 uppercase">URL ubicación</label>
+
+            <input name="ubication" value={card.ubication || ""} onChange={handleChange} className="w-full p-2 border rounded border-blue-600" placeholder="URL de Google Maps" />
           </div>
         ) : (
           <Button className="mt-auto" href={card.ubication} icon="ubicacion">Ver ubicación</Button>

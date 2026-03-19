@@ -79,21 +79,21 @@ export default function MapBlock({ block, isEditing, isAdmin, onChange }) {
                         <button onClick={() => setLocalEditing(true)} className="p-1 bg-blue-600 text-white rounded-full cursor-pointer"><Icon name={"editar"} className={"w-6 h-6 p-1"} /></button>
                     ) : (
                         <>
-                            <button onClick={handleSave} className="px-2 font-bold bg-green-500 text-sm text-white rounded-full cursor-pointer" title="Guardar cambios">Guardar cambios</button>
-                            <button onClick={() => setLocalEditing(false)} className="px-1 bg-gray-500 text-white rounded-full cursor-pointer" title="Cancelar">✖</button>
+                            <button onClick={handleSave} className="bg-green-600 text-white px-2 py-1 rounded text-[10px] font-bold shadow-sm cursor-pointer" title="Guardar cambios">OK</button>
+                            <button onClick={() => setLocalEditing(false)} className="bg-gray-500 text-white px-2 py-1 rounded text-[10px] font-bold shadow-sm cursor-pointer" title="Cancelar">X</button>
                         </>
                     )}
                 </div>
             )}
             {isAdmin && isEditing && localEditing && (
-                <div className="mb-3 bg-white border rounded pt-3 px-2 pb-2">
-                    
-                    <label className="text-sm mt-1">Oficina que se mostrará en el mapa.</label>
+                <div className="mb-3 bg-white border rounded  pb-2 p-2 border-gray-400">
+
+                    <label className="text-sm font-bold text-blue-600 uppercase">Oficina que se mostrará en el mapa.</label>
                     <select
                         name="officeId"
                         value={data.officeId || ""}
                         onChange={handleOfficeSelect}
-                        className="w-full p-1 border rounded"
+                        className="w-full p-2 border rounded border-blue-600"
                     >
                         <option value="">Selecciona una oficina...</option>
                         {offices.map(office => (
@@ -107,22 +107,22 @@ export default function MapBlock({ block, isEditing, isAdmin, onChange }) {
                         Si desea agregar un nuevo lugar/oficina, lo puede hacer volviendo al menú principal, en el botón de "Gestionar oficinas/lugares del mapa".
                     </p>
 
-                    <label className="text-sm mt-4">Titulo del botón (opcional)</label>
+                    <label className="text-sm font-bold text-blue-600 uppercase">Titulo del botón (opcional)</label>
                     <input
                         name="title"
                         value={data.title || ""}
                         onChange={handleChange}
                         placeholder="Ver ubicación en el mapa"
-                        className="w-full mb-2 p-1 border rounded"
+                        className=" mb-2 w-full p-2 border rounded border-blue-600"
                     />
 
-                    <label className="text-sm mt-4">Título que se mostrará en el mapa (opcional)</label>
+                    <label className="text-sm font-bold text-blue-600 uppercase">Título que se mostrará en el mapa (opcional)</label>
                     <input
                         name="mapTitle"
                         value={data.mapTitle || ""}
                         onChange={handleChange}
                         placeholder="Ejemplo: Oficinas para tramitar el pase"
-                        className="w-full mb-2 p-1 border rounded"
+                        className="w-full mb-2 p-2 border rounded border-blue-600"
                     />
                 </div>
             )}

@@ -75,7 +75,7 @@ export default function BlogForm({ initialData = {}, onSubmit, onCancel }) {
         />
 
         <input
-          required
+          
           name="phone"
           value={form.phone}
           onChange={handleChange}
@@ -100,7 +100,6 @@ export default function BlogForm({ initialData = {}, onSubmit, onCancel }) {
           accept="image/*"
           value={form.image}
           onChange={handleFileChange}
-          required
           className="w-full p-2 border rounded border-blue-600"
         />
 
