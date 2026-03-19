@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../../context/AuthContext";
 import { Subsubtitle } from "../Typography";
 import { Icon } from "../common/Icon";
-import { ContentBlockService } from "../../api/services/ContentBlockService";
+import { ICON_OPTIONS } from "../../utils/iconOptions.JS";
 
-export default function Step({ step: initialStep, blockId, allSteps, isEditing: sectionEditing, isAdmin, onUpdate, onDelete }) {
-  const { isAuthenticated } = useAuth();
+export default function Step({ step: initialStep, stepNumber, isEditing: sectionEditing, isAdmin, onUpdate, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
   const [step, setStep] = useState(initialStep);
 
@@ -18,41 +16,32 @@ export default function Step({ step: initialStep, blockId, allSteps, isEditing: 
     setStep(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSave = async () => {
-    try {
-      // Reemplaza el step modificado dentro del array completo
-      const updatedSteps = allSteps.map(s =>
-        s.id === step.id ? step : s
-      );
-      await ContentBlockService.updateBlock(blockId, { steps: updatedSteps });
-      setIsEditing(false);
-      if (onUpdate) onUpdate(step);
-    } catch (err) {
-      console.error("Error guardando paso:", err);
-    }
+  //se eliminó la lógica de back porque ya se resuelve en section
+  const handleSave = () => {
+    if (onUpdate) onUpdate(step);
+    setIsEditing(false);
   };
 
-  const handleDelete = async () => {
-    try {
-      const remaining = allSteps.filter(s => s.id !== step.id);
-      await ContentBlockService.updateBlock(blockId, { steps: remaining });
-      if (onDelete) onDelete(step.id);
-      window.location.reload();
-    } catch (err) {
-      console.error("Error eliminando paso:", err);
-    }
+  //se eliminó la lógica de back porque se resuelve en section y el reload que refrescaba toda la página innecesariamente.
+  const handleDelete = () => {
+    if (onDelete) onDelete(step.id);
   };
 
   return (
-    <li className={`flex items-start gap-4 my-4 p-2 rounded-lg transition-all relative group ${isEditing ? "bg-blue-50 ring-1 ring-blue-100" : ""}`}>
+    <li className={`flex items-start gap-4 my-4 p-2 rounded-lg transition-all relative group
+      ${isEditing 
+      ? "flex flex-col md:flex-row md:items-start md:gap-4" // editando: columna en mobile, fila en desktop
+      : "flex items-start gap-4" // normal: fila siempre
+    }
+    ${isEditing ? "bg-blue-50 ring-1 ring-blue-100" : ""}`}>
 
-      {isAuthenticated && isAdmin && sectionEditing && (
+      { isAdmin && sectionEditing && (
         <div className="absolute top-0 right-2 flex gap-1 translate-y-[-50%] group-hover:translate-y-0 group-hover:opacity-100 transition-all">
           {!isEditing ? (
             <>
               <button
                 onClick={() => setIsEditing(true)}
-                className="bg-blue-600 text-white p-1 rounded-full shadow-md hover:bg-blue-700"
+                className="bg-blue-600 text-white p-1 rounded-full shadow-md cursor-pointer "
                 title="Editar Paso"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
@@ -75,16 +64,26 @@ export default function Step({ step: initialStep, blockId, allSteps, isEditing: 
         </div>
       )}
 
-      <div className="flex flex-col items-center flex-shrink-0">
+      <div className="flex flex-col items-center shrink-0">
         <Icon name={step.icon} className={`w-10 h-10 ${isEditing ? 'opacity-40' : ''}`} />
         {isEditing && (
-          <input
-            name="icon"
-            value={step.icon || ""}
-            onChange={handleChange}
-            className="mt-1 text-[9px] w-12 p-0.5 border rounded text-center bg-white outline-none focus:border-blue-400"
-            placeholder="Icono"
-          />
+          <div className="mt-1">
+      <span className="text-sm font-bold text-blue-600">Icono</span>
+      <div className="grid grid-cols-6 gap-2 max-h-48 overflow-y-auto p-2 border rounded mt-1">
+        {ICON_OPTIONS.map((ico) => (
+          <button
+            key={ico}
+            type="button"
+            onClick={() => setStep(prev => ({ ...prev, icon: ico }))}
+            className={`p-1 border rounded flex justify-center items-center ${
+              step.icon === ico ? "bg-blue-200 ring-2 ring-blue-400" : ""
+            }`}
+          >
+            <Icon name={ico} className="w-6 h-6" />
+          </button>
+        ))}
+      </div>
+    </div>
         )}
       </div>
 
@@ -92,7 +91,7 @@ export default function Step({ step: initialStep, blockId, allSteps, isEditing: 
         {isEditing ? (
           <div className="flex flex-col gap-1 w-full">
             <div className="flex items-center gap-1">
-              <span className="text-xs font-bold text-blue-600">Paso</span>
+              <span className="text-xl font-bold text-blue-600">Paso</span>
               <input
                 name="id"
                 type="number"
@@ -105,13 +104,13 @@ export default function Step({ step: initialStep, blockId, allSteps, isEditing: 
               name="description"
               value={step.description || ""}
               onChange={handleChange}
-              rows={2}
+              rows={11}
               className="text-sm w-full p-2 border rounded bg-white outline-none focus:border-blue-400"
             />
           </div>
         ) : (
           <>
-            <Subsubtitle className="md:text-xl">Paso {step.id}</Subsubtitle>
+            <Subsubtitle className="md:text-xl">Paso {stepNumber}</Subsubtitle>
             <p className="text-gray-700">{step.description}</p>
           </>
         )}

@@ -101,5 +101,14 @@ export const SectionRepository = {
       .delete()
       .eq("id", id);
     if (error) throw error;
+  },
+
+  async delete(slug) {
+    const { error } = await supabase
+      .from("section")
+      .delete()
+      .eq("slug", slug);
+    if (error) throw error;
   }
+
 };

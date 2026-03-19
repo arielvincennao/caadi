@@ -66,5 +66,10 @@ export const SectionService = {
   async delete(id) {
     if (!id) throw new Error("El id es requerido");
     return await SectionRepository.delete(id);
+  },
+
+   async delete(slug) {
+    if (!slug) throw new Error("El slug es requerido");
+    return await SectionRepository.delete(slug);
   }
 };

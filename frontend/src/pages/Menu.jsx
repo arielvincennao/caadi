@@ -13,11 +13,11 @@ function Menu() {
     async function fetchData() {
       // 1. Verificar sesión/rol del usuario
       const { data: { user } } = await supabase.auth.getUser();
-      
+
       // Aquí podrías chequear un campo 'role' en tu tabla de perfiles
       // Por ahora, simulamos que si existe un usuario, es admin (o podés hardcodear tu email)
       if (user) {
-        setIsAdmin(true); 
+        setIsAdmin(true);
       }
 
       // 2. Fetch del menú
@@ -73,21 +73,31 @@ function Menu() {
           {isAdmin && (
             <>
               <li key="agregar-seccion">
-                <Card 
-                  icon="add" 
-                  to="/add-seccion" 
+                <Card
+                  icon="add"
+                  to="/add-seccion"
                   className="text-start border-dashed border-2 border-blue-500 bg-blue-50 opacity-90"
                 >
                   <span className="font-bold text-blue-700 underline italic">Agregar una sección (Admin)</span>
                 </Card>
               </li>
+              <li key="eliminar-seccion">
+                <Card
+                  icon="delete"
+                  to="/eliminar-seccion"
+                  className="text-start border-dashed border-2 border-blue-500 bg-blue-50 opacity-90"
+                >
+                  <span className="font-bold text-blue-700 underline italic">Eliminar una sección (Admin)</span>
+                </Card>
+              </li>
+
               <li key="agregar-oficina">
                 <Card 
                   icon="office" 
-                  to="" 
-                  className="text-start border-dashed border-2 border-blue-500 bg-blue-50 opacity-90"
+                  to="/admin/oficinas" 
+                  className="text-start justify-center border-dashed border-2 border-blue-500 bg-blue-50 opacity-90"
                 >
-                  <span className="font-bold text-blue-700 underline italic">Agregar oficina (Admin)</span>
+                  <span className="font-bold text-blue-700 underline italic">Gestionar oficinas/lugares del mapa (Admin)</span>
                 </Card>
               </li>
             </>
