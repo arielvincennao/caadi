@@ -65,9 +65,8 @@ function AddSection() {
       <section className="flex flex-col items-center pb-10 pt-20 md:pt-4">
         <Title className="m-4 md:text-2xl">Agregar Sección</Title>
         {feedback.message && (
-          <div className={`mb-4 p-4 rounded-lg w-full max-w-md text-center font-medium animate-bounce ${
-            feedback.type === "success" ? "bg-green-100 text-green-700 border border-green-200" : "bg-red-100 text-red-700 border border-red-200"
-          }`}>
+          <div className={`mb-4 p-4 rounded-lg w-full max-w-md text-center font-medium animate-bounce ${feedback.type === "success" ? "bg-green-100 text-green-700 border border-green-200" : "bg-red-100 text-red-700 border border-red-200"
+            }`}>
             {feedback.message}
           </div>
         )}
