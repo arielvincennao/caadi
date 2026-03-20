@@ -6,6 +6,8 @@ import Button from "../components/common/Button";
 import BtnBack from "../components/common/BtnBack";
 import { SectionService } from "../api/services/SectionService";
 import { StorageService } from "../api/services/StorageService";
+import { ICON_OPTIONS } from "../utils/iconOptions.JS";
+import { Icon } from "../components/common/Icon";
 
 function AddSection() {
   const [title, setTitle] = useState("");
@@ -63,7 +65,27 @@ function AddSection() {
             <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required className="mt-1 block w-full border border-gray-300 rounded-md p-2" />
           </div>
           <div>
-            <label className="block text-sm font-medium">Ícono</label>
+            <div>
+              <label className="block text-sm font-medium mb-2">Seleccionar Ícono</label>
+
+              <div className="mb-3 p-2 border w-fit rounded-lg bg-gray-50">
+                <Icon name={icon || "cud"} className="w-8 h-8 text-blue-600" />
+              </div>
+
+              <div className="grid grid-cols-6 gap-2 max-h-48 overflow-y-auto p-2 border rounded mt-1">
+                {ICON_OPTIONS.map((ico) => (
+                  <button
+                    key={ico}
+                    type="button"
+                    onClick={() => setIcon(ico)}
+                    className={`p-2 border rounded flex justify-center items-center transition-colors ${icon === ico ? "bg-blue-200 ring-2 ring-blue-400" : "hover:bg-gray-100"
+                      }`}
+                  >
+                    <Icon name={ico} className="w-6 h-6" />
+                  </button>
+                ))}
+              </div>
+            </div>
             <input type="text" value={icon} onChange={(e) => setIcon(e.target.value)} required className="mt-1 block w-full border border-gray-300 rounded-md p-2" />
           </div>
           <div>
