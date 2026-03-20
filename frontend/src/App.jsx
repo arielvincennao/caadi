@@ -11,7 +11,7 @@ import Oficinas from './pages/admin/oficinas/Oficinas.jsx'
 import FormularioOficina from './pages/admin/oficinas/FormularioOficina.jsx'
 import AddSection from './pages/AddSection.jsx'
 import { PrivateRoute, AuthProvider} from './context/AuthContext.jsx'
-import {DeleteSection} from './pages/EliminarSeccion.jsx'
+import {DeleteSection} from './pages/DeleteSection.jsx'
 
 function App() {
   return (
