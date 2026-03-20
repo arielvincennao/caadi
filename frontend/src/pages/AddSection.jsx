@@ -16,10 +16,12 @@ function AddSection() {
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [feedback, setFeedback] = useState({ message: "", type: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setFeedback({ message: "", type: "" });
 
     try {
       const slug = title.toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, '');
@@ -41,11 +43,14 @@ function AddSection() {
         image: imageUrl
       });
 
-      alert("Sección agregada exitosamente");
-      navigate("/menu");
+      setFeedback({ message: "¡Sección creada con éxito! Redirigiendo...", type: "success" });
+      setTimeout(() => {
+        navigate("/menu");
+      }, 2000);
+
     } catch (error) {
       console.error("Error adding section:", error);
-      alert("Error al agregar la sección");
+      setFeedback({ message: "Hubo un error al guardar la sección.", type: "error" });
     } finally {
       setLoading(false);
     }
@@ -59,6 +64,13 @@ function AddSection() {
       </div>
       <section className="flex flex-col items-center pb-10 pt-20 md:pt-4">
         <Title className="m-4 md:text-2xl">Agregar Sección</Title>
+        {feedback.message && (
+          <div className={`mb-4 p-4 rounded-lg w-full max-w-md text-center font-medium animate-bounce ${
+            feedback.type === "success" ? "bg-green-100 text-green-700 border border-green-200" : "bg-red-100 text-red-700 border border-red-200"
+          }`}>
+            {feedback.message}
+          </div>
+        )}
         <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
           <div>
             <label className="block text-sm font-medium">Título</label>
