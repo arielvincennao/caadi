@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { ContentBlockService } from "../../../api/services/ContentBlockService";
+import ChildBlockSelector from "../ChildrenBlockSelector";
 import Modal from "../../common/Modal";
 import CardForm from "../../forms/CardForm";
 import CardSection from "../CardSection";
@@ -21,17 +21,72 @@ export default function ExpandedCardsGroup({ block, isEditing, isAdmin, onChildr
   const nextCard = currentIndex >= 0 ? cards[currentIndex + 1] : null;
 
   const handleAdd = (formData) => {
-  const newCard = {
-    id: `new-${crypto.randomUUID()}`,
-    type: "card",
-    data: formData,
-    children: []
+    const newCard = {
+      id: `new-${crypto.randomUUID()}`,
+      type: "card",
+      data: formData,
+      children: []
+    };
+
+    const updatedChildren = [...cards, newCard];
+
+    onChildrenChange?.(block.id, updatedChildren);
   };
 
-  const updatedChildren = [...cards, newCard];
+  const handleDeleteChild = (childId) => {
+    const updatedCards = cards.map(card => {
+      if (card.id === activeId) {
+        return {
+          ...card,
+          children: (card.children || []).filter(child => child.id !== childId)
+        };
+      }
+      return card;
+    });
 
-  onChildrenChange?.(block.id, updatedChildren);
-};
+    onChildrenChange?.(block.id, updatedCards);
+  };
+
+  const handleAddChildBlock = (type) => {
+    if (!activeId) return;
+
+    const newChild = {
+      id: `new-${crypto.randomUUID()}`,
+      type: type,
+      data: {},
+      children: []
+    };
+
+    // Buscamos la card activa y actualizamos sus hijos
+    const updatedCards = cards.map(card => {
+      if (card.id === activeId) {
+        return {
+          ...card,
+          children: [...(card.children || []), newChild]
+        };
+      }
+      return card;
+    });
+
+    onChildrenChange?.(block.id, updatedCards);
+  };
+
+  // funcion para editar hijos
+  const handleChildChange = (childId, newData) => {
+    const updatedCards = cards.map(card => {
+      if (card.id === activeId) {
+        return {
+          ...card,
+          children: card.children.map(child =>
+            child.id === childId ? { ...child, data: newData } : child
+          )
+        };
+      }
+      return card;
+    });
+    onChildrenChange?.(block.id, updatedCards);
+  };
+
 
   //scroll automatico al contenido de la card clickeada
   useEffect(() => {
@@ -81,23 +136,32 @@ export default function ExpandedCardsGroup({ block, isEditing, isAdmin, onChildr
                 blockId={card.id}
                 onClick={() => setActiveId(isActive ? null : card.id)}
                 isActive={isActive}
-              
                 isAdmin={isAdmin && isEditing}
                 onUpdate={(newData) => onChange && onChange(card.id, newData)}
               />
               {isActive && (
                 <div id={`card-content-${card.id}`} className="md:hidden p-6 rounded-xl mt-4 bg-white shadow-sm">
                   {card.children?.map(innerBlock => (
-                    <SectionBlock key={innerBlock.id} block={innerBlock} isEditing={isEditing} isAdmin={isAdmin} onChange={onChange} />
+                    <SectionBlock
+                      key={innerBlock.id}
+                      block={innerBlock}
+                      isEditing={isEditing}
+                      isAdmin={isAdmin}
+                      onChange={handleChildChange} // <-- Cambio aquí
+                    />
                   ))}
+                  {/* Selector para Mobile */}
+                  {isAdmin && isEditing && (
+                    <ChildBlockSelector onAdd={handleAddChildBlock} />
+                  )}
                 </div>
               )}
             </div>
           );
         })}
-      </div>  {/* ← cierra el grid acá */}
+      </div>
 
-      {activeCard && (  // ← ahora está afuera del grid
+      {activeCard && (
         <div key={activeCard.id} className="hidden md:block w-full bg-white shadow-sm rounded-2xl py-5 mb-15">
           <div ref={desktopContentRef}
             tabIndex="-1"
@@ -105,18 +169,31 @@ export default function ExpandedCardsGroup({ block, isEditing, isAdmin, onChildr
             aria-labelledby={`card-title-${activeCard.id}`}
             aria-live="polite"
             className="max-w-5xl mx-auto px-6 space-y-5"
-
             onKeyDown={(e) => {
               if (e.key === "Tab" && !e.shiftKey && nextCard) {
-                {/* si se presiona tab, se puede seguir navegando a la siguiente luego de leer el contenido expandido. shift + tab, vuelve a la card anterior */ }
                 e.preventDefault();
                 const next = cardRefs.current[nextCard.id];
                 next?.querySelector("button, a")?.focus();
               }
             }}>
+
             {activeCard.children?.map(innerBlock => (
-              <SectionBlock key={innerBlock.id} block={innerBlock} isAdmin={isAdmin && isEditing} onChange={onChange} />
+              <SectionBlock
+                key={innerBlock.id}
+                block={innerBlock}
+                isEditing={isEditing}
+                isAdmin={isAdmin}
+                onChange={handleChildChange}
+                onDelete={isAdmin && isEditing ? handleDeleteChild : null}
+              />
             ))}
+
+            {/* Selector para Desktop */}
+            {isAdmin && isEditing && (
+              <div className="border-t pt-4 mt-4">
+                <ChildBlockSelector onAdd={handleAddChildBlock} />
+              </div>
+            )}
 
           </div>
         </div>
