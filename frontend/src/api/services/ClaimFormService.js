@@ -5,18 +5,13 @@ export const ClaimFormService = {
     return await ClaimFormRepository.get();
   },
 
-  async updateTitle(id, title) {
-    if (!title.trim()) throw new Error("El título es requerido");
-    return await ClaimFormRepository.update(id, { title });
-  },
-
   async updateTexts(id, { title, description, note }) {
-    if (!title.trim()) throw new Error("El título es requerido");
+    if (!title?.trim()) throw new Error("El título es requerido");
     return await ClaimFormRepository.update(id, { title, description, note });
   },
 
   async updateClaimTypes(id, claimTypes) {
-    if (!claimTypes.length) throw new Error("Debe haber al menos un tipo");
+    if (!claimTypes.length) throw new Error("Debe haber al menos un tipo de reclamo");
     return await ClaimFormRepository.update(id, { claim_types: claimTypes });
   },
 

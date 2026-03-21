@@ -20,5 +20,5 @@ export function useClaimForm() {
     fetchConfig();
   }, []);
 
-  return { formConfig, loading, error };
+  return { formConfig, setFormConfig, loading, error };
 }
