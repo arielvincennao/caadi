@@ -59,6 +59,7 @@ const handleAdd = (formData) => {
               card={card.data}
               key={cardKey}
               blockId={card.id}
+              isEditable={isAdmin && isEditing}
               onDelete={isAdmin && isEditing ? handleDelete : null}
               onUpdate={isAdmin && isEditing ? (updatedData) => handleUpdate(cardKey, updatedData) : null}
             />

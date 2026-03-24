@@ -11,7 +11,7 @@ import Oficinas from './pages/admin/oficinas/Oficinas.jsx'
 import FormularioOficina from './pages/admin/oficinas/FormularioOficina.jsx'
 import AddSection from './pages/AddSection.jsx'
 import { PrivateRoute, AuthProvider} from './context/AuthContext.jsx'
-import {DeleteSection} from './pages/EliminarSeccion.jsx'
+import {DeleteSection} from './pages/DeleteSection.jsx'
 
 function App() {
   return (
@@ -24,14 +24,14 @@ function App() {
         <Route path="/seccion/:slug" element={<DynamicSection />} />
         <Route path="/agradecimientos" element={<Agradecimientos />} />
         <Route path="/reclamos" element={<Claim />} />
-        <Route path="/add-seccion" element={<AddSection />} />
-        <Route path="/eliminar-seccion" element={<DeleteSection />} />
 
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>}/>
         <Route path="/admin/oficinas" element={<PrivateRoute><Oficinas /></PrivateRoute>} />
         <Route path="/admin/oficinas/nueva" element={<PrivateRoute><FormularioOficina /></PrivateRoute>} />
         <Route path="/admin/oficinas/editar/:id" element={<PrivateRoute><FormularioOficina /></PrivateRoute>} />
+        <Route path="/agregar-seccion" element={<PrivateRoute><AddSection /></PrivateRoute>} />
+        <Route path="/eliminar-seccion" element={<PrivateRoute><DeleteSection /></PrivateRoute>} />
       </Routes>
     </AuthProvider>
     </BrowserRouter>
