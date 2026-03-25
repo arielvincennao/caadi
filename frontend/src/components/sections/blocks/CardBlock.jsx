@@ -5,7 +5,7 @@ import CardForm from "../../forms/CardForm";
 
 export default function CardBlock({ block, isEditing, isAdmin, onChildrenChange }) {
   //const cards = block.children?.length > 0 ? block.children : [block];
-const cards = block.children || [];
+  const cards = block.children || [];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCard, setEditingCard] = useState(null);
 
@@ -34,6 +34,15 @@ const cards = block.children || [];
                 setIsModalOpen(true);
               }}
               onDelete={() => handleDelete(card.id)}
+              onUpdate={(updatedData) => {
+                const updatedChildren = cards.map(c =>
+                  c.id === card.id
+                    ? { ...c, data: updatedData }
+                    : c
+                );
+
+                onChildrenChange(block.id, updatedChildren);
+              }}
             />
           ))}
         </div>
@@ -67,15 +76,14 @@ const cards = block.children || [];
         </Modal>
       )}
       {isAdmin && isEditing && (
-          <button
-            onClick={handleAdd}
-            className="mb-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer w-full"
-          >
-            + Añadir tarjeta
-          </button>
-        )}
+        <button
+          onClick={handleAdd}
+          className="mb-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer w-full"
+        >
+          + Añadir tarjeta
+        </button>
+      )}
     </>
   );
 }
-// indicate that this block type has its own editing UI
 CardBlock.hasEditor = true;

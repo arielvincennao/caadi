@@ -11,15 +11,6 @@ export default function CardSection({ card: initialCard, className, onClick, isA
         setCard(initialCard || {});
     }, [initialCard]);
 
-    const handleDelete = (id) => {
-        if (onDelete) {
-            onDelete(id);
-        } else {
-            const newChildren = cards.filter(c => c.id !== id);
-            onChildrenChange(block.id, newChildren);
-        }
-    };
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setCard(prev => ({ ...prev, [name]: value }));
