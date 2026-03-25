@@ -4,10 +4,17 @@ import Modal from "../../common/Modal";
 import CardForm from "../../forms/CardForm";
 import CardSection from "../CardSection";
 import SectionBlock from "../SectionBlock";
+import { BLOCK_FORMS } from "../../../config/blockForms";
+import { BLOCKS_WITH_MODAL } from "../../../utils/blocksWithForm";
+
 
 export default function ExpandedCardsGroup({ block, isEditing, isAdmin, onChildrenChange, onChange }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalBlockType, setModalBlockType] = useState(null);
+  const [isChildModalOpen, setIsChildModalOpen] = useState(false);
   const [activeId, setActiveId] = useState(null);
+
+  const FormComponent = BLOCK_FORMS[modalBlockType];
 
   const cardRefs = useRef({});
   const desktopContentRef = useRef(null);
@@ -47,13 +54,13 @@ export default function ExpandedCardsGroup({ block, isEditing, isAdmin, onChildr
     onChildrenChange?.(block.id, updatedCards);
   };
 
-  const handleAddChildBlock = (type) => {
+  const handleAddChildBlock = (type, formData = null) => {
     if (!activeId) return;
 
     const newChild = {
       id: `new-${crypto.randomUUID()}`,
       type: type,
-      data: {},
+      data: formData || {},
       children: []
     };
 
@@ -152,7 +159,14 @@ export default function ExpandedCardsGroup({ block, isEditing, isAdmin, onChildr
                   ))}
                   {/* Selector para Mobile */}
                   {isAdmin && isEditing && (
-                    <ChildBlockSelector onAdd={handleAddChildBlock} />
+                    <ChildBlockSelector onAdd={(type) => {
+                      if (BLOCKS_WITH_MODAL.includes(type)) {
+                        setModalBlockType(type);
+                        setIsChildModalOpen(true);
+                        return;
+                      }
+                      handleAddChildBlock(type);
+                    }} />
                   )}
                 </div>
               )}
@@ -190,8 +204,15 @@ export default function ExpandedCardsGroup({ block, isEditing, isAdmin, onChildr
 
             {/* Selector para Desktop */}
             {isAdmin && isEditing && (
-              <div className="border-t pt-4 mt-4">
-                <ChildBlockSelector onAdd={handleAddChildBlock} />
+              <div className=" pt-4 mt-4">
+                <ChildBlockSelector onAdd={(type) => {
+                  if (BLOCKS_WITH_MODAL.includes(type)) {
+                    setModalBlockType(type);
+                    setIsChildModalOpen(true);
+                    return;
+                  }
+                  handleAddChildBlock(type);
+                }} />
               </div>
             )}
 
@@ -218,6 +239,22 @@ export default function ExpandedCardsGroup({ block, isEditing, isAdmin, onChildr
           showHref={false}
         />
       </Modal>
+
+      <Modal open={isChildModalOpen} onClose={() => setIsChildModalOpen(false)}>
+        {FormComponent && (
+          <FormComponent
+            onSubmit={(data) => {
+              handleAddChildBlock(modalBlockType, data);
+              setIsChildModalOpen(false);
+              setModalBlockType(null);
+            }}
+            onCancel={() => {
+              setIsChildModalOpen(false);
+              setModalBlockType(null);
+            }} />
+        )}
+      </Modal>
+
     </>
   );
 }

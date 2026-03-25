@@ -11,6 +11,7 @@ import SectionHeader from "../components/sections/SectionHeader";
 import { BLOCK_DEFAULTS } from "../config/blockDefaults";
 import { BLOCK_FORMS } from "../config/blockForms";
 import Modal from "../components/common/Modal";
+import { BLOCKS_WITH_MODAL } from "../utils/blocksWithForm";
 
 /**
  * Section
@@ -21,7 +22,7 @@ import Modal from "../components/common/Modal";
  * - Permitir edición si el usuario es admin
  */
 
-const BLOCKS_WITH_MODAL = ["link", "list", "steps"];
+
 
 function Section({ data: initialData }) {
   const { isAuthenticated } = useAuth();
@@ -30,7 +31,7 @@ function Section({ data: initialData }) {
   const [newBlockType, setNewBlockType] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalBlockType, setModalBlockType] = useState(null);
-
+  const [tempSubtype, setTempSubtype] = useState(null);
 
   useEffect(() => {
     setEditData(initialData || {});
@@ -236,11 +237,14 @@ const handleBlockChildrenChange = (id, newChildren) => {
             <AddBlockSelector
               newBlockType={newBlockType}
               setNewBlockType={setNewBlockType}
-              onAdd={async (type) => {
+              onAdd={async (rawType) => {
+                const [type, subtype] = rawType.split(":");
                 if (BLOCKS_WITH_MODAL.includes(type)) {
                   setModalBlockType(type);
                   setIsModalOpen(true);
+                  setTempSubtype(subtype);
                   setNewBlockType("");
+
                   return;
                 }
                 
@@ -248,14 +252,14 @@ const handleBlockChildrenChange = (id, newChildren) => {
                 if (type === 'expandedCardsGroup' || type === 'blogEntry') {
                   try {
                     const created = await ContentBlockService.createBlock(
-                      editData.id, type, {}, editData.rootBlocks?.length || 0, null
+                      editData.id, type, { subtype }, editData.rootBlocks?.length || 0, null
                     );
                     setEditData(prev => ({
                       ...prev,
                       rootBlocks: [...(prev.rootBlocks || []), {
                         id: created.id,
                         type,
-                        data: {},
+                        data: { subtype },
                         children: [],
                         section_id: editData.id
                       }]
@@ -267,7 +271,7 @@ const handleBlockChildrenChange = (id, newChildren) => {
                   return;
                 }
 
-                handleAddBlock(type);
+                handleAddBlock(type, subtype ? { subtype } : null);
                 setNewBlockType("");
               }}
             />
@@ -289,8 +293,10 @@ const handleBlockChildrenChange = (id, newChildren) => {
       <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {FormComponent && (
           <FormComponent
+          variant={tempSubtype}
             onSubmit={(data) => {
-              handleAddBlock(modalBlockType, data);
+              handleAddBlock(modalBlockType, {...data, ...(tempSubtype && { subtype: tempSubtype})});
+              setTempSubtype(null);
               setIsModalOpen(false);
             }}
             onCancel={() => setIsModalOpen(false)}

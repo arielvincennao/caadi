@@ -28,21 +28,21 @@ export default function CardSection({ card: initialCard, className, onClick, isA
 
   const isLink = Boolean(card.href);
   const isExpanded = Boolean(onClick);
-  const activeEditing =  localEditing;
+  const activeEditing = localEditing;
   const Wrapper = activeEditing ? "div" : (isLink ? "a" : isExpanded ? "button" : "div");
 
   return (
     <>
-      <div className="relative">
+      <div className="relative w-fit">
 
         {isAdmin && (
-          <div className="absolute top-2 right-2 z-10 flex gap-1 min-w-[60px] justify-end">
+          <>
             {!propEditing && !localEditing ? (
               <button
                 type="button"
                 tabIndex={0}
                 onClick={(e) => { e.stopPropagation(); setLocalEditing(true); }}
-                className="bg-blue-600 text-white p-1.5 rounded-full opacity-100 transition-opacity shadow-sm cursor-pointer"
+                className="bg-blue-600 text-white p-1.5 rounded-full opacity-100 transition-opacity shadow-sm cursor-pointer absolute z-10 top-2 right-2"
                 title="Editar Card"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -50,12 +50,16 @@ export default function CardSection({ card: initialCard, className, onClick, isA
                 </svg>
               </button>
             ) : (
-              <div className="flex gap-1">
-                <button tabIndex={0} onClick={handleSave} className="bg-green-600 text-white px-2 py-1 rounded text-[10px] font-bold shadow-sm cursor-pointer">OK</button>
-                <button tabIndex={0} onClick={(e) => { e.stopPropagation(); setLocalEditing(false); setCard(initialCard); }} className="bg-gray-500 text-white px-2 py-1 rounded text-[10px] font-bold shadow-sm cursor-pointer">X</button>
+              <div className="absolute top-2 right-2 z-10 flex gap-1 min-w-[60px] justify-end">
+
+                <div className="flex gap-1">
+                  <button tabIndex={0} onClick={handleSave} className="bg-green-600 text-white px-2 py-1 rounded text-[10px] font-bold shadow-sm cursor-pointer">OK</button>
+                  <button tabIndex={0} onClick={(e) => { e.stopPropagation(); setLocalEditing(false); setCard(initialCard); }} className="bg-gray-500 text-white px-2 py-1 rounded text-[10px] font-bold shadow-sm cursor-pointer">X</button>
+                </div>
               </div>
+
             )}
-          </div>
+          </>
         )}
 
         <Wrapper

@@ -4,6 +4,7 @@ import Button from '../../common/Button';
 import { OfficeService } from "../../../api/services/OfficeService";
 import { ContentBlockService } from "../../../api/services/ContentBlockService";
 import { Icon } from "../../common/Icon";
+import BtnControl from "../../common/BtnControl";
 
 export default function MapBlock({ block, isEditing, isAdmin, onChange }) {
     const navigate = useNavigate();
@@ -74,9 +75,10 @@ export default function MapBlock({ block, isEditing, isAdmin, onChange }) {
     return (
         <div className="relative">
             {isAdmin && isEditing && (
-                <div className="absolute top-1 right-2 z-10 flex gap-1">
+                <div className="absolute top-6 -right-2 z-10 flex gap-1">
                     {!localEditing ? (
-                        <button onClick={() => setLocalEditing(true)} className="p-1 bg-blue-600 text-white rounded-full cursor-pointer"><Icon name={"editar"} className={"w-6 h-6 p-1"} /></button>
+                        <BtnControl onClick={() => setLocalEditing(true)} title={"Editar bloque"} className={"p-2 bg-blue-600 hover:bg-blue-700 text-white"}><Icon name={"editar"} className={"w-5 h-5"} /></BtnControl>
+
                     ) : (
                         <>
                             <button onClick={handleSave} className="bg-green-600 text-white px-2 py-1 rounded text-[10px] font-bold shadow-sm cursor-pointer" title="Guardar cambios">OK</button>

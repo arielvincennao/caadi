@@ -4,8 +4,8 @@ import Modal from "../../common/Modal";
 import CardForm from "../../forms/CardForm";
 
 export default function CardBlock({ block, isEditing, isAdmin, onChildrenChange }) {
-  const cards = block.children?.length > 0 ? block.children : [block];
-
+  //const cards = block.children?.length > 0 ? block.children : [block];
+const cards = block.children || [];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCard, setEditingCard] = useState(null);
 
@@ -69,7 +69,7 @@ export default function CardBlock({ block, isEditing, isAdmin, onChildrenChange 
       {isAdmin && isEditing && (
           <button
             onClick={handleAdd}
-            className="mb-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
+            className="mb-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer w-full"
           >
             + Añadir tarjeta
           </button>

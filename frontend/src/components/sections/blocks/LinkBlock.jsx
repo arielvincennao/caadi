@@ -25,7 +25,7 @@ export default function LinkBlock({ block, isEditing, isAdmin, onChange }) {
   return (
     <div className="relative">
       {isAdmin && isEditing && (
-        <div className="absolute top-1 right-2 z-10">
+        <div className="absolute top-6 -right-2 z-10">
           {!localEditing ? (
             <BtnControl onClick={() => setLocalEditing(true)} title={"Editar bloque"} className={"p-2 bg-blue-600 hover:bg-blue-700 text-white"}><Icon name={"editar"} className={"w-5 h-5"} /></BtnControl>
           ) : (

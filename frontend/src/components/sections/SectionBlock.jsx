@@ -39,7 +39,7 @@ export default function SectionBlock({ block, isEditing, isAdmin, onChange, onDe
         <BtnControl 
           onClick={() => onDelete(block.id)}
           title={"Eliminar bloque"}
-          className="absolute -top-3 right-4 bg-red-600 hover:bg-red-700 p-2 w-9 h-9 z-10 shadow-md"
+          className="absolute  right-4 bg-red-600 hover:bg-red-700 p-2 w-9 h-9 z-10 shadow-md"
         >
           <Icon name={"eliminar"} className={"w-5 h-5 text-white"} />
         </BtnControl>
