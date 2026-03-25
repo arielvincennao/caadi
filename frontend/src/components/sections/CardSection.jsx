@@ -5,7 +5,7 @@ import { ICON_OPTIONS } from "../../utils/iconOptions.JS";
 
 
 export default function CardSection({ card: initialCard, className, onClick, isActive, isEditing: propEditing, isAdmin, onUpdate }) {
-  ;
+  
   const [localEditing, setLocalEditing] = useState(false);
   const [card, setCard] = useState(initialCard || {});
 
@@ -22,7 +22,7 @@ export default function CardSection({ card: initialCard, className, onClick, isA
     e.stopPropagation();
 
     if (onUpdate) onUpdate(card);
-
+    
     setLocalEditing(false);
   };
 
