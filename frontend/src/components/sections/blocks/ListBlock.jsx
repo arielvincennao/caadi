@@ -20,9 +20,6 @@ export default function ListBlock({ block, isEditing, isAdmin, onChange }) {
 
   const handleTitleChange = (e) => {
     setLocalTitle(e.target.value);
-    {/*const value = e.target.value;
-    setLocalTitle(value);
-    updateBlockData(block, onChange, { title: value });*/}
   };
 
   const handleItemChange = (id, value) => {

@@ -20,11 +20,7 @@ export default function StepsBlock({ block, isEditing, isAdmin, onChange }) {
   }, [title]);
 
   const handleTitleChange = (e) => {
-    setLocalTitle(e.target.value); // Solo actualizamos lo visual
-    {/*const value = e.target.value;
-    setLocalTitle(value);
-    updateBlockData(block, onChange, { title: value });*/}
-
+    setLocalTitle(e.target.value);
   };
 
   const handleAddStep = (stepData) => {

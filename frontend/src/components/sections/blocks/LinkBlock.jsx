@@ -16,9 +16,6 @@ export default function LinkBlock({ block, isEditing, isAdmin, onChange }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData(prev => ({ ...prev, [name]: value }));
-    {/*const updated = { ...data, [name]: value };
-    setData(updated);
-    updateBlockData(block, onChange, { [name]: value });*/}
   };
 
   const handleSaveToParent = () => {

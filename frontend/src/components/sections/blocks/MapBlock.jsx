@@ -26,9 +26,6 @@ export default function MapBlock({ block, isEditing, isAdmin, onChange }) {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        {/*const updated = { ...data, [name]: value };
-        setData(updated);
-        onChange && onChange(block.id, updated);*/}
         setData(prev => ({ ...prev, [name]: value }));
     };
 
