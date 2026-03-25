@@ -15,12 +15,17 @@ export default function LinkBlock({ block, isEditing, isAdmin, onChange }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const updated = { ...data, [name]: value };
+    setData(prev => ({ ...prev, [name]: value }));
+    {/*const updated = { ...data, [name]: value };
     setData(updated);
-    updateBlockData(block, onChange, { [name]: value });
+    updateBlockData(block, onChange, { [name]: value });*/}
   };
 
-
+  const handleSaveToParent = () => {
+    if (JSON.stringify(data) !== JSON.stringify(block.data)) {
+      updateBlockData(block, onChange, data);
+    }
+  };
 
   return (
     <div className="relative">
@@ -29,7 +34,7 @@ export default function LinkBlock({ block, isEditing, isAdmin, onChange }) {
           {!localEditing ? (
             <BtnControl onClick={() => setLocalEditing(true)} title={"Editar bloque"} className={"p-2 bg-blue-600 hover:bg-blue-700 text-white"}><Icon name={"editar"} className={"w-5 h-5"} /></BtnControl>
           ) : (
-            <BtnControl onClick={() => setLocalEditing(false)} title={"Dejar de editar bloque"} className={"p-2 bg-green-600 hover:bg-green-700 text-white cursor-pointer"}><Icon name={"check"} className={"w-5 h-5"} /></BtnControl>
+            <BtnControl onClick={() => { handleSaveToParent(); setLocalEditing(false); }} title={"Dejar de editar bloque"} className={"p-2 bg-green-600 hover:bg-green-700 text-white cursor-pointer"}><Icon name={"check"} className={"w-5 h-5"} /></BtnControl>
           )}
         </div>
       )}
@@ -40,6 +45,7 @@ export default function LinkBlock({ block, isEditing, isAdmin, onChange }) {
             name="name"
             value={data.name || ""}
             onChange={handleChange}
+            onBlur={handleSaveToParent}
             className="w-full p-2 border rounded border-blue-600"
           />
           <label className="text-sm font-bold text-blue-600 uppercase">Editar URL</label>
@@ -47,6 +53,7 @@ export default function LinkBlock({ block, isEditing, isAdmin, onChange }) {
             name="href"
             value={data.href || ""}
             onChange={handleChange}
+            onBlur={handleSaveToParent}
             placeholder="URL destino"
             className="w-full p-2 border rounded border-blue-600"
           />

@@ -26,9 +26,14 @@ export default function MapBlock({ block, isEditing, isAdmin, onChange }) {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        const updated = { ...data, [name]: value };
+        {/*const updated = { ...data, [name]: value };
         setData(updated);
-        onChange && onChange(block.id, updated);
+        onChange && onChange(block.id, updated);*/}
+        setData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleBlur = () => {
+        onChange && onChange(block.id, data);
     };
 
     const handleOfficeSelect = (e) => {
@@ -114,6 +119,7 @@ export default function MapBlock({ block, isEditing, isAdmin, onChange }) {
                         name="title"
                         value={data.title || ""}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         placeholder="Ver ubicación en el mapa"
                         className=" mb-2 w-full p-2 border rounded border-blue-600"
                     />
@@ -123,6 +129,7 @@ export default function MapBlock({ block, isEditing, isAdmin, onChange }) {
                         name="mapTitle"
                         value={data.mapTitle || ""}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         placeholder="Ejemplo: Oficinas para tramitar el pase"
                         className="w-full mb-2 p-2 border rounded border-blue-600"
                     />

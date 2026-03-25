@@ -19,9 +19,10 @@ export default function ListBlock({ block, isEditing, isAdmin, onChange }) {
   }, [title, list]);
 
   const handleTitleChange = (e) => {
-    const value = e.target.value;
+    setLocalTitle(e.target.value);
+    {/*const value = e.target.value;
     setLocalTitle(value);
-    updateBlockData(block, onChange, { title: value });
+    updateBlockData(block, onChange, { title: value });*/}
   };
 
   const handleItemChange = (id, value) => {
@@ -65,6 +66,11 @@ export default function ListBlock({ block, isEditing, isAdmin, onChange }) {
             className="text-3xl font-bold border-b-2 border-blue-500 bg-transparent outline-none w-full py-2"
             value={localTitle}
             onChange={handleTitleChange}
+            onBlur={() => {
+              if (localTitle !== title) {
+                updateBlockData(block, onChange, { title: localTitle });
+              }
+            }}
             placeholder="Título"
           />
         </div>
@@ -74,15 +80,15 @@ export default function ListBlock({ block, isEditing, isAdmin, onChange }) {
 
       <ul className="list-disc space-y-4 mt-2">
         {localList.map((item) => (
-          <List 
-          key={item.id} 
-          item={item} 
-          isEditing={localEditing}
-          isActiveEditing={editingItemId === item.id}
-          isAdmin={isAdmin}
-          onUpdate={(updatedItem) => handleItemChange(updatedItem.id, updatedItem.text)}
-          onDelete={handleDeleteItem} />
-          
+          <List
+            key={item.id}
+            item={item}
+            isEditing={localEditing}
+            isActiveEditing={editingItemId === item.id}
+            isAdmin={isAdmin}
+            onUpdate={(updatedItem) => handleItemChange(updatedItem.id, updatedItem.text)}
+            onDelete={handleDeleteItem} />
+
         ))}
       </ul>
       {isAdmin && isEditing && (

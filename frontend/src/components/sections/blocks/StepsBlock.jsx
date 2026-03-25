@@ -20,9 +20,10 @@ export default function StepsBlock({ block, isEditing, isAdmin, onChange }) {
   }, [title]);
 
   const handleTitleChange = (e) => {
-    const value = e.target.value;
+    setLocalTitle(e.target.value); // Solo actualizamos lo visual
+    {/*const value = e.target.value;
     setLocalTitle(value);
-    updateBlockData(block, onChange, { title: value });
+    updateBlockData(block, onChange, { title: value });*/}
 
   };
 
@@ -68,6 +69,11 @@ export default function StepsBlock({ block, isEditing, isAdmin, onChange }) {
               className="text-3xl font-bold border-b-2 border-blue-500 bg-transparent outline-none w-full py-2"
               value={localTitle}
               onChange={handleTitleChange}
+              onBlur={() => {
+                if (localTitle !== title) {
+                  updateBlockData(block, onChange, { title: localTitle });
+                }
+              }}
               placeholder="Título"
             />
           </div>
