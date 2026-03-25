@@ -34,18 +34,16 @@ export default function SectionBlock({ block, isEditing, isAdmin, onChange, onDe
       }`}
     >
 
-      {/* Botón de eliminar (reubicado para que flote en la esquina de la card) */}
       {isEditMode && onDelete && (
         <BtnControl 
           onClick={() => onDelete(block.id)}
           title={"Eliminar bloque"}
-          className="absolute  right-4 bg-red-600 hover:bg-red-700 p-2 w-9 h-9 z-10 shadow-md"
+          className="absolute top-3 right-3 bg-red-600 hover:bg-red-700 p-2 w-9 h-9 z-10 shadow-md"
         >
           <Icon name={"eliminar"} className={"w-5 h-5 text-white"} />
         </BtnControl>
       )}
 
-      {/* Contenedor del componente hijo con margen superior si estamos editando para que no pise la etiqueta */}
       <div className={isEditMode ? "mt-4" : ""}>
         <BlockComponent
           block={block}
@@ -53,6 +51,7 @@ export default function SectionBlock({ block, isEditing, isAdmin, onChange, onDe
           isAdmin={isAdmin}
           onChange={onChange}
           onChildrenChange={onChildrenChange}
+          onDelete={onDelete}
         />
       </div>
     </div>

@@ -47,9 +47,9 @@ export default function StepsBlock({ block, isEditing, isAdmin, onChange }) {
 
   return (
     <>
-      <section className={`relative ${isAdmin && isEditing ? 'pt-12' : ''} mb-6`}>
+      <section className={`relative ${isAdmin && isEditing ? 'mt-6' : ''} mb-6`}>
         {isAdmin && isEditing && (
-          <div className="absolute top-6 -right-2 z-10">
+          <div className="absolute top-2 right-12 z-10">
             {!localEditing ? (
               <BtnControl onClick={startEditing} title={"Editar bloque"} className={"p-2 bg-blue-600 hover:bg-blue-700 text-white"}><Icon name={"editar"} className={"w-5 h-5"} /></BtnControl>
 

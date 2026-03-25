@@ -61,9 +61,7 @@ export default function BlogCard({ card: initialCard, className, blockId, onDele
                                 className="bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-md cursor-pointer px-2"
                                 title="Editar"
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                </svg>
+                                <Icon name={"editar"} className={"w-5 h-5 text-white"} />
                             </button>
                             {onDelete && (
                                 <button onClick={() => onDelete(blockId)} className="bg-red-600 text-white p-2 rounded-full shadow-md hover:bg-red-700 cursor-pointer transition" title="Eliminar Card">

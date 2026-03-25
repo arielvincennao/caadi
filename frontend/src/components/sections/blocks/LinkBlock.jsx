@@ -25,16 +25,8 @@ export default function LinkBlock({ block, isEditing, isAdmin, onChange }) {
   };
 
   return (
-    <div className="relative">
-      {isAdmin && isEditing && (
-        <div className="absolute top-6 -right-2 z-10">
-          {!localEditing ? (
-            <BtnControl onClick={() => setLocalEditing(true)} title={"Editar bloque"} className={"p-2 bg-blue-600 hover:bg-blue-700 text-white"}><Icon name={"editar"} className={"w-5 h-5"} /></BtnControl>
-          ) : (
-            <BtnControl onClick={() => { handleSaveToParent(); setLocalEditing(false); }} title={"Dejar de editar bloque"} className={"p-2 bg-green-600 hover:bg-green-700 text-white cursor-pointer"}><Icon name={"check"} className={"w-5 h-5"} /></BtnControl>
-          )}
-        </div>
-      )}
+    <section className={`mb-6 ${isAdmin && isEditing ? 'mt-6 flex' : ''}${localEditing ? 'flex-column' : ''}`}>
+      
       {isAdmin && isEditing && localEditing && (
         <div className="mt-12 mb-3 p-2 border rounded border-gray-400">
           <label className="text-sm font-bold text-blue-600 uppercase">Editar texto</label>
@@ -60,7 +52,16 @@ export default function LinkBlock({ block, isEditing, isAdmin, onChange }) {
       <Button className="main-button mb-5" href={data.href} key={block.id} icon={data.icon}>
         {data.name}
       </Button>
-    </div>
+      {isAdmin && isEditing && (
+        <div className="ms-2 z-10">
+          {!localEditing ? (
+            <BtnControl onClick={() => setLocalEditing(true)} title={"Editar bloque"} className={"p-2 bg-blue-600 hover:bg-blue-700 text-white"}><Icon name={"editar"} className={"w-5 h-5"} /></BtnControl>
+          ) : (
+            <BtnControl onClick={() => { handleSaveToParent(); setLocalEditing(false); }} title={"Dejar de editar bloque"} className={"p-2 bg-green-600 hover:bg-green-700 text-white cursor-pointer"}><Icon name={"check"} className={"w-5 h-5"} /></BtnControl>
+          )}
+        </div>
+      )}
+    </section>
   );
 }
 

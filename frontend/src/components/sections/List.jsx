@@ -65,7 +65,7 @@ export default function List({
         <input
           value={item.text}
           onChange={handleChange}
-          className="flex-1 p-1 border-2 border-blue-600 rounded outline-none"
+          className="flex-1 p-1 border-2 border-blue-600 w-[90%] rounded outline-none"
           autoFocus
         />
       ) : (
