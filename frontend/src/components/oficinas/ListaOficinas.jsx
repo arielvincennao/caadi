@@ -24,7 +24,7 @@ export const ListaOficinas = ({ offices, onEdit, onDelete, onViewMap }) => {
                             <td className="p-4 text-gray-600 text-sm">
                                 {office.coordinates ? `${office.coordinates[0]}, ${office.coordinates[1]}` : 'N/A'}
                             </td>
-                            <td className="p-4 flex flex-col">
+                            <td className="p-4 gap-2 flex flex-col">
                                 <button 
                                     onClick={() => onViewMap(office.id)} 
                                     className="text-sm font-medium text-emerald-600 hover:text-emerald-800 transition-colors"

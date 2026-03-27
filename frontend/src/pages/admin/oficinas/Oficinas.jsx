@@ -47,8 +47,8 @@ const Oficinas = () => {
       </div>
       <div className="max-w-6xl mx-auto justify-center w-full">
         <div className="p-6 text-gray-800">
-          <header className="flex justify-between items-center mb-8 pb-4 border-b border-gray-200">
-            <h2 className="text-2xl font-semibold tracking-tight text-gray-900">Gestionar Oficinas/Lugares del mapa</h2>
+          <header className="flex flex-col md:flex-row justify-between items-center mb-8 pb-4 border-b border-gray-200 mt-15 2xl:mt-0 gap-2 2xl:gap-0">
+            <h2 className="text-2xl font-semibold tracking-tight text-gray-900">Gestionar Oficinas del mapa</h2>
             <Button onClick={() => navigate('/admin/oficinas/nueva')}>
               + Agregar Oficina
             </Button>

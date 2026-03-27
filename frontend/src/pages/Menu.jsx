@@ -71,7 +71,7 @@ function Menu() {
                   to="/agregar-seccion"
                   className="text-start border-dashed border-2 border-blue-500 bg-blue-50 opacity-90"
                 >
-                  <span className="font-bold text-blue-700 underline italic">Agregar una sección (Admin)</span>
+                  <span className="font-bold text-blue-700 underline italic">Agregar una sección</span>
                 </Card>
               </li>
               <li key="eliminar-seccion">
@@ -80,7 +80,7 @@ function Menu() {
                   to="/eliminar-seccion"
                   className="text-start border-dashed border-2 border-blue-500 bg-blue-50 opacity-90"
                 >
-                  <span className="font-bold text-blue-700 underline italic">Eliminar una sección (Admin)</span>
+                  <span className="font-bold text-blue-700 underline italic">Eliminar una sección</span>
                 </Card>
               </li>
 
@@ -90,7 +90,7 @@ function Menu() {
                   to="/admin/oficinas"
                   className="text-start justify-center border-dashed border-2 border-blue-500 bg-blue-50 opacity-90"
                 >
-                  <span className="font-bold text-blue-700 underline italic">Gestionar oficinas/lugares del mapa (Admin)</span>
+                  <span className="font-bold text-blue-700 underline italic">Gestionar oficinas del mapa</span>
                 </Card>
               </li>
             </>
