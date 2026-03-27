@@ -1,6 +1,6 @@
 export default function AddBlockSelector({ newBlockType, setNewBlockType, onAdd }) {
     return (
-        <div className="mb-4 flex items-center gap-2">
+        <div className="mb-4 md:flex items-center gap-2">
             <select
                 value={newBlockType}
                 onChange={(e) => setNewBlockType(e.target.value)}
@@ -24,7 +24,7 @@ export default function AddBlockSelector({ newBlockType, setNewBlockType, onAdd 
                     onAdd(newBlockType);
                     
                 }}
-                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-blue-600 text-white px-4 py-2 mt-2 md:mt-0 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 Añadir bloque
             </button>

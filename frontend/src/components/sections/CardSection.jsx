@@ -49,7 +49,7 @@ export default function CardSection({ card: initialCard, className, onClick, isA
                                     >
                                         <Icon name={"editar"} className={"w-5 h-5"} />
                                     </button>
-                                    <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); if (onDelete) onDelete(card.id); }}
+                                    <button onClick={(e) => { e.preventDefault(); e.stopPropagation();  onDelete(card.id); }}
                                         className="bg-red-600 text-white p-2 rounded-full shadow-md hover:bg-red-700 cursor-pointer transition" title="Eliminar Card">
                                         <Icon name={"eliminar"} className={"w-5 h-5 text-white"} />
                                     </button>

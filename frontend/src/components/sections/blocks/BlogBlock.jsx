@@ -56,6 +56,7 @@ const handleAdd = (formData) => {
               isEditable={isAdmin && isEditing}
               onDelete={isAdmin && isEditing ? handleDelete : null}
               onUpdate={isAdmin && isEditing ? (updatedData) => handleUpdate(cardKey, updatedData) : null}
+              subtype={block.data?.subtype}
             />
           );
         })}

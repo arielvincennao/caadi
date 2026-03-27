@@ -6,7 +6,7 @@ import Button from "../common/Button";
 import { StorageService } from "../../api/services/StorageService";
 import { Icon } from "../common/Icon";
 
-export default function BlogCard({ card: initialCard, className, blockId, onDelete, onUpdate, isEditable}) {
+export default function BlogCard({ card: initialCard, className, blockId, onDelete, onUpdate, isEditable, subtype}) {
     const { isAuthenticated } = useAuth();
     const [isEditing, setIsEditing] = useState(false);
     const [card, setCard] = useState(initialCard);
@@ -107,6 +107,7 @@ export default function BlogCard({ card: initialCard, className, blockId, onDele
             {(hasDate || isEditing) && (
                 <div className="self-start mb-2">
                     {isEditing ? (
+                        subtype === "event" && (
                         <div className="bg-amber-100 p-2 rounded-r-xl border-l-4 border-amber-500 shadow-sm">
                             <label className="block text-[10px] font-bold text-amber-700 uppercase mb-1">
                                 Fecha y Hora
@@ -120,6 +121,7 @@ export default function BlogCard({ card: initialCard, className, blockId, onDele
                                 className="text-sm bg-white border border-amber-400 rounded px-2 py-1 outline-none focus:ring-2 ring-amber-500"
                             />
                         </div>
+                    )
                     ) : (
                         hasDate && (
                             <span className="inline-block px-3 py-1 text-base font-semibold text-black rounded-r-full shadow-sm bg-amber-300">
@@ -146,12 +148,13 @@ export default function BlogCard({ card: initialCard, className, blockId, onDele
                 {(card.phone || isEditing) && (
                     <div className="mb-2">
                         {isEditing ? (
+                            subtype === "center" && (
                             <div>
                                 <label className="text-sm font-bold text-blue-600 uppercase">Telefono</label>
 
                                 <input name="phone" value={card.phone || ""} onChange={handleChange} className="text-sm outline-none w-full p-2 border rounded border-blue-600" placeholder="Número de teléfono" />
                             </div>
-                        ) : (
+                        )) : (
                             <Text>Tel: {card.phone}</Text>
                         )}
                     </div>
