@@ -7,20 +7,16 @@ import { supabase } from "../../db/supabaseClient";
 
 function Menu() {
   const [menuOptions, setMenuOptions] = useState([]);
-  const [isAdmin, setIsAdmin] = useState(false); // Estado para el admin
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
-      // 1. Verificar sesión/rol del usuario
       const { data: { user } } = await supabase.auth.getUser();
 
-      // Aquí podrías chequear un campo 'role' en tu tabla de perfiles
-      // Por ahora, simulamos que si existe un usuario, es admin (o podés hardcodear tu email)
       if (user) {
         setIsAdmin(true);
       }
 
-      // 2. Fetch del menú
       const { data, error } = await supabase
         .from("section")
         .select("title, icon, slug, position")
@@ -52,7 +48,6 @@ function Menu() {
       <section className="flex flex-col items-center pb-10 pt-20 md:pt-4">
         <Title className="m-4 md:text-2xl">Menú principal</Title>
         <ul className="space-y-5">
-          {/* Opciones normales */}
           {menuOptions.map((option) => (
             <li key={option.title}>
               <Card icon={option.icon} to={option.to} className="text-start">
@@ -68,14 +63,12 @@ function Menu() {
             </Card>
           </li>
 
-
-          {/* Opciones de Admin con estilos distintos */}
           {isAdmin && (
             <>
               <li key="agregar-seccion">
                 <Card
                   icon="add"
-                  to="/add-seccion"
+                  to="/agregar-seccion"
                   className="text-start border-dashed border-2 border-blue-500 bg-blue-50 opacity-90"
                 >
                   <span className="font-bold text-blue-700 underline italic">Agregar una sección (Admin)</span>
@@ -92,9 +85,9 @@ function Menu() {
               </li>
 
               <li key="agregar-oficina">
-                <Card 
-                  icon="office" 
-                  to="/admin/oficinas" 
+                <Card
+                  icon="office"
+                  to="/admin/oficinas"
                   className="text-start justify-center border-dashed border-2 border-blue-500 bg-blue-50 opacity-90"
                 >
                   <span className="font-bold text-blue-700 underline italic">Gestionar oficinas/lugares del mapa (Admin)</span>

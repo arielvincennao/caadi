@@ -7,12 +7,13 @@ import BlogForm from "../../forms/BlogForm";
 export default function BlogBlock({ block, isAdmin, isEditing, onChildrenChange }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const cards = block.children || [];
+  const subtype = block.data?.subtype;
 
 const handleAdd = (formData) => {
     const newCard = {
       id: `new-${Date.now()}`,
       type: "card",
-      data: formData
+      data: {...formData, subtype}
     };
 
     onChildrenChange(block.id, [...cards, newCard]);
@@ -43,14 +44,7 @@ const handleAdd = (formData) => {
 
   return (
     <section className="mb-10">
-      {isAdmin && isEditing && (
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="w-full mb-4 bg-blue-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-700"
-        >
-          + Añadir entrada de blog
-        </button>
-      )}
+      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {cards.map((card) => {
           const cardKey = card.id || card.tempId;
@@ -59,14 +53,25 @@ const handleAdd = (formData) => {
               card={card.data}
               key={cardKey}
               blockId={card.id}
+              isEditable={isAdmin && isEditing}
               onDelete={isAdmin && isEditing ? handleDelete : null}
               onUpdate={isAdmin && isEditing ? (updatedData) => handleUpdate(cardKey, updatedData) : null}
+              subtype={block.data?.subtype}
             />
           );
         })}
       </div>
+      {isAdmin && isEditing && (
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="w-full mt-10 bg-blue-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-700"
+        >
+          + Añadir entrada de blog
+        </button>
+      )}
       <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <BlogForm
+          variant={subtype}
           onSubmit={(formData) => {
             handleAdd(formData);
             setIsModalOpen(false);

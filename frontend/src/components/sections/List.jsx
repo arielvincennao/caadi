@@ -3,11 +3,15 @@ import BtnControl from "../common/BtnControl";
 import { Icon } from "../common/Icon";
 
 export default function List({
-  item: initialItem, isEditing: sectionEditing, isAdmin, onUpdate, onDelete,
+  item: initialItem, isEditing: sectionEditing, isAdmin, onUpdate, onDelete, isActiveEditing,
   className = ""
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [item, setItem] = useState(initialItem);
+
+ useEffect(() =>{
+  if(isActiveEditing) setIsEditing(true);
+ }, [isActiveEditing]);
 
   useEffect(() => {
     setItem(initialItem);
@@ -26,8 +30,8 @@ export default function List({
     if (onDelete) onDelete(item.id);
   };
   return (
-    <li className={className}>
-      {isAdmin && sectionEditing && (
+    <li className={`mt-4 ${className}`}>
+      {isAdmin && (
         <div className="absolute right-0 flex gap-1 transition">
           {!isEditing ? (
             <>
@@ -61,7 +65,7 @@ export default function List({
         <input
           value={item.text}
           onChange={handleChange}
-          className="flex-1 p-1 border-2 border-blue-600 rounded outline-none"
+          className="flex-1 p-1 border-2 border-blue-600 w-[90%] rounded outline-none"
           autoFocus
         />
       ) : (
