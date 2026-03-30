@@ -28,7 +28,7 @@ export default function Modal({ open, onClose, children }) {
       />
 
       {/* contenido */}
-      <div className="relative bg-white rounded-xl shadow-lg p-5 m-2 w-full max-w-md z-10">
+      <div className="relative bg-white rounded-xl shadow-lg p-5 w-full max-w-md z-10 m-2">
         {children}
       </div>
     </div>

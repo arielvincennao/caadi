@@ -30,7 +30,7 @@ export default function List({
     if (onDelete) onDelete(item.id);
   };
   return (
-    <li className={`mt-4 ${className}`}>
+    <li className={`mx-2 mt-4 ${className}`}>
       {isAdmin && (
         <div className="absolute right-0 flex gap-1 transition">
           {!isEditing ? (
@@ -65,7 +65,7 @@ export default function List({
         <input
           value={item.text}
           onChange={handleChange}
-          className="flex-1 p-1 border-2 border-blue-600 w-[90%] rounded outline-none"
+          className="flex-1 p-1 border-2 border-blue-600 w-[85%] rounded outline-none"
           autoFocus
         />
       ) : (
