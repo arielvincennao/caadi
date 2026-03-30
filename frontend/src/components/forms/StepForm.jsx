@@ -80,14 +80,14 @@ export default function StepForm({ onSubmit, onCancel }) {
                 <div className="flex justify-end gap-2 mt-2">
                     <button
                         onClick={onCancel}
-                        className="px-3 py-1 rounded bg-gray-200"
+                        className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 cursor-pointer"
                     >
                         Cancelar
                     </button>
 
                     <button
                         onClick={handleSubmit}
-                        className="px-3 py-1 rounded bg-blue-600 text-white"
+                        className="px-3 py-1 rounded bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
                     >
                         Crear
                     </button>
