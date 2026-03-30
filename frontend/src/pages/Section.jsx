@@ -4,10 +4,7 @@
  * - Renderizar una sección y su árbol de bloques
  * - Mostrar el modo edición para admin y manejar el estado de la UI
  * - Guardar los cambios: primero los datos base de la sección y después cada bloque (crear/actualizar)
- * - Dejar borrar bloques: lo saca del estado al toque y si ya existía en DB, lo elimina
- * Ojo con:
- * - Si no llega `initialData`, retorna `null`
- * - Los bloques nuevos usan ids con prefijo `new-` y eso cambia cómo se persisten
+ * - Dejar borrar bloques: lo saca del estado y si ya existía en DB, lo elimina
  */
 
 import { useState, useEffect } from "react";

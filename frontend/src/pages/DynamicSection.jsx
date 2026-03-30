@@ -7,8 +7,6 @@
  * - Obtener los datos de la sección usando el hook personalizado
  * - Manejar estados de carga y error
  * - Renderizar el componente presentacional Section
- * 
- * NO hace acceso directo a la BD ni transformaciones complejas
  */
 
 import { useParams } from "react-router-dom";

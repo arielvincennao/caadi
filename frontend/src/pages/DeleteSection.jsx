@@ -5,8 +5,6 @@
  * - Mostrar una confirmación antes de borrar (para evitar cagadas con el delete)
  * - Llamar `SectionService.delete(selectedSlug)` y, si sale bien, volver al menú
  * - Mostrar feedback (éxito / error) y deshabilitar botones mientras corre la request
- * Ojo con:
- * - La UI depende de que `SectionService.getAll()` funcione; si falla, `sections` queda vacío y no va a haber opciones.
  */
 
 import { useState, useEffect } from "react";
