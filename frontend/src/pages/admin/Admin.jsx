@@ -1,3 +1,15 @@
+/**
+ * Admin
+ * Responsabilidades:
+ * - Mostrar el formulario de login del panel de admin
+ * - Pedirle al backend que inicie sesión con `AuthService.signIn(email, password)`
+ * - Redirigir a `/menu` cuando el usuario ya está autenticado
+ * - Enseñar errores y deshabilitar el botón mientras se está logueando
+ * Ojo con:
+ * - `useAuth()` controla `isLoadingAuth`; mientras carga, no renderiza nada (`return null`)
+ * - El texto del error depende de `error.message`; si no matchea, usa el `default`
+ */
+
 import { useEffect, useState } from 'react'
 import { AuthService } from '../../api/services/AuthService'
 import { useAuth } from '../../context/AuthContext';

@@ -1,3 +1,15 @@
+/**
+ * Claim
+ * Responsabilidades:
+ * - Renderizar un formulario de reclamos basado en la config del hook `useClaimForm()`
+ * - Validar campos requeridos antes de enviar
+ * - Enviar el reclamo con `ClaimService.sendClaim(formData)`
+ * - Si el usuario está logueado como admin, mostrar también un panel para ver reclamos ya enviados
+ * Ojo con:
+ * - Los campos salen de `formConfig.fields` (y también `claim_types` para el select), así que cualquier cambio en esa config afecta el render y la validación.
+ * - La lista de reclamos se carga bajo demanda cuando activás “Ver reclamos”.
+ */
+
 import { useState, useEffect } from 'react';
 import Navbar from '../components/layout/Navbar';
 import BtnBack from '../components/common/BtnBack';

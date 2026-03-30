@@ -1,3 +1,11 @@
+/**
+ * Agradecimientos
+ * Responsabilidades:
+ * - Mostrar el texto de agradecimiento y el “por qué” del proyecto CAADi
+ * - Presentar agradecimientos especiales y personales en listas
+ * - Incluir la navegación (`Navbar`) y el botón de volver (`BtnBack`)
+ */
+
 import Navbar from "../components/layout/Navbar";
 import { Title, Subtitle, Subsubtitle, Text } from "../components/Typography";
 import BtnBack from "../components/common/BtnBack";

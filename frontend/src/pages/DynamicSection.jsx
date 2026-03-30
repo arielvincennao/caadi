@@ -1,8 +1,3 @@
-import { useParams } from "react-router-dom";
-import { useSectionData } from "../hooks/useSectionData";
-import Section from "../pages/Section";
-import { Subtitle } from "../components/Typography";
-
 /**
  * DynamicSection
  * Componente contenedor (Container Component)
@@ -15,6 +10,12 @@ import { Subtitle } from "../components/Typography";
  * 
  * NO hace acceso directo a la BD ni transformaciones complejas
  */
+
+import { useParams } from "react-router-dom";
+import { useSectionData } from "../hooks/useSectionData";
+import Section from "../pages/Section";
+import { Subtitle } from "../components/Typography";
+
 export default function DynamicSection() {
   const { slug } = useParams();
   const { data, loading, error } = useSectionData(slug);
