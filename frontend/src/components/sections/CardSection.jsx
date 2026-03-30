@@ -27,6 +27,7 @@ export default function CardSection({ card: initialCard, className, onClick, isA
     const activeEditing = localEditing;
     const Wrapper = activeEditing ? "div" : (isLink ? "a" : "div");
 
+    
     return (
         <>
             <div>
@@ -34,7 +35,7 @@ export default function CardSection({ card: initialCard, className, onClick, isA
                     {...(isLink && !activeEditing && { href: card.href, target: "_blank" })}
                     {...(isExpanded && !activeEditing && { role: "button", tabIndex: 0, onClick, "aria-expanded": isActive, "aria-controls": `card-content-${card.id}` })}
                     style={isActive ? { borderColor: '#475569', backgroundColor: '#f1f5f9', borderWidth: '2px' } : {}}
-                    className={`relative flex flex-col items-center text-center max-w-sm p-6 border rounded-2xl bg-[#FCFCFC] border-gray-400 relative group ${!activeEditing ? 'cursor-pointer' : ''} ${className ?? ''}`}
+                    className={`flex flex-col items-center text-center max-w-sm p-6 border rounded-2xl bg-[#FCFCFC] border-gray-400 relative group ${!activeEditing ? 'cursor-pointer' : ''} ${className ?? ''}`}
                 >
                     {isAdmin && (
                         <div className="absolute top-2 right-2 z-10 flex gap-1 min-w-[60px] justify-end">
@@ -49,7 +50,7 @@ export default function CardSection({ card: initialCard, className, onClick, isA
                                     >
                                         <Icon name={"editar"} className={"w-5 h-5"} />
                                     </button>
-                                    <button onClick={(e) => { e.preventDefault(); e.stopPropagation();  onDelete(card.id); }}
+                                    <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); onDelete(card.id); }}
                                         className="bg-red-600 text-white p-2 rounded-full shadow-md hover:bg-red-700 cursor-pointer transition" title="Eliminar Card">
                                         <Icon name={"eliminar"} className={"w-5 h-5 text-white"} />
                                     </button>

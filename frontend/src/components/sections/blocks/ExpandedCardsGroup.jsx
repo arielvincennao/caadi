@@ -21,7 +21,7 @@ export default function ExpandedCardsGroup({ block, isEditing, isAdmin, onChildr
 
     const cards = block.children || [];
 
-    const activeCard = cards.find(card => card.id === activeId);onDelete
+    const activeCard = cards.find(card => card.id === activeId); onDelete
 
     //busco el id de la card actual y busco la siguiente. Lógica para poder navegar a la siguiente card con el lector de pantalla con el TAB
     const currentIndex = cards.findIndex(card => card.id === activeId);
@@ -143,7 +143,6 @@ export default function ExpandedCardsGroup({ block, isEditing, isAdmin, onChildr
 
     }, [activeCard]);
 
-
     return (
         <>
             <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10 relative ${isAdmin && isEditing ? 'mt-6' : ''}`}>
@@ -200,8 +199,7 @@ export default function ExpandedCardsGroup({ block, isEditing, isAdmin, onChildr
                         onKeyDown={(e) => {
                             if (e.key === "Tab" && !e.shiftKey && nextCard) {
                                 e.preventDefault();
-                                const next = cardRefs.current[nextCard.id];
-                                next?.querySelector("button, a")?.focus();
+                                cardRefs.current[nextCard.id]?.querySelector('[role="button"]')?.focus();
                             }
                         }}>
 

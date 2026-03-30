@@ -55,7 +55,7 @@ export default function Step({ step: initialStep, stepNumber, isEditing: section
               </BtnControl>
             </>
           ) : (
-            <div className="flex gap-1">
+            <div className="flex gap-1 mt-1">
               <button onClick={handleSave} className="bg-green-600 text-white px-2 py-0.5 rounded text-[10px] font-bold shadow-sm cursor-pointer">OK</button>
               <button onClick={() => { setIsEditing(false); setStep(initialStep); }} className="bg-gray-500 text-white px-2 py-0.5 rounded text-[10px] font-bold shadow-sm cursor-pointer">X</button>
             </div>
