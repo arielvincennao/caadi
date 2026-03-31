@@ -1,3 +1,10 @@
+/**
+ * FormularioOficina
+ * Responsabilidades:
+ * - Cargar datos iniciales del formulario (secciones y oficina existente en modo edición)
+ * - Persistir oficinas en Supabase, resolviendo alta/edición y sus relaciones con secciones
+ * - Coordinar estados de carga y redirección al listado tras guardar o cancelar
+ */
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { OfficeForm } from '../../../components/oficinas/OfficeForm';

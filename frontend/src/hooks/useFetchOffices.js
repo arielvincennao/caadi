@@ -1,3 +1,9 @@
+/**
+ * useFetchOffices
+ * Responsabilidades:
+ * - Cargar oficinas por sección o por id y exponer centro y zoom del mapa
+ * - Gestionar estado de carga y ofrecer refetch para volver a pedir datos
+ */
 import { useState, useEffect } from "react";
 import { OfficeService } from "../api/services/OfficeService";
 
