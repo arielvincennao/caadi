@@ -6,6 +6,14 @@ import Button from "../components/common/Button";
 import BtnBack from "../components/common/BtnBack";
 import { SectionService } from "../api/services/SectionService";
 
+/**
+ * DeleteSecttion
+ * Responsabilidades:
+ *   Elimina una seccion en funcion de su slug
+ * 
+ * Aclaracion: En esta screen solo estaremos si somos admin, si no, se desconoce.
+ */
+
 export function DeleteSection() {
   const [sections, setSections] = useState([]);
   const [selectedSlug, setSelectedSlug] = useState("");
@@ -17,6 +25,7 @@ export function DeleteSection() {
 
   const navigate = useNavigate();
 
+  //nos traemos todas las sectiones para mostrarlas y que el admin elija cual eliminar
   useEffect(() => {
     const fetchSections = async () => {
       try {
@@ -33,17 +42,20 @@ export function DeleteSection() {
 
   const sectionToConfirm = sections.find(s => s.slug === selectedSlug);
 
-
+  //funcion para eliminar cuando ya tenemos el slug 
   const handleDelete = async (e) => {
     if (e) e.preventDefault();
 
     setLoading(true);
     setFeedback({ message: "", type: "" });
 
+    //intentamos llamar a supabase para decirle que eliminamos la section
     try {
       await SectionService.delete(selectedSlug);
 
       setFeedback({ message: `Sección "${sectionToConfirm?.title}" eliminada con éxito.`, type: "success" });
+
+      //si todo ok, mostramos un cartel positivo y redirijimos al menu
 
       setTimeout(() => {
         navigate("/menu");
@@ -56,6 +68,8 @@ export function DeleteSection() {
     }
   };
 
+
+  //UI que nos permite elegir que section eliminar 
   return (
     <div>
       <Navbar />

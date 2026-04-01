@@ -9,6 +9,12 @@ import { StorageService } from "../api/services/StorageService";
 import { ICON_OPTIONS } from "../utils/iconOptions.JS";
 import { Icon } from "../components/common/Icon";
 
+/**
+ * AddSection
+ * Responsabilidades:
+ * -Permite agregar una nueva seccion al admin
+ */
+
 function AddSection() {
   const [title, setTitle] = useState("");
   const [icon, setIcon] = useState("");
@@ -23,17 +29,23 @@ function AddSection() {
     setLoading(true);
     setFeedback({ message: "", type: "" });
 
+    //intentamos crear la section
     try {
+      //en base al titulo creamos el slug (identificador)
       const slug = title.toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, '');
+      
+      //buscamos cual es el siguiente numero de orden
       const sections = await SectionService.getAll();
       const maxPosition = sections.length > 0 ? Math.max(...sections.map(s => s.position || 0)) : 0;
       const position = maxPosition + 1;
 
+      //almacenamos la imagen si existe en el bucket mediante el llamado al supabase
       let imageUrl = "";
       if (imageFile) {
         imageUrl = await StorageService.uploadImage('section_covers', imageFile);
       }
 
+      //guardamos la section en supabase
       await SectionService.create({
         title,
         icon,
@@ -43,6 +55,7 @@ function AddSection() {
         image: imageUrl
       });
 
+      //mostramos mensaje de creacion valida y redirigimos al menu
       setFeedback({ message: "¡Sección creada con éxito! Redirigiendo...", type: "success" });
       setTimeout(() => {
         navigate("/menu");
@@ -56,6 +69,8 @@ function AddSection() {
     }
   };
 
+
+  //UI para crear la section, que incluye: titulo, icono, descripcion e imagen.
   return (
     <div>
       <Navbar />

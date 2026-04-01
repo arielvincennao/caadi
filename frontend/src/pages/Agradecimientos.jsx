@@ -2,6 +2,13 @@ import Navbar from "../components/layout/Navbar";
 import { Title, Subtitle, Subsubtitle, Text } from "../components/Typography";
 import BtnBack from "../components/common/BtnBack";
 
+/**
+ * Agradecimientos
+ * Responsabilidades:
+ * -Screen que expone agradecimientos a distintas personas.
+ */
+
+
 function Agradecimientos() {
   return (
     <div className="min-h-screen">

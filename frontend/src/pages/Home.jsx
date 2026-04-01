@@ -4,6 +4,12 @@ import Logo from '../components/common/Logo'
 import Button from '../components/common/Button'
 import { Text } from '../components/Typography'
 
+/**
+ * Home
+ * Responsabilidades:
+ * - Screen de presentacion de la web que redirije al menu y a los agradecimientos.
+ */
+
 function Home() {
   const navigate = useNavigate()
 

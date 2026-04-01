@@ -7,6 +7,14 @@ import { ClaimService } from '../api/services/ClaimService';
 import { useClaimForm } from '../hooks/useClaimForm';
 import { useAuth } from '../context/AuthContext';
 
+
+/**
+ * Claim o reclamo
+ * Responsabilidades:
+ * - Formulario para recibir reclamos de accesibilidad y entre otros, de los usuarios de caadi.
+ */
+
+
 function Claim() {
   const { formConfig, loading: configLoading } = useClaimForm();
   const { isAuthenticated } = useAuth();
@@ -50,6 +58,7 @@ function Claim() {
     setErrors(prev => ({ ...prev, [name]: "" }));
   };
 
+  //logica para validar que el input del user sea el deseado
   const validate = () => {
     const newErrors = {};
     const fields = formConfig?.fields || [];
@@ -68,18 +77,25 @@ function Claim() {
     return newErrors;
   };
 
+  //manda la claim a la base de datos
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSuccess(false);
     setSubmitError(null);
     const validationErrors = validate();
+
+    //si hay algun error, no mando. (logica para ver que el input sea valido)
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
     setLoading(true);
+
+    //intentamos mandar la claim a la base de datos y enviarle un mail al usuario con su claim
     try {
       await ClaimService.sendClaim(formData);
+
+      //si todo ok, reseteamos el form por si quiere hacer otra claim
       setSuccess(true);
       const resetData = {};
       formConfig.fields.forEach(field => { resetData[field.name] = ""; });
@@ -92,6 +108,7 @@ function Claim() {
     }
   };
 
+  
   const renderField = (field) => {
     const commonProps = {
       name: field.name,

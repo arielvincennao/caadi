@@ -15,6 +15,7 @@ import { Subtitle } from "../components/Typography";
  * 
  * NO hace acceso directo a la BD ni transformaciones complejas
  */
+
 export default function DynamicSection() {
   const { slug } = useParams();
   const { data, loading, error } = useSectionData(slug);
