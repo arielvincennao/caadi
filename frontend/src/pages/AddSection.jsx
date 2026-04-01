@@ -1,3 +1,13 @@
+/**
+ * AddSection
+ * Responsabilidades:
+ * - Mostrar un formulario para crear una nueva “sección” (título, ícono, descripción y portada)
+ * - Convertir el título a un `slug` usable para la URL
+ * - Subir la imagen a storage
+ * - Persistir la nueva sección con `SectionService.create(...)`
+ * - Después de crear, volver al menú con un mensaje de feedback
+ */
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";

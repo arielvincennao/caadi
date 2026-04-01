@@ -1,3 +1,11 @@
+/**
+ * Menu
+ * Responsabilidades:
+ * - Armar el menú leyendo las secciones desde Supabase (`section`)
+ * - Mostrar opciones para navegar a cada sección con su ícono y slug
+ * - Detectar si el usuario es admin y mostrarle opciones extra (agregar/eliminar oficinas y secciones)
+ */
+
 import { useEffect, useState } from "react";
 import Navbar from "../components/layout/Navbar";
 import { Title } from "../components/Typography";

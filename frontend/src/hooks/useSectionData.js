@@ -1,14 +1,18 @@
-import { useEffect, useState } from "react";
-import { SectionService } from "../api/services/SectionService";
-
 /**
- * useSectionData Hook
+ * useSectionData
  * Custom hook que encapsula la lógica de obtención y manejo de estado
  * para una sección específica identificada por su slug
  * 
  * @param {string} slug - El slug de la sección a obtener
  * @returns {Object} { data, loading, error }
+ * 
+ * Responsabilidades:
+ * - Obtener una sección por slug (con bloques) vía SectionService
+ * - Exponer estado de carga, error y datos, con cleanup para evitar actualizaciones tras desmontar
  */
+import { useEffect, useState } from "react";
+import { SectionService } from "../api/services/SectionService";
+
 export function useSectionData(slug) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);

@@ -1,3 +1,12 @@
+/**
+ * DeleteSection
+ * Responsabilidades:
+ * - Traer el listado de secciones para que el admin elija cuál eliminar
+ * - Mostrar una confirmación antes de borrar (para evitar cagadas con el delete)
+ * - Llamar `SectionService.delete(selectedSlug)` y, si sale bien, volver al menú
+ * - Mostrar feedback (éxito / error) y deshabilitar botones mientras corre la request
+ */
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
@@ -5,14 +14,6 @@ import { Title } from "../components/Typography";
 import Button from "../components/common/Button";
 import BtnBack from "../components/common/BtnBack";
 import { SectionService } from "../api/services/SectionService";
-
-/**
- * DeleteSecttion
- * Responsabilidades:
- *   Elimina una seccion en funcion de su slug
- * 
- * Aclaracion: En esta screen solo estaremos si somos admin, si no, se desconoce.
- */
 
 export function DeleteSection() {
   const [sections, setSections] = useState([]);

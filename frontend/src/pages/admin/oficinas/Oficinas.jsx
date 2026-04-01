@@ -1,3 +1,10 @@
+/**
+ * Oficinas
+ * Responsabilidades:
+ * - Renderizar la pantalla de gestión de oficinas con navegación a alta y edición
+ * - Cargar y mostrar el listado de oficinas, incluyendo estados de carga de la UI
+ * - Gestionar la eliminación con confirmación y actualizar el estado local tras borrar
+ */
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ListaOficinas } from '../../../components/oficinas/ListaOficinas';

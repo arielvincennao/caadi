@@ -1,14 +1,15 @@
+/**
+ * Home
+ * Responsabilidades:
+ * - Lading para mostrar la pantalla de bienvenida de CAADi (descripción + logo)
+ * - Dar acceso rápido al `Menú principal` y a `Agradecimientos`
+ */
+
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/layout/Navbar'
 import Logo from '../components/common/Logo'
 import Button from '../components/common/Button'
 import { Text } from '../components/Typography'
-
-/**
- * Home
- * Responsabilidades:
- * - Screen de presentacion de la web que redirije al menu y a los agradecimientos.
- */
 
 function Home() {
   const navigate = useNavigate()

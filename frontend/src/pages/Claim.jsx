@@ -1,3 +1,12 @@
+/**
+ * Claim
+ * Responsabilidades:
+ * - Renderizar un formulario de reclamos basado en la config del hook `useClaimForm()`
+ * - Validar campos requeridos antes de enviar
+ * - Enviar el reclamo con `ClaimService.sendClaim(formData)`
+ * - Si el usuario está logueado como admin, mostrar también un panel para ver reclamos ya enviados
+ */
+
 import { useState, useEffect } from 'react';
 import Navbar from '../components/layout/Navbar';
 import BtnBack from '../components/common/BtnBack';
@@ -6,13 +15,6 @@ import { Title, Text } from '../components/Typography';
 import { ClaimService } from '../api/services/ClaimService';
 import { useClaimForm } from '../hooks/useClaimForm';
 import { useAuth } from '../context/AuthContext';
-
-
-/**
- * Claim o reclamo
- * Responsabilidades:
- * - Formulario para recibir reclamos de accesibilidad y entre otros, de los usuarios de caadi.
- */
 
 
 function Claim() {
