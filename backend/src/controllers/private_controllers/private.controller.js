@@ -1,7 +1,6 @@
 const { supabase } = require("../../../db/supabaseClient");
 
 const getAllSections = async (req, res) => {
-  console.log("asddas");
 
   const { data, error } = await supabase
     .from("section")
@@ -14,7 +13,6 @@ const getAllSections = async (req, res) => {
   res.json(data);
 };
 
-//aca agus podes crear los demas metodos privados
 
 module.exports = {
   getAllSections,
