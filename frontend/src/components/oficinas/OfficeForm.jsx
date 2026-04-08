@@ -1,3 +1,10 @@
+/**
+ * OfficeForm
+ * Responsabilidades:
+ * - Mostrar un formulario para crear/editar una oficina
+ * - Manejar los campos de dirección, sección, coordenadas y contacto
+ */
+
 import { useState, useEffect } from 'react';
 
 export const OfficeForm = ({ initialData, availableSections, onSave, onCancel }) => {

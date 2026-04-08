@@ -1,3 +1,10 @@
+/**
+ * SectionHeader
+ * Responsabilidades:
+ * - Mostrar el encabezado de sección con imagen, título y descripción
+ * - Permitir editar el contenido y subir nueva imagen en modo admin
+ */
+
 import { StorageService } from "../../api/services/StorageService";
 import { Title, Text } from "../Typography";
 

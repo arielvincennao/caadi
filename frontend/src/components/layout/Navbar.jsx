@@ -1,3 +1,10 @@
+/**
+ * Navbar
+ * Responsabilidades:
+ * - Renderizar la barra superior con logo y navegación
+ * - Mostrar enlaces públicos y opciones de logout para el admin
+ */
+
 import Logo from "../common/Logo";
 import { Icon } from "../common/Icon";
 import { useAuth } from "../../context/AuthContext";

@@ -1,3 +1,10 @@
+/**
+ * OfficeMarker
+ * Responsabilidades:
+ * - Renderizar un marcador de oficina en el mapa
+ * - Mostrar un tooltip interactivo con el nombre de la oficina
+ */
+
 import { Marker, Tooltip } from "react-leaflet";
 import { Icon } from "leaflet";
 import placeholderIcon from "./icons/placeholder.png";

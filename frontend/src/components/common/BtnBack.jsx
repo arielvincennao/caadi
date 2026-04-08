@@ -1,6 +1,15 @@
+/**
+ * BtnBack
+ * Responsabilidades:
+ * - Mostrar un botón de regreso con estilo consistente
+ * - Permitir volver a la pantalla anterior o al menú
+ */
+
 import { useNavigate } from 'react-router-dom'
 import Button from './Button'
 import { Text } from '../Typography'
+
+
 
 export default function BtnBack({ className = "" }) {
     const navigate = useNavigate()

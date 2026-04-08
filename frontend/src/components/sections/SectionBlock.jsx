@@ -1,3 +1,10 @@
+/**
+ * SectionBlock
+ * Responsabilidades:
+ * - Seleccionar el tipo de bloque adecuado según block.type
+ * - Renderizar el bloque específico con soporte de edición y borrado
+ */
+
 import CardBlock from "./blocks/CardBlock";
 import LinkBlock from "./blocks/LinkBlock";
 import StepsBlock from "./blocks/StepsBlock";

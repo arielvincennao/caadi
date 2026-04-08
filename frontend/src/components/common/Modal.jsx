@@ -1,3 +1,10 @@
+/**
+ * Modal
+ * Responsabilidades:
+ * - Mostrar un diálogo modal sobre el contenido
+ * - Cerrar el modal con ESC o al hacer click fuera
+ */
+
 import { useEffect } from "react";
 
 export default function Modal({ open, onClose, children }) {

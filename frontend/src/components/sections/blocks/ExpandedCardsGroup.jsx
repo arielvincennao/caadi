@@ -1,3 +1,10 @@
+/**
+ * ExpandedCardsGroup
+ * Responsabilidades:
+ * - Renderizar un grupo de cards expandibles y gestionar hijos internos
+ * - Permitir agregar, editar y eliminar cards y bloques secundarios
+ */
+
 import { useState, useRef, useEffect } from "react";
 import ChildBlockSelector from "../ChildrenBlockSelector";
 import Modal from "../../common/Modal";

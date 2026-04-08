@@ -1,3 +1,10 @@
+/**
+ * OfficeModal
+ * Responsabilidades:
+ * - Mostrar los detalles de una oficina seleccionada en un modal
+ * - Cerrar el modal con Escape o al cliquear el fondo
+ */
+
 import { useEffect, useRef } from "react";
 import Button from "../common/Button";
 

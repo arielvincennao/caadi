@@ -1,3 +1,10 @@
+/**
+ * CardSection
+ * Responsabilidades:
+ * - Renderizar una colección de cards dentro de una sección
+ * - Soportar modos de visualización y edición para administradores
+ */
+
 import { useState, useEffect } from "react";
 import { Text } from "../Typography";
 import { Icon } from "../common/Icon";

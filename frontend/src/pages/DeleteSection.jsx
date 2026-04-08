@@ -1,3 +1,12 @@
+/**
+ * DeleteSection
+ * Responsabilidades:
+ * - Traer el listado de secciones para que el admin elija cuál eliminar
+ * - Mostrar una confirmación antes de borrar (para evitar cagadas con el delete)
+ * - Llamar `SectionService.delete(selectedSlug)` y, si sale bien, volver al menú
+ * - Mostrar feedback (éxito / error) y deshabilitar botones mientras corre la request
+ */
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
@@ -17,6 +26,7 @@ export function DeleteSection() {
 
   const navigate = useNavigate();
 
+  //nos traemos todas las sectiones para mostrarlas y que el admin elija cual eliminar
   useEffect(() => {
     const fetchSections = async () => {
       try {
@@ -33,17 +43,20 @@ export function DeleteSection() {
 
   const sectionToConfirm = sections.find(s => s.slug === selectedSlug);
 
-
+  //funcion para eliminar cuando ya tenemos el slug 
   const handleDelete = async (e) => {
     if (e) e.preventDefault();
 
     setLoading(true);
     setFeedback({ message: "", type: "" });
 
+    //intentamos llamar a supabase para decirle que eliminamos la section
     try {
       await SectionService.delete(selectedSlug);
 
       setFeedback({ message: `Sección "${sectionToConfirm?.title}" eliminada con éxito.`, type: "success" });
+
+      //si todo ok, mostramos un cartel positivo y redirijimos al menu
 
       setTimeout(() => {
         navigate("/menu");
@@ -56,6 +69,8 @@ export function DeleteSection() {
     }
   };
 
+
+  //UI que nos permite elegir que section eliminar 
   return (
     <div>
       <Navbar />

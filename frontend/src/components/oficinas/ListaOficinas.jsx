@@ -1,3 +1,10 @@
+/**
+ * ListaOficinas
+ * Responsabilidades:
+ * - Mostrar una tabla con las oficinas cargadas
+ * - Permitir editar, eliminar y ver la oficina en el mapa
+ */
+
 export const ListaOficinas = ({ offices, onEdit, onDelete, onViewMap }) => {
     if (!offices || offices.length === 0) {
         return <p className="text-gray-500 text-center py-8">No hay oficinas cargadas.</p>;

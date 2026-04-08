@@ -1,3 +1,10 @@
+/**
+ * Step
+ * Responsabilidades:
+ * - Renderizar un paso individual con icono y descripción
+ * - Permitir editar o eliminar el paso en modo admin
+ */
+
 import { useState, useEffect } from "react";
 import { Subsubtitle } from "../Typography";
 import { Icon } from "../common/Icon";

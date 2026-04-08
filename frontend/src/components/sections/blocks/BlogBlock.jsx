@@ -1,3 +1,10 @@
+/**
+ * BlogBlock
+ * Responsabilidades:
+ * - Renderizar entradas de blog como un bloque de contenido
+ * - Permitir abrir un modal para crear nuevos cards de blog
+ */
+
 import { useState } from "react";
 import { ContentBlockService } from "../../../api/services/ContentBlockService";
 import BlogCard from "../BlogCard";

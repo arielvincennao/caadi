@@ -1,3 +1,9 @@
+/**
+ * useLocalEditing
+ * Responsabilidades:
+ * - Mantener un booleano de edición local (p. ej. modo edición en la UI)
+ * - Exponer helpers para iniciar y detener la edición
+ */
 import { useState } from "react";
 
 export function useLocalEditing(initial = false){

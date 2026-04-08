@@ -1,3 +1,11 @@
+/**
+ * Menu
+ * Responsabilidades:
+ * - Armar el menú leyendo las secciones desde Supabase (`section`)
+ * - Mostrar opciones para navegar a cada sección con su ícono y slug
+ * - Detectar si el usuario es admin y mostrarle opciones extra (agregar/eliminar oficinas y secciones)
+ */
+
 import { useEffect, useState } from "react";
 import Navbar from "../components/layout/Navbar";
 import { Title } from "../components/Typography";
@@ -5,18 +13,29 @@ import Card from "../components/common/Card";
 import BtnBack from "../components/common/BtnBack";
 import { supabase } from "../../db/supabaseClient";
 
+/**
+ * Menu
+ * Responsabilidades:
+ * - Exponer la entrada a las distintas secciones
+ * - Permitir agregar/eliminar secciones y agregar oficinas (puntos en el mapa)
+ * - Permitir edición si el usuario es admin
+ */
+
 function Menu() {
   const [menuOptions, setMenuOptions] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
+
+      //vemos si hay user, si hay implica que es admin. seteamos si es true
       const { data: { user } } = await supabase.auth.getUser();
 
       if (user) {
         setIsAdmin(true);
       }
 
+      //independientemente si es user traemos la data de las secciones (para mostrar a cual podemos navegar)
       const { data, error } = await supabase
         .from("section")
         .select("title, icon, slug, position")
@@ -27,6 +46,8 @@ function Menu() {
         return;
       }
 
+
+      //metemos las secciones en una lista para iterarlas y mostrarlas. solo guardamos titulo, icono y slug, lo demas es innecesario
       const options = (data || []).map((item) => ({
         title: item.title,
         icon: item.icon,
@@ -48,6 +69,8 @@ function Menu() {
       <section className="flex flex-col items-center pb-10 pt-20 md:pt-4">
         <Title className="m-4 md:text-2xl">Menú principal</Title>
         <ul className="space-y-5">
+
+          {/* UI render de las secciones */}
           {menuOptions.map((option) => (
             <li key={option.title}>
               <Card icon={option.icon} to={option.to} className="text-start">
@@ -63,6 +86,7 @@ function Menu() {
             </Card>
           </li>
 
+          {/* Si es admin mostramos UI para agregar/eliminar secciones y agregar oficinas */}
           {isAdmin && (
             <>
               <li key="agregar-seccion">

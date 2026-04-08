@@ -1,3 +1,10 @@
+/**
+ * CardForm
+ * Responsabilidades:
+ * - Mostrar un formulario para crear un card con título, descripción e ícono
+ * - Permitir enviar y cancelar la creación del card
+ */
+
 import { useState } from "react";
 import { ICON_OPTIONS } from "../../utils/iconOptions.JS";
 import { Icon } from "../common/Icon";

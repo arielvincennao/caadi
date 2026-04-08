@@ -1,3 +1,10 @@
+/**
+ * CustomMapControls
+ * Responsabilidades:
+ * - Mostrar controles personalizados de zoom para el mapa
+ * - Invocar la acción de obtener ubicación del usuario
+ */
+
 import { useMap } from "react-leaflet";
 import Button from "../common/Button";
 

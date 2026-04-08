@@ -1,3 +1,10 @@
+/**
+ * RecenterMap
+ * Responsabilidades:
+ * - Sincronizar el centro y el nivel de zoom del mapa Leaflet
+ * - Volar a la posición indicada cuando cambian center o zoom
+ */
+
 import { useEffect } from "react";
 import { useMap } from "react-leaflet";
 

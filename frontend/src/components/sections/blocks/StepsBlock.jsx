@@ -1,3 +1,10 @@
+/**
+ * StepsBlock
+ * Responsabilidades:
+ * - Renderizar un bloque de pasos ordenados
+ * - Permitir agregar, editar y eliminar pasos en modo admin
+ */
+
 import { useState, useEffect } from "react";
 import Step from "../Step";
 import { Subtitle } from "../../Typography";

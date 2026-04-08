@@ -1,3 +1,12 @@
+/**
+ * Section
+ * Responsabilidades:
+ * - Renderizar una sección y su árbol de bloques
+ * - Mostrar el modo edición para admin y manejar el estado de la UI
+ * - Guardar los cambios: primero los datos base de la sección y después cada bloque (crear/actualizar)
+ * - Dejar borrar bloques: lo saca del estado y si ya existía en DB, lo elimina
+ */
+
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { SectionService } from "../api/services/SectionService";
@@ -13,17 +22,6 @@ import { BLOCK_FORMS } from "../config/blockForms";
 import Modal from "../components/common/Modal";
 import { BLOCKS_WITH_MODAL } from "../utils/blocksWithForm";
 import { Subtitle } from "../components/Typography";
-
-/**
- * Section
- * Responsabilidades:
- * - Renderizar la sección con todos sus bloques
- * - Manejar estado local de UI
- * - Presentar datos de forma visual
- * - Permitir edición si el usuario es admin
- */
-
-
 
 function Section({ data: initialData }) {
     const { isAuthenticated } = useAuth();

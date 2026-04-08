@@ -1,3 +1,10 @@
+/**
+ * List
+ * Responsabilidades:
+ * - Renderizar un item de lista editable dentro de un bloque de sección
+ * - Permitir edición inline y eliminación cuando es admin
+ */
+
 import { useEffect, useState } from "react";
 import BtnControl from "../common/BtnControl";
 import { Icon } from "../common/Icon";

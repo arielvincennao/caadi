@@ -1,3 +1,10 @@
+/**
+ * MapView
+ * Responsabilidades:
+ * - Mostrar el mapa interactivo con oficinas y marcadores
+ * - Manejar selección de oficina y detalles de ubicación
+ */
+
 import { useRef, useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
 import { useSearchParams } from "react-router-dom";

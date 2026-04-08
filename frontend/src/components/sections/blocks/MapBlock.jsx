@@ -1,3 +1,10 @@
+/**
+ * MapBlock
+ * Responsabilidades:
+ * - Renderizar un bloque de mapa con oficina seleccionada
+ * - Manejar selección de oficina y navegación al mapa completo
+ */
+
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button';

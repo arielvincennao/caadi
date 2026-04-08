@@ -1,3 +1,10 @@
+/**
+ * BtnControl
+ * Responsabilidades:
+ * - Renderizar un botón de control pequeño para acciones de administración
+ * - Recibir título, clases y contenido interno para comandos de edición o borrado
+ */
+
 
 export default function BtnControl({ onClick, children, className = "", title, type = "button" }) {
     return (

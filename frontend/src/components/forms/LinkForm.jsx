@@ -1,3 +1,10 @@
+/**
+ * LinkForm
+ * Responsabilidades:
+ * - Mostrar un formulario para crear o editar un enlace
+ * - Validar nombre y URL antes de enviar los datos
+ */
+
 import { useState } from "react";
 import Button from "../common/Button";
 import { ICON_OPTIONS } from "../../utils/iconOptions.JS";
