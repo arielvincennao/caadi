@@ -6,8 +6,8 @@ El objetivo es facilitar el acceso a recursos utiles y promover una participacio
 El proyecto esta dividido en:
 
 - `frontend`: aplicacion React + Vite.
-- `backend`: API REST con Express.
 - `Supabase`: base de datos y servicios de datos.
+- `frontend/src/api`: capa de acceso a datos y servicios de negocio en cliente.
 
 ---
 
@@ -22,23 +22,13 @@ El proyecto esta dividido en:
 ## Estructura del proyecto
 
 - `frontend/`: interfaz de usuario y logica cliente.
-- `backend/`: servidor, rutas publicas/privadas y controladores.
-- `backend/db/supabaseClient.js`: cliente de Supabase para el backend.
 - `frontend/db/supabaseClient.js`: cliente de Supabase para el frontend.
+- `frontend/src/api/repositories/`: acceso directo a datos (consultas a Supabase).
+- `frontend/src/api/services/`: casos de uso para la UI.
 
 ---
 
 ## Variables de entorno
-
-### Backend (`backend/.env`)
-
-Crear un archivo `backend/.env` con:
-
-```env
-SUPABASE_URL=tu_url_de_supabase
-SUPABASE_SERVICE_ROLE_KEY=tu_service_role_key
-PORT=3000
-```
 
 ### Frontend (`frontend/.env`)
 
@@ -51,6 +41,8 @@ VITE_SUPABASE_ANON_KEY=tu_anon_key
 
 ### Consideraciones importantes sobre claves
 
+- `VITE_SUPABASE_ANON_KEY` es publica y se usa en el cliente.
+- Mantener activas las politicas RLS y permisos correctos en Supabase.
 - No subir archivos `.env` al repositorio.
 
 ---
@@ -60,9 +52,7 @@ VITE_SUPABASE_ANON_KEY=tu_anon_key
 Desde la raiz del proyecto:
 
 ```bash
-cd backend
-npm install
-cd ../frontend
+cd frontend
 npm install
 ```
 
@@ -70,20 +60,7 @@ npm install
 
 ## Ejecucion en desarrollo
 
-Se deben levantar **dos servicios** (backend y frontend).
-
-### 1) Levantar backend
-
-```bash
-cd backend
-npm run dev
-```
-
-Backend disponible en `http://localhost:3000` (o el `PORT` configurado).
-
-### 2) Levantar frontend
-
-En otra terminal:
+Se levanta el frontend:
 
 ```bash
 cd frontend
@@ -94,12 +71,8 @@ Frontend disponible en `http://localhost:5173`.
 
 ---
 
-## Endpoints base del backend
+## Capa API en frontend
 
-- `GET /` - estado basico del servidor.
-- `GET /menu` - menu publico (titulos e iconos de secciones).
-- `GET /sections/:slug` - detalle de una seccion publica por slug.
-- `GET /admin/sections` - listado de secciones para administracion.
-- `GET /admin/sections/:slug` - ruta declarada para admin (revisar implementacion en controlador privado).
+Leer README de `/frontend/src/api`.
 
 ---
