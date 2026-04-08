@@ -1,3 +1,10 @@
+/**
+ * ListBlock
+ * Responsabilidades:
+ * - Renderizar un bloque de lista con título y elementos
+ * - Permitir edición de contenido y sincronizar cambios al padre
+ */
+
 import { useState, useEffect } from "react";
 import List from "../List";
 import { Subtitle } from "../../Typography";

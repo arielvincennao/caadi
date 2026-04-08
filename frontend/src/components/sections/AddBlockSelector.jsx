@@ -1,3 +1,10 @@
+/**
+ * AddBlockSelector
+ * Responsabilidades:
+ * - Mostrar un selector de tipo de bloque para añadir a la sección
+ * - Invocar la acción onAdd con el tipo de bloque elegido
+ */
+
 export default function AddBlockSelector({ newBlockType, setNewBlockType, onAdd }) {
     return (
         <div className="mb-4 md:flex items-center gap-2">

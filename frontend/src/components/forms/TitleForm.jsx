@@ -1,3 +1,10 @@
+/**
+ * TitleForm
+ * Responsabilidades:
+ * - Mostrar un formulario simple para ingresar un título
+ * - Validar que el título no esté vacío antes de enviar
+ */
+
 import { useState } from "react";
 export default function TitleForm({ onSubmit, onCancel }) {
   const [title, setTitle] = useState("");

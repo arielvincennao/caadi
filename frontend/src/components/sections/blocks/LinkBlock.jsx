@@ -1,3 +1,10 @@
+/**
+ * LinkBlock
+ * Responsabilidades:
+ * - Renderizar un bloque de enlace o botón con datos dinámicos
+ * - Permitir editar URL y texto en modo admin
+ */
+
 import { useState, useEffect } from "react";
 import Button from "../../common/Button";
 import { updateBlockData } from "../../../utils/blockHelpers";

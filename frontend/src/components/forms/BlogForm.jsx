@@ -1,3 +1,10 @@
+/**
+ * BlogForm
+ * Responsabilidades:
+ * - Mostrar un formulario para crear o actualizar una entrada de blog
+ * - Validar campos y subir imagen cuando corresponde
+ */
+
 import { useState } from "react";
 import { StorageService } from "../../api/services/StorageService";
 

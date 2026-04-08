@@ -1,3 +1,10 @@
+/**
+ * CardBlock
+ * Responsabilidades:
+ * - Renderizar un bloque de tarjeta dentro de una sección
+ * - Soportar edición local y cambios de contenido para admin
+ */
+
 import { useState } from "react";
 import CardSection from "../CardSection";
 import Modal from "../../common/Modal";

@@ -1,3 +1,10 @@
+/**
+ * Typography
+ * Responsabilidades:
+ * - Proveer componentes tipográficos reutilizables como Title, Subtitle y Text
+ * - Usarse para dar estilo consistente a títulos, subtítulos y párrafos
+ */
+
 export function Title({ children, className = "" }) {
     return (
       <h1

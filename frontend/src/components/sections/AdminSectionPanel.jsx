@@ -1,3 +1,10 @@
+/**
+ * AdminSectionPanel
+ * Responsabilidades:
+ * - Mostrar controles administrativos para editar la sección
+ * - Permitir agregar bloques, guardar cambios y mostrar acciones de gestión
+ */
+
 export default function AdminSectionPanel({ isEditing, onToggleEdit, onSave }) {
     return (
         <div className="mb-6 p-4 bg-white border-l-4 border-blue-600 shadow-sm flex justify-between items-center rounded-r-lg">

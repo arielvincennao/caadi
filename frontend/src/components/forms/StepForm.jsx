@@ -1,3 +1,10 @@
+/**
+ * StepForm
+ * Responsabilidades:
+ * - Mostrar un formulario para crear un paso con icono y descripción
+ * - Validar campos antes de notificar al padre
+ */
+
 import { useState } from "react";
 import { Icon } from "../common/Icon";
 import { ICON_OPTIONS } from "../../utils/iconOptions.JS";

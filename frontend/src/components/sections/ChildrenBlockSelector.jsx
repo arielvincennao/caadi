@@ -1,3 +1,10 @@
+/**
+ * ChildrenBlockSelector
+ * Responsabilidades:
+ * - Mostrar un selector de contenido hijo para bloques complejos
+ * - Añadir el tipo de bloque secundario seleccionado
+ */
+
 import { useState } from "react";
 export default function ChildBlockSelector({ onAdd }) {
   const [selected, setSelected] = useState("");

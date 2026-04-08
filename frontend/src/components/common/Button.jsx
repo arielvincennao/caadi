@@ -1,3 +1,10 @@
+/**
+ * Button
+ * Responsabilidades:
+ * - Renderizar un botón principal reutilizable
+ * - Soportar acciones normales y enlaces externos si recibe href
+ */
+
 import { Icon } from "./Icon";
 
 function Button({

@@ -1,3 +1,10 @@
+/**
+ * Card
+ * Responsabilidades:
+ * - Renderizar un contenedor tipo tarjeta con estilos de borde y sombra
+ * - Mostrar título, subtítulo y contenido interno de forma consistente
+ */
+
 import { useNavigate } from 'react-router-dom'
 import { Icon } from './Icon';
 

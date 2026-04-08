@@ -1,3 +1,10 @@
+/**
+ * BlogCard
+ * Responsabilidades:
+ * - Renderizar una tarjeta de blog dentro de una sección
+ * - Mostrar botones de edición, eliminación y vista de detalle para admin
+ */
+
 import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { ContentBlockService } from "../../api/services/ContentBlockService";
